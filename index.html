@@ -71,6 +71,53 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-WriteUp3" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/12/19/WriteUp3/" class="article-date">
+  <time class="dt-published" datetime="2020-12-19T01:46:09.000Z" itemprop="datePublished">2020-12-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2020/12/19/WriteUp3/">WriteUp3</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="XCTF-4th-CyberEarth"><a href="#XCTF-4th-CyberEarth" class="headerlink" title="XCTF 4th-CyberEarth"></a>XCTF 4th-CyberEarth</h1><p>题目提示：云平台报表中心收集了设备管理基础服务的数据，但是数据被删除了，只有一处留下了入侵者的痕迹。</p>
+<p>直奔主题:报表中心<br><img src="https://i.loli.net/2020/12/19/w4Qo5XdAKLjCynN.png"><br>多次尝试改id的值，发现都会回到1;<br>根据题目的提示，知道应该只有一个值是正确的，是入侵者留下的;</p>
+<p><img src="https://i.loli.net/2020/12/19/DGfYPt8hv96CBZA.png" alt="用网络代理"></p>
+<p>准备暴力破解<br><img src="https://i.loli.net/2020/12/19/4DU2uFl6mONcH78.png"></p>
+<p>用burp，选择number数字破解，从1到5000，一个一个爆破<br><img src="https://i.loli.net/2020/12/19/fCxEoky6AacBGvq.png" alt="暴力破解"></p>
+<p><img src="https://i.loli.net/2020/12/19/agGSO8XwehfH3b6.png"></p>
+<blockquote>
+<p>得到falg！</p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://silver-glacier.github.io/2020/12/19/WriteUp3/" data-id="ckiv3xmx8000334v94zy044tm" data-title="WriteUp3" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-WriteUP2" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2020/12/18/WriteUP2/" class="article-date">
@@ -93,34 +140,17 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h1 id="强网杯-2019-web题"><a href="#强网杯-2019-web题" class="headerlink" title="强网杯 2019 web题"></a>强网杯 2019 web题</h1><blockquote>
-<p>打开题目<br> !(<a target="_blank" rel="noopener" href="https://i.loli.net/2020/12/18/1dUy56YohcNZEDS.png">https://i.loli.net/2020/12/18/1dUy56YohcNZEDS.png</a>)</p>
-</blockquote>
-<blockquote>
-<p>发现是sql注入<br> <img src="https://i.loli.net/2020/12/18/OnaQGP2D9H5Vfke.png" alt="判断是否会报错"></p>
-</blockquote>
+        <h1 id="强网杯-2019-web题"><a href="#强网杯-2019-web题" class="headerlink" title="强网杯 2019 web题"></a>强网杯 2019 web题</h1><p>  打开题目<br> <img src="https://i.loli.net/2020/12/18/1dUy56YohcNZEDS.png"></p>
+<p>  发现是sql注入<br> <img src="https://i.loli.net/2020/12/18/OnaQGP2D9H5Vfke.png" alt="判断是否会报错"></p>
 <p> <img src="https://i.loli.net/2020/12/18/4AzSvDTwk3l1OiR.png" alt="将后面的过滤掉"></p>
-<blockquote>
-<p>尝试用order by 和union select进行查看<br> <img src="https://i.loli.net/2020/12/18/7NmKCpGRUTBqf6a.png" alt="select的语句被过滤掉了"></p>
-</blockquote>
-<blockquote>
-<p>查询资料，尝试用堆叠注入<br> <img src="https://i.loli.net/2020/12/18/yslA5bqpBguLtnh.png" alt="尝试查看tables成功"></p>
-</blockquote>
-<blockquote>
-<p>其中有两个columns，分别查看<br> <img src="https://i.loli.net/2020/12/18/ulCHsR8ngG2UOa1.png" alt="查看words columns"></p>
-</blockquote>
-<p> <img src="https://i.loli.net/2020/12/18/uwnx39QptRhO6JZ.png" alt="查看另外一个"></p>
-<blockquote>
-<p>发现flag，但是直接show flag会失败，查询资料后知道，返回的都是words columns；</p>
-</blockquote>
-<blockquote>
-<p>于是进行骚操作</p>
-</blockquote>
+<p>  尝试用order by 和union select进行查看<br> <img src="https://i.loli.net/2020/12/18/7NmKCpGRUTBqf6a.png" alt="select的语句被过滤掉了"></p>
+<p>  查询资料，尝试用堆叠注入<br> <img src="https://i.loli.net/2020/12/18/yslA5bqpBguLtnh.png" alt="尝试查看tables成功"></p>
+<p>  其中有两个columns，分别查看<br> <img src="https://i.loli.net/2020/12/18/ulCHsR8ngG2UOa1.png" alt="查看words columns"></p>
+<p> <img src="https://i.loli.net/2020/12/18/uwnx39QptRhO6JZ.png" alt="查看另外一个"><br>  发现flag，但是直接show flag会失败，查询资料后知道，返回的都是words columns；</p>
+<p>  于是进行骚操作</p>
  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1&#x27;;<span class="keyword">rename</span> <span class="keyword">tables</span> <span class="string">`words`</span> <span class="keyword">to</span> <span class="string">`words1`</span>;<span class="keyword">rename</span> <span class="keyword">tables</span> <span class="string">`1919810931114514`</span> <span class="keyword">to</span> <span class="string">`words`</span>; <span class="keyword">alter</span> <span class="keyword">table</span> <span class="string">`words`</span> <span class="keyword">change</span> <span class="string">`flag`</span> <span class="string">`id`</span> <span class="built_in">varchar</span>(<span class="number">100</span>);%23</span><br></pre></td></tr></table></figure>
 
-<blockquote>
-<p>最后一步，1’ or 1=1 %23<br> !(<a target="_blank" rel="noopener" href="https://i.loli.net/2020/12/18/KmkMOypidQGBU67.png">https://i.loli.net/2020/12/18/KmkMOypidQGBU67.png</a>)</p>
-</blockquote>
+<p>  最后一步，1’ or 1=1 %23<br> <img src="https://i.loli.net/2020/12/18/KmkMOypidQGBU67.png"></p>
 <blockquote>
 <p> 得到flag！</p>
 </blockquote>
@@ -128,7 +158,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://silver-glacier.github.io/2020/12/18/WriteUP2/" data-id="ckiuahoou0000zsv9fksa3q4n" data-title="WriteUP2" class="article-share-link">Share</a>
+      <a data-url="https://silver-glacier.github.io/2020/12/18/WriteUP2/" data-id="ckiv3xmwt000034v91ie9bx48" data-title="WriteUP2" class="article-share-link">Share</a>
       
       
       
@@ -162,28 +192,16 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h1 id="攻防世界web高手区003"><a href="#攻防世界web高手区003" class="headerlink" title="攻防世界web高手区003"></a>攻防世界web高手区003</h1><blockquote>
-<p>首先打开题目<br><img src="https://i.loli.net/2020/12/17/pGbzECfmToRcXnF.png"></p>
-</blockquote>
-<blockquote>
-<p>看/index.php   没反应<br>看/index.phps  发现源码泄露</p>
-</blockquote>
+        <h1 id="攻防世界web高手区003"><a href="#攻防世界web高手区003" class="headerlink" title="攻防世界web高手区003"></a>攻防世界web高手区003</h1><p> 首先打开题目<br><img src="https://i.loli.net/2020/12/17/pGbzECfmToRcXnF.png"></p>
+<p> 看/index.php   没反应<br> 看/index.phps  发现源码泄露</p>
 <p><img src="https://i.loli.net/2020/12/17/tkSm3W62geOZQDL.png"></p>
-<blockquote>
-<p>审视代码，发现是URL编码与解码，且id=’admin’<br>用burp进行编码</p>
-</blockquote>
+<p> 审视代码，发现是URL编码与解码，且id=’admin’<br> 用burp进行编码</p>
 <p><img src="https://i.loli.net/2020/12/17/IJH4GWS2BdnCPqa.png"></p>
-<blockquote>
-<p>发现浏览器会自动解码</p>
-</blockquote>
+<p> 发现浏览器会自动解码</p>
 <p><img src="https://i.loli.net/2020/12/17/6nNwkRtKq5JzdY1.png"></p>
-<blockquote>
-<p>用burp编码两次</p>
-</blockquote>
+<p> 用burp编码两次</p>
 <p><img src="https://i.loli.net/2020/12/17/CgcTM8UhqilJ5EB.png"></p>
-<blockquote>
-<p>再次尝试</p>
-</blockquote>
+<p> 再次尝试</p>
 <p><img src="https://i.loli.net/2020/12/17/9lJMkOna1XoiuLv.png"></p>
 <blockquote>
 <p>获得flag！</p>
@@ -193,7 +211,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://silver-glacier.github.io/2020/12/17/WriteUp1/" data-id="ckiuahop70002zsv90l67dkjg" data-title="WriteUp" class="article-share-link">Share</a>
+      <a data-url="https://silver-glacier.github.io/2020/12/17/WriteUp1/" data-id="ckiv3xmx6000234v9ede1huoq" data-title="WriteUp" class="article-share-link">Share</a>
       
       
       
@@ -262,7 +280,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://silver-glacier.github.io/2020/12/17/%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/" data-id="ckiuahop90003zsv9fdq9b9al" data-title="第一篇文章" class="article-share-link">Share</a>
+      <a data-url="https://silver-glacier.github.io/2020/12/17/%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/" data-id="ckiv3xmxb000434v94ggf9c18" data-title="第一篇文章" class="article-share-link">Share</a>
       
       
       
@@ -313,7 +331,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://silver-glacier.github.io/2020/12/16/hello-world/" data-id="ckiuahop40001zsv98wlt3ow3" data-title="Hello World" class="article-share-link">Share</a>
+      <a data-url="https://silver-glacier.github.io/2020/12/16/hello-world/" data-id="ckiv3xmx3000134v99ulxbtkr" data-title="Hello World" class="article-share-link">Share</a>
       
       
       
@@ -354,6 +372,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2020/12/19/WriteUp3/">WriteUp3</a>
+          </li>
         
           <li>
             <a href="/2020/12/18/WriteUP2/">WriteUP2</a>
