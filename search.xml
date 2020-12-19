@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+  
+    
+    <entry>
+      <title>WriteUp3</title>
+      <link href="2020/12/19/WriteUp3/"/>
+      <url>2020/12/19/WriteUp3/</url>
+      
+        <content type="html"><![CDATA[<h1 id="XCTF-4th-CyberEarth"><a href="#XCTF-4th-CyberEarth" class="headerlink" title="XCTF 4th-CyberEarth"></a>XCTF 4th-CyberEarth</h1><p>题目提示：云平台报表中心收集了设备管理基础服务的数据，但是数据被删除了，只有一处留下了入侵者的痕迹。</p><p>直奔主题:报表中心<br><img src="https://i.loli.net/2020/12/19/w4Qo5XdAKLjCynN.png"><br>多次尝试改id的值，发现都会回到1;<br>根据题目的提示，知道应该只有一个值是正确的，是入侵者留下的;</p><p><img src="https://i.loli.net/2020/12/19/DGfYPt8hv96CBZA.png" alt="用网络代理"></p><p>准备暴力破解<br><img src="https://i.loli.net/2020/12/19/4DU2uFl6mONcH78.png"></p><p>用burp，选择number数字破解，从1到5000，一个一个爆破<br><img src="https://i.loli.net/2020/12/19/fCxEoky6AacBGvq.png" alt="暴力破解"></p><p><img src="https://i.loli.net/2020/12/19/agGSO8XwehfH3b6.png"></p><blockquote><p>得到falg！</p></blockquote>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>WriteUP2</title>
+      <link href="2020/12/18/WriteUP2/"/>
+      <url>2020/12/18/WriteUP2/</url>
+      
+        <content type="html"><![CDATA[<h1 id="强网杯-2019-web题"><a href="#强网杯-2019-web题" class="headerlink" title="强网杯 2019 web题"></a>强网杯 2019 web题</h1><p>  打开题目<br> <img src="https://i.loli.net/2020/12/18/1dUy56YohcNZEDS.png"></p><p>  发现是sql注入<br> <img src="https://i.loli.net/2020/12/18/OnaQGP2D9H5Vfke.png" alt="判断是否会报错"></p><p> <img src="https://i.loli.net/2020/12/18/4AzSvDTwk3l1OiR.png" alt="将后面的过滤掉"></p><p>  尝试用order by 和union select进行查看<br> <img src="https://i.loli.net/2020/12/18/7NmKCpGRUTBqf6a.png" alt="select的语句被过滤掉了"></p><p>  查询资料，尝试用堆叠注入<br> <img src="https://i.loli.net/2020/12/18/yslA5bqpBguLtnh.png" alt="尝试查看tables成功"></p><p>  其中有两个columns，分别查看<br> <img src="https://i.loli.net/2020/12/18/ulCHsR8ngG2UOa1.png" alt="查看words columns"></p><p> <img src="https://i.loli.net/2020/12/18/uwnx39QptRhO6JZ.png" alt="查看另外一个"><br>  发现flag，但是直接show flag会失败，查询资料后知道，返回的都是words columns；</p><p>  于是进行骚操作</p> <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1&#x27;;<span class="keyword">rename</span> <span class="keyword">tables</span> <span class="string">`words`</span> <span class="keyword">to</span> <span class="string">`words1`</span>;<span class="keyword">rename</span> <span class="keyword">tables</span> <span class="string">`1919810931114514`</span> <span class="keyword">to</span> <span class="string">`words`</span>; <span class="keyword">alter</span> <span class="keyword">table</span> <span class="string">`words`</span> <span class="keyword">change</span> <span class="string">`flag`</span> <span class="string">`id`</span> <span class="built_in">varchar</span>(<span class="number">100</span>);%23</span><br></pre></td></tr></table></figure><p>  最后一步，1’ or 1=1 %23<br> <img src="https://i.loli.net/2020/12/18/KmkMOypidQGBU67.png"></p><blockquote><p> 得到flag！</p></blockquote>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>WriteUp</title>
+      <link href="2020/12/17/WriteUp1/"/>
+      <url>2020/12/17/WriteUp1/</url>
+      
+        <content type="html"><![CDATA[<h1 id="攻防世界web高手区003"><a href="#攻防世界web高手区003" class="headerlink" title="攻防世界web高手区003"></a>攻防世界web高手区003</h1><p> 首先打开题目<br><img src="https://i.loli.net/2020/12/17/pGbzECfmToRcXnF.png"></p><p> 看/index.php   没反应<br> 看/index.phps  发现源码泄露</p><p><img src="https://i.loli.net/2020/12/17/tkSm3W62geOZQDL.png"></p><p> 审视代码，发现是URL编码与解码，且id=’admin’<br> 用burp进行编码</p><p><img src="https://i.loli.net/2020/12/17/IJH4GWS2BdnCPqa.png"></p><p> 发现浏览器会自动解码</p><p><img src="https://i.loli.net/2020/12/17/6nNwkRtKq5JzdY1.png"></p><p> 用burp编码两次</p><p><img src="https://i.loli.net/2020/12/17/CgcTM8UhqilJ5EB.png"></p><p> 再次尝试</p><p><img src="https://i.loli.net/2020/12/17/9lJMkOna1XoiuLv.png"></p><blockquote><p>获得flag！</p></blockquote><hr>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>第一篇文章</title>
+      <link href="2020/12/17/%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/"/>
+      <url>2020/12/17/%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</url>
+      
+        <content type="html"><![CDATA[<h1 id="标签"><a href="#标签" class="headerlink" title="标签"></a>标签</h1><blockquote><p>引用</p></blockquote><hr><p><em>斜体</em><br><strong>加粗</strong></p><p>！<a href="%E5%9B%BE%E7%89%87%E9%93%BE%E6%8E%A5">说明</a></p><p><a href="http://baidu.com/">百度</a></p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> i=<span class="string">&quot;代码块&quot;</span></span><br></pre></td></tr></table></figure><ul><li>列表</li><li>列表</li></ul><ol><li>列表</li><li>列表</li></ol><table><thead><tr><th align="center">表头</th><th align="left">表头</th><th align="right">表头</th></tr></thead><tbody><tr><td align="center">1</td><td align="left">2</td><td align="right">3</td></tr></tbody></table><p><del>删除</del></p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Hello World</title>
+      <link href="2020/12/16/hello-world/"/>
+      <url>2020/12/16/hello-world/</url>
+      
+        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+  
+  
+</search>
