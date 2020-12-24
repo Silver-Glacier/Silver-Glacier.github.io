@@ -4,9 +4,22 @@
   
     
     <entry>
-      <title>WriteUp3</title>
-      <link href="2020/12/19/WriteUp3/"/>
-      <url>2020/12/19/WriteUp3/</url>
+      <title>xtctf</title>
+      <link href="2020/12/24/xtctf/"/>
+      <url>2020/12/24/xtctf/</url>
+      
+        <content type="html"><![CDATA[<p>#XTCTF</p><p>打开题目<br><img src="https://i.loli.net/2020/12/24/gydsZaqw1fKeR53.png" alt="审视代码"></p><p>构造函数__construct()在程序执行开始的时候对变量进行赋初值。析构函数__destruct()，在对象所在函数执行完成之后，会自动调用，这里就会高亮显示出文件。<br>在反序列化执行之前，会先执行__wakeup这个魔术方法，所以需要绕过，当成员属性数目大于实际数目时可绕过wakeup方法，正则匹配可以用+号来进行绕过。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$a</span> = <span class="keyword">new</span> Demo(<span class="string">&quot;fl4g.php&quot;</span>);</span><br><span class="line"><span class="keyword">echo</span> serialize(<span class="variable">$a</span>).<span class="string">&quot;\n&quot;</span>;</span><br><span class="line"><span class="comment">//O:4:&quot;Demo&quot;:1:&#123;s:10:&quot; Demo file&quot;;s:8:&quot;fl4g.php&quot;;&#125;</span></span><br><span class="line"><span class="keyword">echo</span> base64_encode(<span class="string">&#x27;O:+4:&quot;Demo&quot;:2:&#123;s:10:&quot; Demo file&quot;;s:8:&quot;fl4g.php&quot;;&#125;&#x27;</span>);</span><br></pre></td></tr></table></figure><p>经过base64加密得到:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TzorNDoiRGVtbyI6Mjp7czoxMDoiAERlbW8AZmlsZSI7czo4OiJmbDRnLnBocCI7fQ&#x3D;&#x3D;</span><br></pre></td></tr></table></figure><p><img src="https://i.loli.net/2020/12/24/nKcx3paDzkrGFUf.png"></p><blockquote><p>得到flag！</p></blockquote>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>XCTF 4th-CyberEarth</title>
+      <link href="2020/12/19/XCTF%204th-CyberEarth/"/>
+      <url>2020/12/19/XCTF%204th-CyberEarth/</url>
       
         <content type="html"><![CDATA[<h1 id="XCTF-4th-CyberEarth"><a href="#XCTF-4th-CyberEarth" class="headerlink" title="XCTF 4th-CyberEarth"></a>XCTF 4th-CyberEarth</h1><p>题目提示：云平台报表中心收集了设备管理基础服务的数据，但是数据被删除了，只有一处留下了入侵者的痕迹。</p><p>直奔主题:报表中心<br><img src="https://i.loli.net/2020/12/19/w4Qo5XdAKLjCynN.png"><br>多次尝试改id的值，发现都会回到1;<br>根据题目的提示，知道应该只有一个值是正确的，是入侵者留下的;</p><p><img src="https://i.loli.net/2020/12/19/DGfYPt8hv96CBZA.png" alt="用网络代理"></p><p>准备暴力破解<br><img src="https://i.loli.net/2020/12/19/4DU2uFl6mONcH78.png"></p><p>用burp，选择number数字破解，从1到5000，一个一个爆破<br><img src="https://i.loli.net/2020/12/19/fCxEoky6AacBGvq.png" alt="暴力破解"></p><p><img src="https://i.loli.net/2020/12/19/agGSO8XwehfH3b6.png"></p><blockquote><p>得到falg！</p></blockquote>]]></content>
       
@@ -17,9 +30,9 @@
     
     
     <entry>
-      <title>WriteUp2</title>
-      <link href="2020/12/18/WriteUp2/"/>
-      <url>2020/12/18/WriteUp2/</url>
+      <title>强网杯 2019 web题</title>
+      <link href="2020/12/18/%E5%BC%BA%E7%BD%91%E6%9D%AF%202019%20web%E9%A2%98/"/>
+      <url>2020/12/18/%E5%BC%BA%E7%BD%91%E6%9D%AF%202019%20web%E9%A2%98/</url>
       
         <content type="html"><![CDATA[<h1 id="强网杯-2019-web题"><a href="#强网杯-2019-web题" class="headerlink" title="强网杯 2019 web题"></a>强网杯 2019 web题</h1><p>打开题目<br> <img src="https://i.loli.net/2020/12/18/1dUy56YohcNZEDS.png"></p><p>发现是sql注入<br> <img src="https://i.loli.net/2020/12/18/OnaQGP2D9H5Vfke.png" alt="判断是否会报错"></p><p><img src="https://i.loli.net/2020/12/18/4AzSvDTwk3l1OiR.png" alt="将后面的过滤掉"></p><p>尝试用order by和union select进行查看<br><img src="https://i.loli.net/2020/12/18/7NmKCpGRUTBqf6a.png" alt="select的语句被过滤掉了"></p><p>查询资料，尝试用堆叠注入<br> <img src="https://i.loli.net/2020/12/18/yslA5bqpBguLtnh.png" alt="尝试查看tables成功"></p><p>其中有两个columns，分别查看<br> <img src="https://i.loli.net/2020/12/18/ulCHsR8ngG2UOa1.png" alt="查看words columns"></p><p><img src="https://i.loli.net/2020/12/18/uwnx39QptRhO6JZ.png" alt="查看另外一个"><br>  发现flag，但是直接show flag会失败，查询资料后知道，返回的都是words columns</p><p> 于是进行骚操作</p> <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1&#x27;;<span class="keyword">rename</span> <span class="keyword">tables</span> <span class="string">`words`</span> <span class="keyword">to</span> <span class="string">`words1`</span>;<span class="keyword">rename</span> <span class="keyword">tables</span> <span class="string">`1919810931114514`</span> <span class="keyword">to</span> <span class="string">`words`</span>; <span class="keyword">alter</span> <span class="keyword">table</span> <span class="string">`words`</span> <span class="keyword">change</span> <span class="string">`flag`</span> <span class="string">`id`</span> <span class="built_in">varchar</span>(<span class="number">100</span>);%23</span><br></pre></td></tr></table></figure><p>最后一步 1’ or 1=1%23<br> <img src="https://i.loli.net/2020/12/18/KmkMOypidQGBU67.png"></p><blockquote><p>得到flag！</p></blockquote>]]></content>
       
@@ -30,9 +43,9 @@
     
     
     <entry>
-      <title>WriteUp1</title>
-      <link href="2020/12/17/WriteUp1/"/>
-      <url>2020/12/17/WriteUp1/</url>
+      <title>攻防世界web高手区003</title>
+      <link href="2020/12/17/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cweb%E9%AB%98%E6%89%8B%E5%8C%BA003/"/>
+      <url>2020/12/17/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cweb%E9%AB%98%E6%89%8B%E5%8C%BA003/</url>
       
         <content type="html"><![CDATA[<h1 id="攻防世界web高手区003"><a href="#攻防世界web高手区003" class="headerlink" title="攻防世界web高手区003"></a>攻防世界web高手区003</h1><p> 首先打开题目<br><img src="https://i.loli.net/2020/12/17/pGbzECfmToRcXnF.png"></p><p> 看/index.php   没反应<br> 看/index.phps  发现源码泄露</p><p><img src="https://i.loli.net/2020/12/17/tkSm3W62geOZQDL.png"></p><p> 审视代码，发现是URL编码与解码，且id=’admin’<br> 用burp进行编码</p><p><img src="https://i.loli.net/2020/12/17/IJH4GWS2BdnCPqa.png"></p><p> 发现浏览器会自动解码</p><p><img src="https://i.loli.net/2020/12/17/6nNwkRtKq5JzdY1.png"></p><p> 用burp编码两次</p><p><img src="https://i.loli.net/2020/12/17/CgcTM8UhqilJ5EB.png"></p><p> 再次尝试</p><p><img src="https://i.loli.net/2020/12/17/9lJMkOna1XoiuLv.png"></p><blockquote><p>获得flag！</p></blockquote><hr>]]></content>
       
