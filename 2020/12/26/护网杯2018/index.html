@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   
   
-  <title>Hexo</title>
+  <title>护网杯2018   | Hexo</title>
 
   
     <link rel="apple-touch-icon" href="/images/favicon.png">
@@ -85,108 +85,96 @@
 
 
       <div class="flex-container">
-        <div class="container index">
-  <div class="post-list">
-    <!-- 遍历渲染文章 -->
-    
-      <div class="post-item" title="护网杯2018">
-        <div class="time-m-d">2020-12-26</div>
-        <div class="title">
-          <a href="/2020/12/26/%E6%8A%A4%E7%BD%91%E6%9D%AF2018/">
-            
-              
-                <span>护网杯2018</span>
-              
-            
-          </a>
-        </div>
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">护网杯2018</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime" title="Update time"></i>
+          2020-12-26
+        </span>
+        
       </div>
-    
-      <div class="post-item" title="xtctf">
-        <div class="time-m-d">2020-12-24</div>
-        <div class="title">
-          <a href="/2020/12/24/xtctf/">
-            
-              
-                <span>xtctf</span>
-              
-            
-          </a>
-        </div>
+      <div class="markdown-body">
+        <h1 id="护网杯2018web题"><a href="#护网杯2018web题" class="headerlink" title="护网杯2018web题"></a>护网杯2018web题</h1><p>首先打开题目<br><img src="https://i.loli.net/2020/12/27/XxyuO5DPhq1t7ze.png" alt="把每个都看一遍"></p>
+<p><img src="https://i.loli.net/2020/12/27/P34zmihWqOx98Hr.png" alt="/flag.txt"></p>
+<p><img src="https://i.loli.net/2020/12/27/MpgKE92qIek7wR4.png" alt="/hints.txt"></p>
+<p><img src="https://i.loli.net/2020/12/27/3kbDHi6c5Ka9Oj2.png" alt="/welcome.txt"></p>
+<p>百度了一下render</p>
+<blockquote>
+<p>render直接渲染视图， 即直接将页面render部分渲染成partial参数后面名字相同的_名字.html.erb文件</p>
+</blockquote>
+<p>根据hint.txt知道，是md5加密，现在就是要去找cookie_secret<br>直接搜索，发现在tornado文档有关于cookie_secret，</p>
+<p><img src="https://i.loli.net/2020/12/27/JfVBW3TgQhXP5Ie.png" alt="找到cookie_secret"></p>
+<p>写个php脚本，运行一下，让他计算出md5<br><img src="https://i.loli.net/2020/12/27/TKMYXjuQRLxVSw2.png" alt="在线运行"></p>
+<p>最后用回到题目运行<br><img src="https://i.loli.net/2020/12/27/rZg4AXFVxQbtJz3.png" alt="QQ截图20201227095310.png"></p>
+<blockquote>
+<p>得到flag！</p>
+</blockquote>
+
       </div>
-    
-      <div class="post-item" title="XCTF 4th-CyberEarth">
-        <div class="time-m-d">2020-12-19</div>
-        <div class="title">
-          <a href="/2020/12/19/XCTF%204th-CyberEarth/">
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
             
-              
-                <span>XCTF 4th-CyberEarth</span>
-              
+              <a href="/2020/12/24/xtctf/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
             
-          </a>
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime" title="Update time"></i>
+              2020-12-26
+            </span>
+            
+          </div>
+          <div class="post-foot-prev">
+            
+          </div>
         </div>
-      </div>
+      
+    </div>
     
-      <div class="post-item" title="强网杯 2019 web题">
-        <div class="time-m-d">2020-12-18</div>
-        <div class="title">
-          <a href="/2020/12/18/%E5%BC%BA%E7%BD%91%E6%9D%AF%202019%20web%E9%A2%98/">
-            
-              
-                <span>强网杯 2019 web题</span>
-              
-            
-          </a>
-        </div>
-      </div>
+  <div class="post-catalog" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8A%A4%E7%BD%91%E6%9D%AF2018web%E9%A2%98"><span class="toc-text">护网杯2018web题</span></a></li></ol>
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
     
-      <div class="post-item" title="攻防世界web高手区003">
-        <div class="time-m-d">2020-12-17</div>
-        <div class="title">
-          <a href="/2020/12/17/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cweb%E9%AB%98%E6%89%8B%E5%8C%BA003/">
-            
-              
-                <span>攻防世界web高手区003</span>
-              
-            
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="The first try">
-        <div class="time-m-d">2020-12-17</div>
-        <div class="title">
-          <a href="/2020/12/17/The%20first%20try/">
-            
-              
-                <span>The first try</span>
-              
-            
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="Hello World">
-        <div class="time-m-d">2020-12-16</div>
-        <div class="title">
-          <a href="/2020/12/16/hello-world/">
-            
-              
-                <span>Hello World</span>
-              
-            
-          </a>
-        </div>
+      <div class="comments-container">
+        
+
+
+
+
+
       </div>
     
   </div>
-  <nav class="post-navigation">
-    
-    <span class="page-num">1 / 1</span>
-    
-  </nav>
-</div>
+
 
         <div class="footer">
   <div class="social">
