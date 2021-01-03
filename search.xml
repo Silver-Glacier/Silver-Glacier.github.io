@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title>XCTF-4th-WHCTF-2017</title>
+      <link href="2021/01/03/XCTF-4th-WHCTF-2017/"/>
+      <url>2021/01/03/XCTF-4th-WHCTF-2017/</url>
+      
+        <content type="html"><![CDATA[<h1 id="XCTF-4th-WHCTF-2017-web题-CAT"><a href="#XCTF-4th-WHCTF-2017-web题-CAT" class="headerlink" title="XCTF 4th-WHCTF-2017 web题 CAT"></a>XCTF 4th-WHCTF-2017 web题 CAT</h1><p>首先打开题目，要求输入域名<br>首先随便输入了一个baidu.com<br>发现没有回显<br>然后在输入127.0.0.1</p><p><img src="https://i.loli.net/2021/01/03/mFVPchU8IuXagSi.png" alt="试一下本地的"><br>发现原来是ping的连接</p><p><img src="https://i.loli.net/2021/01/03/8MCw1AQPGJcO9Ys.png" alt="网上查询资料"></p><p>然后去看setting<br><img src="https://i.loli.net/2021/01/03/rwXI5klsEpH83j2.png"></p><p>找到路径之后，直接跳转<br><img src="https://i.loli.net/2021/01/03/4671fEYIvJDp3iB.png"><br>在这个里面去找database</p><p><img src="https://i.loli.net/2021/01/03/T2NpH1w9mUMoCtP.png" alt="找到database"><br>然后再去下一步，<br>去找ctf<br><img src="https://i.loli.net/2021/01/03/W4SlwVTqYDbH7JF.png" alt="查找ctf"></p><blockquote><p>得到flag！</p></blockquote><h2 id="关于php-curl的介绍"><a href="#关于php-curl的介绍" class="headerlink" title="关于php curl的介绍"></a>关于php curl的介绍</h2><p><img src="https://img.it610.com/image/info8/a24d1740e7224686a77188fbacf2139f.jpg"><br>感觉这题涉及到的知识有点太多了，几乎没接触过，看完别人的wp还是有点懵</p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>网鼎杯2018</title>
       <link href="2021/01/02/%E7%BD%91%E9%BC%8E%E6%9D%AF2018/"/>
       <url>2021/01/02/%E7%BD%91%E9%BC%8E%E6%9D%AF2018/</url>
