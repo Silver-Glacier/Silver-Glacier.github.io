@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   
   
-  <title>TokyoWesterns   | Hexo</title>
+  <title>archive_a: 2021   | Hexo</title>
 
   
     <link rel="apple-touch-icon" href="/images/favicon.png">
@@ -85,98 +85,121 @@
 
 
       <div class="flex-container">
-        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
-<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+        <!-- 归档页，展示本站所有文章，按照年份降序归类，url形式：https://yoursite/archives/ -->
 
+<!-- last: 按年份把文章分组，当前遍历到的年份 -->
+<!-- now: 当前遍历到的文章的发布年份 -->
 
-
-  
-
-  
-
-  
-
-  
-  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
-  <div class="container post-details" id="post-details">
-    <div class="post-content">
-      <div class="post-title">TokyoWesterns</div>
-      <div class="post-attach">
-        <span class="post-pubtime">
-          <i class="iconfont icon-updatetime" title="Update time"></i>
-          2020-12-27
-        </span>
-        
-      </div>
-      <div class="markdown-body">
-        <h1 id="TokyoWesterns-CTF-shrine"><a href="#TokyoWesterns-CTF-shrine" class="headerlink" title="TokyoWesterns CTF shrine"></a>TokyoWesterns CTF shrine</h1><p>打开题目<br><img src="https://i.loli.net/2020/12/27/XZndtk7svaf8z2u.png" alt="全是源码"></p>
-<p>审视源码<br><img src="https://i.loli.net/2020/12/27/W3y5xGApeC28KMI.png" alt="这么看舒服一点"><br>主要源码是python写的，得慢慢看</p>
-<blockquote>
-<p>知识点<br><img src="https://img2018.cnblogs.com/blog/1625650/202001/1625650-20200128200324741-208140586.png" alt="SSTI模板注入"></p>
-</blockquote>
-<blockquote>
-<p>模板引擎可以让（网站）程序实现界面与数据分离，业务代码与逻辑代码的分离，这大大提升了开发效率，良好的设计也使得代码重用变得更加容易。与此同时，它也扩展了黑客的攻击面。除了常规的 XSS 外，注入到模板中的代码还有可能引发 RCE（远程代码执行）。通常来说，这类问题会在博客，CMS，wiki 中产生。虽然模板引擎会提供沙箱机制，攻击者依然有许多手段绕过它</p>
-</blockquote>
-<p><img src="https://i.loli.net/2020/12/27/fNUTPxBsiGEVLp4.png" alt="构造payload"></p>
-<blockquote>
-<p>得到flag！</p>
-</blockquote>
-
-      </div>
+<div class="container archives">
+  <div class="post-list">
+    
+    
       
-        <div class="prev-or-next">
-          <div class="post-foot-next">
-            
-              <a href="/2020/12/26/%E6%8A%A4%E7%BD%91%E6%9D%AF2018/" target="_self">
-                <i class="iconfont icon-chevronleft"></i>
-                <span>Prev</span>
-              </a>
-            
-          </div>
-          <div class="post-attach">
-            <span class="post-pubtime">
-              <i class="iconfont icon-updatetime" title="Update time"></i>
-              2020-12-27
-            </span>
-            
-          </div>
-          <div class="post-foot-prev">
-            
-              <a href="/2021/01/01/csaw-ctf-2016-quals/" target="_self">
-                <span>Next</span>
-                <i class="iconfont icon-chevronright"></i>
-              </a>
-            
-          </div>
+        <!-- 第一篇文章的发布年份呈现 -->
+        <div class="content-title">
+          <h2>
+            <span>2021</span>
+          </h2>
         </div>
       
-    </div>
+      <div class="post-item" title="csaw-ctf-2016-quals">
+        <div class="time-m-d">01-01</div>
+        <div class="title">
+          <a href="/2021/01/01/csaw-ctf-2016-quals/">
+            <span>csaw-ctf-2016-quals</span>
+          </a>
+        </div>
+      </div>
     
-  <div class="post-catalog" id="catalog">
-    <div class="title">Contents</div>
-    <div class="catalog-content">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#TokyoWesterns-CTF-shrine"><span class="toc-text">TokyoWesterns CTF shrine</span></a></li></ol>
-    </div>
-  </div>
-
-  
-<script src="/js/catalog.js"></script>
-
-
-
-
+      
+        <!-- 后续文章的发布年份呈现 -->
+        <div class="content-title">
+          <h2>
+            <span>2020</span>
+          </h2>
+        </div>
+      
+      <div class="post-item" title="TokyoWesterns">
+        <div class="time-m-d">12-27</div>
+        <div class="title">
+          <a href="/2020/12/27/TokyoWesterns/">
+            <span>TokyoWesterns</span>
+          </a>
+        </div>
+      </div>
     
-      <div class="comments-container">
-        
-
-
-
-
-
+      
+      <div class="post-item" title="护网杯2018">
+        <div class="time-m-d">12-26</div>
+        <div class="title">
+          <a href="/2020/12/26/%E6%8A%A4%E7%BD%91%E6%9D%AF2018/">
+            <span>护网杯2018</span>
+          </a>
+        </div>
+      </div>
+    
+      
+      <div class="post-item" title="xtctf">
+        <div class="time-m-d">12-24</div>
+        <div class="title">
+          <a href="/2020/12/24/xtctf/">
+            <span>xtctf</span>
+          </a>
+        </div>
+      </div>
+    
+      
+      <div class="post-item" title="XCTF 4th-CyberEarth">
+        <div class="time-m-d">12-19</div>
+        <div class="title">
+          <a href="/2020/12/19/XCTF%204th-CyberEarth/">
+            <span>XCTF 4th-CyberEarth</span>
+          </a>
+        </div>
+      </div>
+    
+      
+      <div class="post-item" title="强网杯 2019 web题">
+        <div class="time-m-d">12-18</div>
+        <div class="title">
+          <a href="/2020/12/18/%E5%BC%BA%E7%BD%91%E6%9D%AF%202019%20web%E9%A2%98/">
+            <span>强网杯 2019 web题</span>
+          </a>
+        </div>
+      </div>
+    
+      
+      <div class="post-item" title="攻防世界web高手区003">
+        <div class="time-m-d">12-17</div>
+        <div class="title">
+          <a href="/2020/12/17/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cweb%E9%AB%98%E6%89%8B%E5%8C%BA003/">
+            <span>攻防世界web高手区003</span>
+          </a>
+        </div>
+      </div>
+    
+      
+      <div class="post-item" title="The first try">
+        <div class="time-m-d">12-17</div>
+        <div class="title">
+          <a href="/2020/12/17/The%20first%20try/">
+            <span>The first try</span>
+          </a>
+        </div>
+      </div>
+    
+      
+      <div class="post-item" title="Hello World">
+        <div class="time-m-d">12-16</div>
+        <div class="title">
+          <a href="/2020/12/16/hello-world/">
+            <span>Hello World</span>
+          </a>
+        </div>
       </div>
     
   </div>
-
+</div>
 
         <div class="footer">
   <div class="social">

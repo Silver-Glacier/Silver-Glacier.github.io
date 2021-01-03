@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title>csaw-ctf-2016-quals</title>
+      <link href="2021/01/01/csaw-ctf-2016-quals/"/>
+      <url>2021/01/01/csaw-ctf-2016-quals/</url>
+      
+        <content type="html"><![CDATA[<h1 id="csaw-ctf-2016-quals-web题mfw"><a href="#csaw-ctf-2016-quals-web题mfw" class="headerlink" title="csaw-ctf-2016-quals web题mfw"></a>csaw-ctf-2016-quals web题mfw</h1><p>首先按打开题目<br><img src="https://i.loli.net/2021/01/03/LCsQtNgocb35GfD.png" alt="没有任何提示"></p><p>浏览不同的板块，发现就是url上面加上了？page=</p><p>接下来查看源码<br><img src="https://i.loli.net/2021/01/03/2QKuhIzxnETeqJw.png" alt="感觉有一点点提示"></p><p>在这个about板块里面，有GIT<br><img src="https://i.loli.net/2021/01/03/dN6Xm7YLF3zPq4t.png"><br>怀疑是git泄露，在url后面加上/.git/</p><p><img src="https://i.loli.net/2021/01/03/UnDOpslqIaNtYob.png" alt="打开/.git/"><br>还真的有东西</p><p>查询资料，需要用到GitHack<br><img src="https://i.loli.net/2021/01/03/MIjYLl7bJreXRT2.png" alt="下好并使用"></p><p>先查看flag.php</p><blockquote><p>好像啥也没有</p></blockquote><p>再分别看其他的php</p><p><img src="https://i.loli.net/2021/01/03/mdrcNfqRxXJL5Bi.png" alt="index.php"><br>好像只有index.php里面的东西有点作用</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">page=abc<span class="string">&#x27;) or system(&quot;cat templates/flag.php&quot;);//</span></span><br></pre></td></tr></table></figure><p>于是想到这样构造payload<br><img src="https://i.loli.net/2021/01/03/w1YLuBixtFyUZof.png" alt="查看源码"></p><blockquote><p>得到flag！</p></blockquote>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>TokyoWesterns</title>
       <link href="2020/12/27/TokyoWesterns/"/>
       <url>2020/12/27/TokyoWesterns/</url>
