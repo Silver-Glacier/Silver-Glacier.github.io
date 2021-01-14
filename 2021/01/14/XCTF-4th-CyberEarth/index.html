@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   
   
-  <title>archive_a: 2020   | Hexo</title>
+  <title>XCTF-4th-CyberEarth   | Hexo</title>
 
   
     <link rel="apple-touch-icon" href="/images/favicon.png">
@@ -85,151 +85,97 @@
 
 
       <div class="flex-container">
-        <!-- 归档页，展示本站所有文章，按照年份降序归类，url形式：https://yoursite/archives/ -->
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
 
-<!-- last: 按年份把文章分组，当前遍历到的年份 -->
-<!-- now: 当前遍历到的文章的发布年份 -->
 
-<div class="container archives">
-  <div class="post-list">
-    
-    
-      
-        <!-- 第一篇文章的发布年份呈现 -->
-        <div class="content-title">
-          <h2>
-            <span>2021</span>
-          </h2>
-        </div>
-      
-      <div class="post-item" title="XCTF-4th-CyberEarth">
-        <div class="time-m-d">01-14</div>
-        <div class="title">
-          <a href="/2021/01/14/XCTF-4th-CyberEarth/">
-            <span>XCTF-4th-CyberEarth</span>
-          </a>
-        </div>
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">XCTF-4th-CyberEarth</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime" title="Update time"></i>
+          2021-01-14
+        </span>
+        
       </div>
-    
-      
-      <div class="post-item" title="XCTF-4th-WHCTF-2017">
-        <div class="time-m-d">01-09</div>
-        <div class="title">
-          <a href="/2021/01/09/XCTF-4th-WHCTF-2017/">
-            <span>XCTF-4th-WHCTF-2017</span>
-          </a>
-        </div>
+      <div class="markdown-body">
+        <h1 id="ics-07"><a href="#ics-07" class="headerlink" title="ics-07"></a>ics-07</h1><p>首先打开题目<br><img src="https://i.loli.net/2021/01/14/YnbcwaP6Z9XJWEk.png"></p>
+<p>下面有hint<br>就点开看</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">     <span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_GET</span>[id]) &amp;&amp; floatval(<span class="variable">$_GET</span>[id]) !== <span class="string">&#x27;1&#x27;</span> &amp;&amp; substr(<span class="variable">$_GET</span>[id], <span class="number">-1</span>) === <span class="string">&#x27;9&#x27;</span>) &#123;</span><br><span class="line">       <span class="keyword">include</span> <span class="string">&#x27;config.php&#x27;</span>;</span><br><span class="line">       <span class="variable">$id</span> = mysql_real_escape_string(<span class="variable">$_GET</span>[id]);</span><br><span class="line">       <span class="variable">$sql</span>=<span class="string">&quot;select * from cetc007.user where id=&#x27;<span class="subst">$id</span>&#x27;&quot;</span>;</span><br><span class="line">       <span class="variable">$result</span> = mysql_query(<span class="variable">$sql</span>);</span><br><span class="line">       <span class="variable">$result</span> = mysql_fetch_object(<span class="variable">$result</span>);</span><br><span class="line">     &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">       <span class="variable">$result</span> = <span class="literal">False</span>;</span><br><span class="line">       <span class="keyword">die</span>();</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">if</span>(!<span class="variable">$result</span>)<span class="keyword">die</span>(<span class="string">&quot;&lt;br &gt;something wae wrong ! &lt;br&gt;&quot;</span>);</span><br><span class="line">     <span class="keyword">if</span>(<span class="variable">$result</span>)&#123;</span><br><span class="line">       <span class="keyword">echo</span> <span class="string">&quot;id: &quot;</span>.<span class="variable">$result</span>-&gt;id.<span class="string">&quot;&lt;/br&gt;&quot;</span>;</span><br><span class="line">       <span class="keyword">echo</span> <span class="string">&quot;name:&quot;</span>.<span class="variable">$result</span>-&gt;user.<span class="string">&quot;&lt;/br&gt;&quot;</span>;</span><br><span class="line">       <span class="variable">$_SESSION</span>[<span class="string">&#x27;admin&#x27;</span>] = <span class="literal">True</span>;</span><br><span class="line">     &#125;</span><br><span class="line">    <span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>首先看这一段代码</p>
+<blockquote>
+<p>if (isset($_GET[id]) &amp;&amp; floatval($_GET[id]) !== ‘1’ &amp;&amp; substr($_GET[id], -1) === ‘9’)<br> 要越过这一条<br> 构造upload<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id&#x3D;1-9&amp;submit&amp;page&#x3D;flag.php</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p> <img src="https://i.loli.net/2021/01/14/ZQrdNGIWvi7j1E8.png" alt="显示越过成功"></p>
+<p>下面继续看源码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$_SESSION</span>[<span class="string">&#x27;admin&#x27;</span>]) &#123;</span><br><span class="line">      <span class="variable">$con</span> = <span class="variable">$_POST</span>[<span class="string">&#x27;con&#x27;</span>];</span><br><span class="line">      <span class="variable">$file</span> = <span class="variable">$_POST</span>[<span class="string">&#x27;file&#x27;</span>];</span><br><span class="line">      <span class="variable">$filename</span> = <span class="string">&quot;backup/&quot;</span>.<span class="variable">$file</span>;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span>(preg_match(<span class="string">&#x27;/.+\.ph(p[3457]?|t|tml)$/i&#x27;</span>, <span class="variable">$filename</span>))&#123;</span><br><span class="line">         <span class="keyword">die</span>(<span class="string">&quot;Bad file extension&quot;</span>);</span><br><span class="line">      &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">           chdir(<span class="string">&#x27;uploaded&#x27;</span>);</span><br><span class="line">          <span class="variable">$f</span> = fopen(<span class="variable">$filename</span>, <span class="string">&#x27;w&#x27;</span>);</span><br><span class="line">          fwrite(<span class="variable">$f</span>, <span class="variable">$con</span>);</span><br><span class="line">          fclose(<span class="variable">$f</span>);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">?&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>这个正则的绕过有点没看懂<br>看来大佬的wp，好像就用.直接绕过了</p>
+<p><img src="https://i.loli.net/2021/01/14/muTg1OFPhtHUjDz.png" alt="写一句话木马"><br>直接上传🐎</p>
+<p><img src="https://i.loli.net/2021/01/14/Jacej8MzhYLBiq4.png" alt="蚁剑大法好啊"></p>
+<blockquote>
+<p>得到flag！</p>
+</blockquote>
+
       </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2021/01/09/XCTF-4th-WHCTF-2017/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime" title="Update time"></i>
+              2021-01-14
+            </span>
+            
+          </div>
+          <div class="post-foot-prev">
+            
+          </div>
+        </div>
+      
+    </div>
     
-      
-      <div class="post-item" title="网鼎杯2018">
-        <div class="time-m-d">01-08</div>
-        <div class="title">
-          <a href="/2021/01/08/%E7%BD%91%E9%BC%8E%E6%9D%AF2018/">
-            <span>网鼎杯2018</span>
-          </a>
-        </div>
-      </div>
+  <div class="post-catalog" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ics-07"><span class="toc-text">ics-07</span></a></li></ol>
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
     
-      
-      <div class="post-item" title="csaw-ctf-2016-quals">
-        <div class="time-m-d">01-07</div>
-        <div class="title">
-          <a href="/2021/01/07/csaw-ctf-2016-quals/">
-            <span>csaw-ctf-2016-quals</span>
-          </a>
-        </div>
-      </div>
-    
-      
-        <!-- 后续文章的发布年份呈现 -->
-        <div class="content-title">
-          <h2>
-            <span>2020</span>
-          </h2>
-        </div>
-      
-      <div class="post-item" title="TokyoWesterns">
-        <div class="time-m-d">12-27</div>
-        <div class="title">
-          <a href="/2020/12/27/TokyoWesterns/">
-            <span>TokyoWesterns</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="护网杯2018">
-        <div class="time-m-d">12-26</div>
-        <div class="title">
-          <a href="/2020/12/26/%E6%8A%A4%E7%BD%91%E6%9D%AF2018/">
-            <span>护网杯2018</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="xtctf">
-        <div class="time-m-d">12-24</div>
-        <div class="title">
-          <a href="/2020/12/24/xtctf/">
-            <span>xtctf</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="XCTF 4th-CyberEarth">
-        <div class="time-m-d">12-19</div>
-        <div class="title">
-          <a href="/2020/12/19/XCTF%204th-CyberEarth/">
-            <span>XCTF 4th-CyberEarth</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="强网杯 2019 web题">
-        <div class="time-m-d">12-18</div>
-        <div class="title">
-          <a href="/2020/12/18/%E5%BC%BA%E7%BD%91%E6%9D%AF%202019%20web%E9%A2%98/">
-            <span>强网杯 2019 web题</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="攻防世界web高手区003">
-        <div class="time-m-d">12-17</div>
-        <div class="title">
-          <a href="/2020/12/17/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cweb%E9%AB%98%E6%89%8B%E5%8C%BA003/">
-            <span>攻防世界web高手区003</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="The first try">
-        <div class="time-m-d">12-17</div>
-        <div class="title">
-          <a href="/2020/12/17/The%20first%20try/">
-            <span>The first try</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="Hello World">
-        <div class="time-m-d">12-16</div>
-        <div class="title">
-          <a href="/2020/12/16/hello-world/">
-            <span>Hello World</span>
-          </a>
-        </div>
+      <div class="comments-container">
+        
+
+
+
+
+
       </div>
     
   </div>
-</div>
+
 
         <div class="footer">
   <div class="social">
