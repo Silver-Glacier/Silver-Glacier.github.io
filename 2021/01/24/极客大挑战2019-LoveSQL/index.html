@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   
   
-  <title>极客大挑战2019_secret_file   | Hexo</title>
+  <title>极客大挑战2019_LoveSQL1   | Hexo</title>
 
   
     <link rel="apple-touch-icon" href="/images/favicon.png">
@@ -100,25 +100,25 @@
   <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
   <div class="container post-details" id="post-details">
     <div class="post-content">
-      <div class="post-title">极客大挑战2019_secret_file</div>
+      <div class="post-title">极客大挑战2019_LoveSQL1</div>
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime" title="Update time"></i>
-          2021-01-20
+          2021-01-24
         </span>
         
       </div>
       <div class="markdown-body">
-        <h1 id="即可大挑战2019-secret-file"><a href="#即可大挑战2019-secret-file" class="headerlink" title="即可大挑战2019 secret file"></a>即可大挑战2019 secret file</h1><p>首先打开题目<br><img src="https://i.loli.net/2021/01/20/X38yAOeDlMGFuEt.png" alt="啥也不是"><br>我们直接去看源码</p>
-<p><img src="https://i.loli.net/2021/01/20/DnB2h3Oig8tN5zV.png"><br>这里发现了一点小秘密<br>题目把这里的颜色调成跟背景颜色一样，所以看不到，那我们直接进到这个./Archieve.php里面去</p>
-<p><img src="https://i.loli.net/2021/01/20/SUtJEe1Mo6sPmxF.png" alt="同样藏了一点东西"><br>那我们还是一样，去到./action.php里面</p>
-<p><img src="https://i.loli.net/2021/01/20/i4ZY1My5e7WUOSK.png" alt="好像不对"><br>它自动跳转到了end.php里面，那就用burp suite去抓包，这次就不会让它跑了</p>
-<p><img src="https://i.loli.net/2021/01/20/i4ZY1My5e7WUOSK.png" alt="发现了"><br>果然有个secr3t.php藏在里面，进去看看</p>
-<p><img src="https://i.loli.net/2021/01/20/qoIuZGkzXn7eOiT.png" alt="看源码"><br>知道了要用filter去越过，找到包含文件</p>
-<p><img src="https://i.loli.net/2021/01/20/UeGTCgcpt28QvLf.png" alt="马上要成功了"><br>然后解码</p>
-<p><img src="https://i.loli.net/2021/01/20/2QUg9ALvemxoybd.png" alt="万能的burp suite"></p>
+        <h1 id="极客大挑战2019-LoveSQL"><a href="#极客大挑战2019-LoveSQL" class="headerlink" title="极客大挑战2019_LoveSQL"></a>极客大挑战2019_LoveSQL</h1><p>首先打开题目<br><img src="https://i.loli.net/2021/01/24/cfYuvnQkemx9JqT.png"><br>根据题目名字，确定这肯定是一个sql注入<br>首先试一下万能密码，看能不能登进去</p>
+<p><img src="https://i.loli.net/2021/01/24/XwKs73EJLgMN9m2.png" alt="成功了"><br>既然万能密码登进去了，那后面的基本上就简单了</p>
+<p><img src="https://i.loli.net/2021/01/24/EH8kTscSl5fNMxV.png"><br>看一下有几组<br><img src="https://i.loli.net/2021/01/24/4ZEe2JYshrfnbmB.png" alt="有三组"></p>
+<p><img src="https://i.loli.net/2021/01/24/Lin6rPtOCFEXkmh.png" alt="看看那些有回显"><br>2和3有回显，那先看一下database</p>
+<p><img src="https://i.loli.net/2021/01/24/AdLCGQYiUFaMnvS.png" alt="查到了database"></p>
+<p>继续查table_name<br><img src="https://i.loli.net/2021/01/24/G8mnbzxBkAUNOfC.png"></p>
+<p>这两个table名中好像是一样的，那就随便看一个<br><img src="https://i.loli.net/2021/01/24/jCzbIOaXhoHAYU2.png"><br>得到三个表名</p>
+<p>最后一步，把他们都显出来<br><img src="https://i.loli.net/2021/01/24/T5vYFOcCxiKSb64.png"></p>
 <blockquote>
-<p>得到flag!</p>
+<p>得到flag！</p>
 </blockquote>
 
       </div>
@@ -126,7 +126,7 @@
         <div class="prev-or-next">
           <div class="post-foot-next">
             
-              <a href="/2021/01/17/redtiger-forth/" target="_self">
+              <a href="/2021/01/20/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982019-secret-file/" target="_self">
                 <i class="iconfont icon-chevronleft"></i>
                 <span>Prev</span>
               </a>
@@ -135,16 +135,11 @@
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime" title="Update time"></i>
-              2021-01-20
+              2021-01-24
             </span>
             
           </div>
           <div class="post-foot-prev">
-            
-              <a href="/2021/01/24/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982019-LoveSQL/" target="_self">
-                <span>Next</span>
-                <i class="iconfont icon-chevronright"></i>
-              </a>
             
           </div>
         </div>
@@ -154,7 +149,7 @@
   <div class="post-catalog" id="catalog">
     <div class="title">Contents</div>
     <div class="catalog-content">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8D%B3%E5%8F%AF%E5%A4%A7%E6%8C%91%E6%88%982019-secret-file"><span class="toc-text">即可大挑战2019 secret file</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982019-LoveSQL"><span class="toc-text">极客大挑战2019_LoveSQL</span></a></li></ol>
     </div>
   </div>
 
