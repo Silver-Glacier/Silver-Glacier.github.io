@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   
   
-  <title>archive_a: 2021/1   | Hexo</title>
+  <title>极客大挑战php   | Hexo</title>
 
   
     <link rel="apple-touch-icon" href="/images/favicon.png">
@@ -85,211 +85,93 @@
 
 
       <div class="flex-container">
-        <!-- 归档页，展示本站所有文章，按照年份降序归类，url形式：https://yoursite/archives/ -->
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
 
-<!-- last: 按年份把文章分组，当前遍历到的年份 -->
-<!-- now: 当前遍历到的文章的发布年份 -->
 
-<div class="container archives">
-  <div class="post-list">
-    
-    
-      
-        <!-- 第一篇文章的发布年份呈现 -->
-        <div class="content-title">
-          <h2>
-            <span>2021</span>
-          </h2>
-        </div>
-      
-      <div class="post-item" title="极客大挑战php">
-        <div class="time-m-d">01-30</div>
-        <div class="title">
-          <a href="/2021/01/30/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98php/">
-            <span>极客大挑战php</span>
-          </a>
-        </div>
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">极客大挑战php</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime" title="Update time"></i>
+          2021-01-30
+        </span>
+        
       </div>
-    
-      
-      <div class="post-item" title="极客大挑战2019_Http">
-        <div class="time-m-d">01-24</div>
-        <div class="title">
-          <a href="/2021/01/24/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982019-Http/">
-            <span>极客大挑战2019_Http</span>
-          </a>
-        </div>
+      <div class="markdown-body">
+        <h1 id="极客大挑战-I-have-a-cat"><a href="#极客大挑战-I-have-a-cat" class="headerlink" title="极客大挑战 I have a cat"></a>极客大挑战 I have a cat</h1><p>首先打开题目，提示是备份<br><img src="https://i.loli.net/2021/01/30/Bq2sJx6aUZeHoMD.png"><br>那就直接开始扫</p>
+<p><img src="https://i.loli.net/2021/01/30/a4ln7rTxeR8XvfS.png" alt="扫到了"><br>那就下下来看一下</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">include</span> <span class="string">&#x27;flag.php&#x27;</span>;</span><br><span class="line"></span><br><span class="line">error_reporting(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Name</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$username</span> = <span class="string">&#x27;nonono&#x27;</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$password</span> = <span class="string">&#x27;yesyes&#x27;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$username</span>,<span class="variable">$password</span></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;username = <span class="variable">$username</span>;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;password = <span class="variable">$password</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__wakeup</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;username = <span class="string">&#x27;guest&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">$this</span>-&gt;password != <span class="number">100</span>) &#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">&quot;&lt;/br&gt;NO!!!hacker!!!&lt;/br&gt;&quot;</span>;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">&quot;You name is: &quot;</span>;</span><br><span class="line">            <span class="keyword">echo</span> <span class="keyword">$this</span>-&gt;username;<span class="keyword">echo</span> <span class="string">&quot;&lt;/br&gt;&quot;</span>;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">&quot;You password is: &quot;</span>;</span><br><span class="line">            <span class="keyword">echo</span> <span class="keyword">$this</span>-&gt;password;<span class="keyword">echo</span> <span class="string">&quot;&lt;/br&gt;&quot;</span>;</span><br><span class="line">            <span class="keyword">die</span>();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">$this</span>-&gt;username === <span class="string">&#x27;admin&#x27;</span>) &#123;</span><br><span class="line">            <span class="keyword">global</span> <span class="variable">$flag</span>;</span><br><span class="line">            <span class="keyword">echo</span> <span class="variable">$flag</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">&quot;&lt;/br&gt;hello my friend~~&lt;/br&gt;sorry i can&#x27;t give you the flag!&quot;</span>;</span><br><span class="line">            <span class="keyword">die</span>();</span><br><span class="line">         </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>源码都放上去了</p>
+<p>看了一下大佬的构造</p>
+<blockquote>
+<p> o是对象，s是字符串，i是数字<br>   因为是private修饰的所以要加上%00当空格<br>   构造:0:4:”Name”:2:{s:14:”%00Name%00username”;s:5:”admin”;s:14:”%00Name%00password”;i:100;}</p>
+</blockquote>
+<p><img src="https://i.loli.net/2021/01/30/sWxqE1hJGc3Bt84.png"></p>
+<blockquote>
+<p>得到flag！</p>
+</blockquote>
+
       </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2021/01/24/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982019-Http/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime" title="Update time"></i>
+              2021-01-30
+            </span>
+            
+          </div>
+          <div class="post-foot-prev">
+            
+          </div>
+        </div>
+      
+    </div>
     
-      
-      <div class="post-item" title="极客大挑战2019_LoveSQL1">
-        <div class="time-m-d">01-23</div>
-        <div class="title">
-          <a href="/2021/01/23/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982019-LoveSQL/">
-            <span>极客大挑战2019_LoveSQL1</span>
-          </a>
-        </div>
-      </div>
+  <div class="post-catalog" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-I-have-a-cat"><span class="toc-text">极客大挑战 I have a cat</span></a></li></ol>
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
     
-      
-      <div class="post-item" title="极客大挑战2019_secret_file">
-        <div class="time-m-d">01-20</div>
-        <div class="title">
-          <a href="/2021/01/20/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982019-secret-file/">
-            <span>极客大挑战2019_secret_file</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="redtiger_forth">
-        <div class="time-m-d">01-17</div>
-        <div class="title">
-          <a href="/2021/01/17/redtiger-forth/">
-            <span>redtiger_forth</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="redtiger_third">
-        <div class="time-m-d">01-16</div>
-        <div class="title">
-          <a href="/2021/01/16/redtiger-third/">
-            <span>redtiger_third</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="XCTF-4th-CyberEarth">
-        <div class="time-m-d">01-14</div>
-        <div class="title">
-          <a href="/2021/01/14/XCTF-4th-CyberEarth/">
-            <span>XCTF-4th-CyberEarth</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="XCTF-4th-WHCTF-2017">
-        <div class="time-m-d">01-09</div>
-        <div class="title">
-          <a href="/2021/01/09/XCTF-4th-WHCTF-2017/">
-            <span>XCTF-4th-WHCTF-2017</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="网鼎杯2018">
-        <div class="time-m-d">01-08</div>
-        <div class="title">
-          <a href="/2021/01/08/%E7%BD%91%E9%BC%8E%E6%9D%AF2018/">
-            <span>网鼎杯2018</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="csaw-ctf-2016-quals">
-        <div class="time-m-d">01-07</div>
-        <div class="title">
-          <a href="/2021/01/07/csaw-ctf-2016-quals/">
-            <span>csaw-ctf-2016-quals</span>
-          </a>
-        </div>
-      </div>
-    
-      
-        <!-- 后续文章的发布年份呈现 -->
-        <div class="content-title">
-          <h2>
-            <span>2020</span>
-          </h2>
-        </div>
-      
-      <div class="post-item" title="TokyoWesterns">
-        <div class="time-m-d">12-27</div>
-        <div class="title">
-          <a href="/2020/12/27/TokyoWesterns/">
-            <span>TokyoWesterns</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="护网杯2018">
-        <div class="time-m-d">12-26</div>
-        <div class="title">
-          <a href="/2020/12/26/%E6%8A%A4%E7%BD%91%E6%9D%AF2018/">
-            <span>护网杯2018</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="xtctf">
-        <div class="time-m-d">12-24</div>
-        <div class="title">
-          <a href="/2020/12/24/xtctf/">
-            <span>xtctf</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="XCTF 4th-CyberEarth">
-        <div class="time-m-d">12-19</div>
-        <div class="title">
-          <a href="/2020/12/19/XCTF%204th-CyberEarth/">
-            <span>XCTF 4th-CyberEarth</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="强网杯 2019 web题">
-        <div class="time-m-d">12-18</div>
-        <div class="title">
-          <a href="/2020/12/18/%E5%BC%BA%E7%BD%91%E6%9D%AF%202019%20web%E9%A2%98/">
-            <span>强网杯 2019 web题</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="攻防世界web高手区003">
-        <div class="time-m-d">12-17</div>
-        <div class="title">
-          <a href="/2020/12/17/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cweb%E9%AB%98%E6%89%8B%E5%8C%BA003/">
-            <span>攻防世界web高手区003</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="The first try">
-        <div class="time-m-d">12-17</div>
-        <div class="title">
-          <a href="/2020/12/17/The%20first%20try/">
-            <span>The first try</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="Hello World">
-        <div class="time-m-d">12-16</div>
-        <div class="title">
-          <a href="/2020/12/16/hello-world/">
-            <span>Hello World</span>
-          </a>
-        </div>
+      <div class="comments-container">
+        
+
+
+
+
+
       </div>
     
   </div>
-</div>
+
 
         <div class="footer">
   <div class="social">
