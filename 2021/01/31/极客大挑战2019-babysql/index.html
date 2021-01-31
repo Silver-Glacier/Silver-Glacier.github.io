@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   
   
-  <title>极客大挑战2019-upload   | Hexo</title>
+  <title>极客大挑战2019-babysql   | Hexo</title>
 
   
     <link rel="apple-touch-icon" href="/images/favicon.png">
@@ -100,25 +100,24 @@
   <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
   <div class="container post-details" id="post-details">
     <div class="post-content">
-      <div class="post-title">极客大挑战2019-upload</div>
+      <div class="post-title">极客大挑战2019-babysql</div>
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime" title="Update time"></i>
-          2021-01-30
+          2021-01-31
         </span>
         
       </div>
       <div class="markdown-body">
-        <h1 id="极客大挑战2019-upload"><a href="#极客大挑战2019-upload" class="headerlink" title="极客大挑战2019 upload"></a>极客大挑战2019 upload</h1><p>首先打开题目，还是一样的上传🐎<br><img src="https://i.loli.net/2021/01/30/VLSwGjeiYyrUJHO.png"></p>
-<p>一开始直接用php写的🐎好像被它直接过滤掉了，那么我们就用js来写</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script language=<span class="string">&quot;php&quot;</span>&gt;<span class="keyword">eval</span>(<span class="variable">$_REQUEST</span>[shell])&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-<p>好了</p>
-<p><img src="https://i.loli.net/2021/01/30/3LEXz5xheWQZgfs.png" alt="用burp suite抓包"><br>把🐎先传上去</p>
-<p>这里是学的新知识<br><img src="https://i.loli.net/2021/01/30/pUkbrhlfnuGN6g4.png"><br>先把格式改成phtml，来越过第一个检测，后面在🐎前面加上GIF89a? 构成图片欺骗</p>
-<p><img src="https://i.loli.net/2021/01/30/HtzoAerMgClfjZV.png" alt="上传成功"></p>
-<p>接下来就直接蚁剑连上去就好了</p>
-<p><img src="https://i.loli.net/2021/01/30/AsXk2Rw4lhO89TS.png"><br>这里的url我还找了一会，结果是在/upload里面</p>
-<p><img src="https://i.loli.net/2021/01/30/I4OK95rdHcSoWxv.png"></p>
+        <h1 id="极客大挑战2019-babysql"><a href="#极客大挑战2019-babysql" class="headerlink" title="极客大挑战2019-babysql"></a>极客大挑战2019-babysql</h1><p>首先打开题目,又是一道平平无奇的sql注入<br><img src="https://i.loli.net/2021/01/31/3BrPd1lCintpOFL.png"></p>
+<p>首先先试一下万能密码，但是好像不行</p>
+<p>然后测试一下会不会有sql报错<br><img src="https://i.loli.net/2021/01/31/pt1J4QIkyjzCRGY.png"><br><img src="https://i.loli.net/2021/01/31/f4mQXYv1zn2lUAP.png" alt="有报错"></p>
+<p>还是按照常理select一下，但是这个也报错了<br>有点不知道为什么，查了一下才知道这是双写注入<br><img src="https://i.loli.net/2021/01/31/AC2THuKBe8Jri5k.png"></p>
+<p>那稍微改一下payload<br><img src="https://i.loli.net/2021/01/31/z1SOgMapLmYxwrc.png" alt="成功的显回了"></p>
+<p>接下来需要做的就是像往常一样的sql注入了，先爆database<br><img src="https://i.loli.net/2021/01/31/cpimtZ6UlN31yxG.png" alt="再爆table_shcema"></p>
+<p><img src="https://i.loli.net/2021/01/31/k2YDHW6SgVeK7dU.png" alt="接着爆table_name"></p>
+<p><img src="https://i.loli.net/2021/01/31/U2VHxiL7rqCeSYP.png" alt="再爆column_name"><br>后面接着继续感觉没什么结果啊，后来才发现自己的一个坏习惯，不喜欢group_concat<br>于是回过头来再爆column_name<br><img src="https://i.loli.net/2021/01/31/3PCN7vsHzrmI4jw.png" alt="这次把column_name给爆全了"></p>
+<p>最后直接爆出password就好了<br><img src="https://i.loli.net/2021/01/31/3cbaivxCtfHjwFM.png"></p>
 <blockquote>
 <p>得到flag！</p>
 </blockquote>
@@ -128,7 +127,7 @@
         <div class="prev-or-next">
           <div class="post-foot-next">
             
-              <a href="/2021/01/28/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982019-php/" target="_self">
+              <a href="/2021/01/30/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982019-upload/" target="_self">
                 <i class="iconfont icon-chevronleft"></i>
                 <span>Prev</span>
               </a>
@@ -137,16 +136,11 @@
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime" title="Update time"></i>
-              2021-01-30
+              2021-01-31
             </span>
             
           </div>
           <div class="post-foot-prev">
-            
-              <a href="/2021/01/31/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982019-babysql/" target="_self">
-                <span>Next</span>
-                <i class="iconfont icon-chevronright"></i>
-              </a>
             
           </div>
         </div>
@@ -156,7 +150,7 @@
   <div class="post-catalog" id="catalog">
     <div class="title">Contents</div>
     <div class="catalog-content">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982019-upload"><span class="toc-text">极客大挑战2019 upload</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982019-babysql"><span class="toc-text">极客大挑战2019-babysql</span></a></li></ol>
     </div>
   </div>
 
