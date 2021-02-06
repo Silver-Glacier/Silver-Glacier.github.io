@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title>极客大挑战2019-buy_flag</title>
+      <link href="2021/02/04/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982019-buy-flag/"/>
+      <url>2021/02/04/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982019-buy-flag/</url>
+      
+        <content type="html"><![CDATA[<h1 id="极客大挑战2019-buy-flag"><a href="#极客大挑战2019-buy-flag" class="headerlink" title="极客大挑战2019-buy_flag"></a>极客大挑战2019-buy_flag</h1><p>首先打开题目，感觉这页面做的还挺好<br><img src="https://i.loli.net/2021/02/06/Tv4bFYsgQOhNIku.png"></p><p>发现了一个buy.php，进去看一下<br><img src="https://i.loli.net/2021/02/06/ZinqNfLhDFPxlHE.png" alt="随便扫一眼"><br>这里好像有点提示</p><p>打开源码看一下，有注释掉的内容<br><img src="https://i.loli.net/2021/02/06/QGyo3lnsk61hCiF.png"></p><p>这个就是要把password写成404，但又不能全是数字，直接构造成404a，这个越过很简单</p><p>先抓个包看一下<br><img src="https://i.loli.net/2021/02/06/K8LCpFAechu7vYa.png"><br>要求要成为他的学生，这可怎么办，突然发现cookie里面有一个user=0，感觉有点奇怪，把0改成1再来看</p><p>现在就对了，接下来就是输入password了<br><img src="https://i.loli.net/2021/02/06/dHXmYrtq7BzDc32.png"></p><p><img src="https://i.loli.net/2021/02/06/gTzHUOvC7EPo8yK.png" alt="这个passwrod成功越过了"><br>最后就是money了</p><p><img src="https://i.loli.net/2021/02/06/hJgOukx68Iovedm.png" alt="它说money的数字长度太长了"><br>我看了网上一些大佬的wp，知道可以改成money[]来越过<br>但是我当时做的时候，就直接把它改成了科学计数法</p><p><img src="https://i.loli.net/2021/02/06/rJU8I4iMGLDAO6Z.png"></p><blockquote><p>得到flag！</p></blockquote>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>极客大挑战2019-babysql</title>
       <link href="2021/01/31/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982019-babysql/"/>
       <url>2021/01/31/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982019-babysql/</url>
