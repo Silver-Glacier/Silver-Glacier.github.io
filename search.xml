@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title>极客大挑战2019hard_sql</title>
+      <link href="2021/02/07/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982019hard-sql/"/>
+      <url>2021/02/07/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982019hard-sql/</url>
+      
+        <content type="html"><![CDATA[<h1 id="极客大挑战2019hard-sql"><a href="#极客大挑战2019hard-sql" class="headerlink" title="极客大挑战2019hard sql"></a>极客大挑战2019hard sql</h1><p>首先打开题目，先判断一下是什么注入，但是过滤掉了很多东西，这次新学会了一个操作，用字典去爆破sql，来看它过滤掉了哪些<br><img src="https://i.loli.net/2021/02/07/wVvT2d4Cbynqjg6.png"><br>这个过滤掉了很多，那么就可能是报错注入了，因为它好像没有过滤掉updatexml</p><p>那我们试一下<br><img src="https://i.loli.net/2021/02/07/rkqzPCYHuJNn9SZ.png"></p><p>确实是报错注入，那我们就接着爆tables<br><img src="https://i.loli.net/2021/02/07/uZNOi4HdKLeCAvT.png"></p><p>继续爆<br><img src="https://i.loli.net/2021/02/07/L3oXdbgDtrhfNOM.png"></p><p>爆出flag了，但是好像这个flag不完整，也不知道该怎么办<br><img src="https://i.loli.net/2021/02/07/OXYh78uHrdte1Gi.png"><br>看了大佬的wp才知道，可以left，right一下来把它全部爆出来</p><p><img src="https://i.loli.net/2021/02/07/QTEmtVawJ3nFd9Z.png" alt="left"><br><img src="https://i.loli.net/2021/02/07/9QaP1O3LEBUjnTw.png" alt="right"></p><blockquote><p>得到flag！</p></blockquote>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>极客大挑战2019-buy_flag</title>
       <link href="2021/02/04/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982019-buy-flag/"/>
       <url>2021/02/04/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982019-buy-flag/</url>
