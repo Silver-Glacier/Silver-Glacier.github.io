@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title>RoarCTF2019-EasyJava</title>
+      <link href="2021/02/12/RoarCTF2019-EasyJava/"/>
+      <url>2021/02/12/RoarCTF2019-EasyJava/</url>
+      
+        <content type="html"><![CDATA[<h1 id="RoarCTF2019-Easy-Java"><a href="#RoarCTF2019-Easy-Java" class="headerlink" title="RoarCTF2019 Easy Java"></a>RoarCTF2019 Easy Java</h1><p>首先打开题目<br><img src="https://i.loli.net/2021/02/12/gf1aFj5vrkZ9oHm.png"><br>试一下sql注入，好像不行</p><p><img src="https://i.loli.net/2021/02/12/Dh5LEzUCV62xsnG.png" alt="无论注入什么都是这个结果"></p><p>login下面有一个help，点开看一下<br><img src="https://i.loli.net/2021/02/12/FCrg82TzKhjQNe4.png"><br>抓包看一下吧<br>把GET改成POST<br>加上filename<br><img src="https://i.loli.net/2021/02/12/Jxy5GFaAdlEsKuh.png"></p><p>学习的新知识：</p><blockquote><p>WEB-INF主要包含一下文件或目录:<br>/WEB-INF/web.xml：Web应用程序配置文件，描述了 servlet 和其他的应用组件配置及命名规则。<br>/WEB-INF/classes/：含了站点所有用的 class 文件，包括 servlet class 和非servlet class，他们不能包含在 .jar文件中<br>/WEB-INF/lib/：存放web应用需要的各种JAR文件，放置仅在这个应用中要求使用的jar文件,如数据库驱动jar文件<br>/WEB-INF/src/：源码目录，按照包名结构放置各个java文件。<br>/WEB-INF/database.properties：数据库配置文件<br>漏洞检测以及利用方法：通过找到web.xml文件，推断class文件的路径，最后直接class文件，在通过反编译class文件，得到网站源码</p></blockquote><p>写出payload<br><img src="https://i.loli.net/2021/02/12/pEGKV9Ax3Cw1PLR.png"></p><p>下载下来一个class文件<br>里面有一个类似于base64加密的东西，解码出来<br><img src="https://i.loli.net/2021/02/12/bXrPm3oVJESUvac.png"></p><blockquote><p>得到flag！</p></blockquote>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>MRCTF-Ez_bypass</title>
       <link href="2021/02/07/MRCTF-Ez-bypass/"/>
       <url>2021/02/07/MRCTF-Ez-bypass/</url>

@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   
   
-  <title>archive_a: 2021/2   | Hexo</title>
+  <title>RoarCTF2019-EasyJava   | Hexo</title>
 
   
     <link rel="apple-touch-icon" href="/images/favicon.png">
@@ -85,271 +85,93 @@
 
 
       <div class="flex-container">
-        <!-- 归档页，展示本站所有文章，按照年份降序归类，url形式：https://yoursite/archives/ -->
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
 
-<!-- last: 按年份把文章分组，当前遍历到的年份 -->
-<!-- now: 当前遍历到的文章的发布年份 -->
 
-<div class="container archives">
-  <div class="post-list">
-    
-    
-      
-        <!-- 第一篇文章的发布年份呈现 -->
-        <div class="content-title">
-          <h2>
-            <span>2021</span>
-          </h2>
-        </div>
-      
-      <div class="post-item" title="RoarCTF2019-EasyJava">
-        <div class="time-m-d">02-12</div>
-        <div class="title">
-          <a href="/2021/02/12/RoarCTF2019-EasyJava/">
-            <span>RoarCTF2019-EasyJava</span>
-          </a>
-        </div>
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">RoarCTF2019-EasyJava</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime" title="Update time"></i>
+          2021-02-12
+        </span>
+        
       </div>
-    
-      
-      <div class="post-item" title="MRCTF-Ez_bypass">
-        <div class="time-m-d">02-07</div>
-        <div class="title">
-          <a href="/2021/02/07/MRCTF-Ez-bypass/">
-            <span>MRCTF-Ez_bypass</span>
-          </a>
-        </div>
+      <div class="markdown-body">
+        <h1 id="RoarCTF2019-Easy-Java"><a href="#RoarCTF2019-Easy-Java" class="headerlink" title="RoarCTF2019 Easy Java"></a>RoarCTF2019 Easy Java</h1><p>首先打开题目<br><img src="https://i.loli.net/2021/02/12/gf1aFj5vrkZ9oHm.png"><br>试一下sql注入，好像不行</p>
+<p><img src="https://i.loli.net/2021/02/12/Dh5LEzUCV62xsnG.png" alt="无论注入什么都是这个结果"></p>
+<p>login下面有一个help，点开看一下<br><img src="https://i.loli.net/2021/02/12/FCrg82TzKhjQNe4.png"><br>抓包看一下吧<br>把GET改成POST<br>加上filename<br><img src="https://i.loli.net/2021/02/12/Jxy5GFaAdlEsKuh.png"></p>
+<p>学习的新知识：</p>
+<blockquote>
+<p>WEB-INF主要包含一下文件或目录:<br>/WEB-INF/web.xml：Web应用程序配置文件，描述了 servlet 和其他的应用组件配置及命名规则。<br>/WEB-INF/classes/：含了站点所有用的 class 文件，包括 servlet class 和非servlet class，他们不能包含在 .jar文件中<br>/WEB-INF/lib/：存放web应用需要的各种JAR文件，放置仅在这个应用中要求使用的jar文件,如数据库驱动jar文件<br>/WEB-INF/src/：源码目录，按照包名结构放置各个java文件。<br>/WEB-INF/database.properties：数据库配置文件<br>漏洞检测以及利用方法：通过找到web.xml文件，推断class文件的路径，最后直接class文件，在通过反编译class文件，得到网站源码</p>
+</blockquote>
+<p>写出payload<br><img src="https://i.loli.net/2021/02/12/pEGKV9Ax3Cw1PLR.png"></p>
+<p>下载下来一个class文件<br>里面有一个类似于base64加密的东西，解码出来<br><img src="https://i.loli.net/2021/02/12/bXrPm3oVJESUvac.png"></p>
+<blockquote>
+<p>得到flag！</p>
+</blockquote>
+
       </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2021/02/07/MRCTF-Ez-bypass/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime" title="Update time"></i>
+              2021-02-12
+            </span>
+            
+          </div>
+          <div class="post-foot-prev">
+            
+          </div>
+        </div>
+      
+    </div>
     
-      
-      <div class="post-item" title="极客大挑战2019hard_sql">
-        <div class="time-m-d">02-06</div>
-        <div class="title">
-          <a href="/2021/02/06/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982019hard-sql/">
-            <span>极客大挑战2019hard_sql</span>
-          </a>
-        </div>
-      </div>
+  <div class="post-catalog" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#RoarCTF2019-Easy-Java"><span class="toc-text">RoarCTF2019 Easy Java</span></a></li></ol>
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
     
-      
-      <div class="post-item" title="极客大挑战2019-buy_flag">
-        <div class="time-m-d">02-04</div>
-        <div class="title">
-          <a href="/2021/02/04/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982019-buy-flag/">
-            <span>极客大挑战2019-buy_flag</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="极客大挑战2019-babysql">
-        <div class="time-m-d">01-31</div>
-        <div class="title">
-          <a href="/2021/01/31/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982019-babysql/">
-            <span>极客大挑战2019-babysql</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="极客大挑战2019-upload">
-        <div class="time-m-d">01-30</div>
-        <div class="title">
-          <a href="/2021/01/30/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982019-upload/">
-            <span>极客大挑战2019-upload</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="极客大挑战2019-php">
-        <div class="time-m-d">01-28</div>
-        <div class="title">
-          <a href="/2021/01/28/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982019-php/">
-            <span>极客大挑战2019-php</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="极客大挑战2019_Http">
-        <div class="time-m-d">01-24</div>
-        <div class="title">
-          <a href="/2021/01/24/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982019-Http/">
-            <span>极客大挑战2019_Http</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="极客大挑战2019_LoveSQL1">
-        <div class="time-m-d">01-23</div>
-        <div class="title">
-          <a href="/2021/01/23/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982019-LoveSQL/">
-            <span>极客大挑战2019_LoveSQL1</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="极客大挑战2019_secret_file">
-        <div class="time-m-d">01-20</div>
-        <div class="title">
-          <a href="/2021/01/20/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982019-secret-file/">
-            <span>极客大挑战2019_secret_file</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="redtiger_forth">
-        <div class="time-m-d">01-17</div>
-        <div class="title">
-          <a href="/2021/01/17/redtiger-forth/">
-            <span>redtiger_forth</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="redtiger_third">
-        <div class="time-m-d">01-16</div>
-        <div class="title">
-          <a href="/2021/01/16/redtiger-third/">
-            <span>redtiger_third</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="XCTF-4th-CyberEarth">
-        <div class="time-m-d">01-14</div>
-        <div class="title">
-          <a href="/2021/01/14/XCTF-4th-CyberEarth/">
-            <span>XCTF-4th-CyberEarth</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="XCTF-4th-WHCTF-2017">
-        <div class="time-m-d">01-09</div>
-        <div class="title">
-          <a href="/2021/01/09/XCTF-4th-WHCTF-2017/">
-            <span>XCTF-4th-WHCTF-2017</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="网鼎杯2018">
-        <div class="time-m-d">01-08</div>
-        <div class="title">
-          <a href="/2021/01/08/%E7%BD%91%E9%BC%8E%E6%9D%AF2018/">
-            <span>网鼎杯2018</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="csaw-ctf-2016-quals">
-        <div class="time-m-d">01-07</div>
-        <div class="title">
-          <a href="/2021/01/07/csaw-ctf-2016-quals/">
-            <span>csaw-ctf-2016-quals</span>
-          </a>
-        </div>
-      </div>
-    
-      
-        <!-- 后续文章的发布年份呈现 -->
-        <div class="content-title">
-          <h2>
-            <span>2020</span>
-          </h2>
-        </div>
-      
-      <div class="post-item" title="TokyoWesterns">
-        <div class="time-m-d">12-27</div>
-        <div class="title">
-          <a href="/2020/12/27/TokyoWesterns/">
-            <span>TokyoWesterns</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="护网杯2018">
-        <div class="time-m-d">12-26</div>
-        <div class="title">
-          <a href="/2020/12/26/%E6%8A%A4%E7%BD%91%E6%9D%AF2018/">
-            <span>护网杯2018</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="xtctf">
-        <div class="time-m-d">12-24</div>
-        <div class="title">
-          <a href="/2020/12/24/xtctf/">
-            <span>xtctf</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="XCTF 4th-CyberEarth">
-        <div class="time-m-d">12-19</div>
-        <div class="title">
-          <a href="/2020/12/19/XCTF%204th-CyberEarth/">
-            <span>XCTF 4th-CyberEarth</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="强网杯 2019 web题">
-        <div class="time-m-d">12-18</div>
-        <div class="title">
-          <a href="/2020/12/18/%E5%BC%BA%E7%BD%91%E6%9D%AF%202019%20web%E9%A2%98/">
-            <span>强网杯 2019 web题</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="攻防世界web高手区003">
-        <div class="time-m-d">12-17</div>
-        <div class="title">
-          <a href="/2020/12/17/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cweb%E9%AB%98%E6%89%8B%E5%8C%BA003/">
-            <span>攻防世界web高手区003</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="The first try">
-        <div class="time-m-d">12-17</div>
-        <div class="title">
-          <a href="/2020/12/17/The%20first%20try/">
-            <span>The first try</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="Hello World">
-        <div class="time-m-d">12-16</div>
-        <div class="title">
-          <a href="/2020/12/16/hello-world/">
-            <span>Hello World</span>
-          </a>
-        </div>
+      <div class="comments-container">
+        
+
+
+
+
+
       </div>
     
   </div>
-</div>
+
 
         <div class="footer">
   <div class="social">
