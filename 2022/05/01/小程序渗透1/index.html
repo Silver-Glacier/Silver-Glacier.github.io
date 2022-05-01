@@ -109,7 +109,7 @@
         
       </div>
       <div class="markdown-body">
-        <h1 id="微信小程序渗透测试（抓包）"><a href="#微信小程序渗透测试（抓包）" class="headerlink" title="微信小程序渗透测试（抓包）"></a>微信小程序渗透测试（抓包）</h1><p>这是基于安卓7.0之前，7.0之后看这里</p>
+        <h1 id="微信小程序渗透测试（抓包）"><a href="#微信小程序渗透测试（抓包）" class="headerlink" title="微信小程序渗透测试（抓包）"></a>微信小程序渗透测试（抓包）</h1><p>这是基于安卓7.0之前<br><a href="https://silver-glacier.github.io/2022/05/01/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%B8%97%E9%80%8F2/">7.0之后看这里</a></p>
 <p>首先准备好一个安卓模拟器，我在这里使用的是夜神模拟器</p>
 <p><img src="https://s2.loli.net/2022/05/01/KMcdE8il9Yu6NPW.png"><br>首先切换到root模式</p>
 <p>给burpsuite加上本地IP的端口监听，如果是在虚拟机上实现，则加上对应的IP端口<br><img src="https://s2.loli.net/2022/05/01/gdYsDOaTp1z6tJn.png"></p>
@@ -118,7 +118,7 @@
 <p>从浏览器打开相应的IP以及端口，下载相应的burpsuite的证书<br>（这里只是为了下载相应的证书，也可以从本地下载下来，再放入到模拟器中）<br><img src="https://s2.loli.net/2022/05/01/usxnIrJd4vCVqNA.png"></p>
 <p>下载完成后，打开模拟器自带的文件管理系统，下载的证书将在download中<br><strong>这里注意！下载下来的证书很可能是灰色的，需要将后缀改为crt，der后缀文件可能存在识别错误的问题</strong><br><strong>其他问题：可能存在证书在download目录下也无法正常导入，需要将其移入其他目录（本人再这里未遇到该问题）</strong><br><img src="https://s2.loli.net/2022/05/01/lI4A7bcEVMZ2Nso.png"></p>
 <p>成功导入证书后就完成了<br>我们打开百度测试一下<br><img src="https://s2.loli.net/2022/05/01/IiamvHD4TNAMSZP.png" alt="成功抓包"></p>
-<p>PS：如果提示证书安全问题看这里</p>
+<p><a href="https://silver-glacier.github.io/2022/05/01/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%B8%97%E9%80%8F2/">如果提示证书安全问题看这里</a></p>
 
       </div>
       
