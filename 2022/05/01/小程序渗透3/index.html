@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   
   
-  <title>Hexo</title>
+  <title>小程序渗透3   | Hexo</title>
 
   
     <link rel="apple-touch-icon" href="/images/favicon.png">
@@ -100,7 +100,7 @@
   <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
   <div class="container post-details" id="post-details">
     <div class="post-content">
-      <div class="post-title"></div>
+      <div class="post-title">小程序渗透3</div>
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime" title="Update time"></i>
@@ -109,7 +109,17 @@
         
       </div>
       <div class="markdown-body">
-        
+        <h1 id="微信小程序渗透测试（反编译）"><a href="#微信小程序渗透测试（反编译）" class="headerlink" title="微信小程序渗透测试（反编译）"></a>微信小程序渗透测试（反编译）</h1><p>代理的配置，成功抓包后，接下来就是对微信小程序的源码分析<br>首先下载微信<br>（注意：如果现在仍然挂着代理，将会无法正常下载微信）</p>
+<p>我们在模拟器里登录微信，随便选择一个小程序打开</p>
+<p>打开文件管理器，在会生成一个md5加密命名的文件夹（如果打开微信小程序过多，同时有多个文件夹不容易识别的情况，可以选择把文件夹所有内容删除掉，再去重新打开微信小程序，就会得到唯一一个MD5加密命名的文件夹）<br>在如图所示的路径下，能看到该小程序的文件夹<br><img src="https://s2.loli.net/2022/05/02/rkYKtlQaqmP8UH1.png"></p>
+<p>一般都在/appbrand/pkg目录下，会看到带有后缀为wxapkg的文件<br>需要将其一一拷贝到本地主机下<br>注意：将整个文件夹复制大概率会使得文件管理系统停止工作而失败，所以需要一个一个文件的拷贝（确实麻烦！）</p>
+<p>在夜神模拟器中，打开文件助手，找到模拟器与本地主机的共享文件夹<br><img src="https://s2.loli.net/2022/05/02/9oGFHnSsMeY4lUu.png"></p>
+<p>开始拷贝文件（图形化交互确实慢。。）<br><img src="https://s2.loli.net/2022/05/02/kaIZgyobT6QuKth.png"></p>
+<p>拷贝完文件之后，就是反编译了<br><a target="_blank" rel="noopener" href="https://github.com/ezshine/wxapkg-convertor/releases"> GUI 界面的反编译工具</a></p>
+<p>将文件拖入即可<br><img src="https://s2.loli.net/2022/05/02/Zng49N3rG5YmhQU.png"></p>
+<p>所有的wxapkg文件编译完成<br><img src="https://s2.loli.net/2022/05/02/4oEBJD6SzH2LPuC.png"></p>
+<p>接下来就是源码审计了<br><img src="https://s2.loli.net/2022/05/02/Shz3byPwKoZHd2l.png"></p>
+
       </div>
       
         <div class="prev-or-next">
@@ -135,6 +145,18 @@
       
     </div>
     
+  <div class="post-catalog" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%EF%BC%88%E5%8F%8D%E7%BC%96%E8%AF%91%EF%BC%89"><span class="toc-text">微信小程序渗透测试（反编译）</span></a></li></ol>
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
 
     
       <div class="comments-container">
