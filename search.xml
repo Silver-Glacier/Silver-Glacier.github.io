@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title>记一次csdn的xss漏洞</title>
+      <link href="2022/07/06/%E8%AE%B0%E4%B8%80%E6%AC%A1csdn%E7%9A%84xss%E6%BC%8F%E6%B4%9E/"/>
+      <url>2022/07/06/%E8%AE%B0%E4%B8%80%E6%AC%A1csdn%E7%9A%84xss%E6%BC%8F%E6%B4%9E/</url>
+      
+        <content type="html"><![CDATA[<p><img src="https://s2.loli.net/2022/07/06/uzAU24HoCVOB1kS.png"><br>csdn存在“猜你想搜”，并将其值存在placeholder中</p><p>在搜索xss相关信息后，将会推荐，</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;img src=<span class="number">1</span> onerror=alert(<span class="number">1</span>)&gt;</span><br></pre></td></tr></table></figure><p>如下图所示<br><img src="https://s2.loli.net/2022/07/06/mvx5pW2u6fUTLi3.png"><br>xss的执行语句被放到了placeholder中，且没有过滤</p><p>存在xss漏洞，成果如下图所示</p><p><img src="https://s2.loli.net/2022/07/06/BAbNqDlcxWEdgFK.png"></p><blockquote><p>成果<br><a href="/files/csdn_xss.mp4">成果演示</a></p></blockquote>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>小程序渗透3</title>
       <link href="2022/05/01/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%B8%97%E9%80%8F3/"/>
       <url>2022/05/01/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%B8%97%E9%80%8F3/</url>
