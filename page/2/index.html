@@ -145,6 +145,76 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://silver-glacier.github.io/2021/01/31/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982019-babysql/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Glacier">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/31/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982019-babysql/" class="post-title-link" itemprop="url">极客大挑战2019-babysql</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-01-31 21:01:33 / Modified: 21:11:26" itemprop="dateCreated datePublished" datetime="2021-01-31T21:01:33+08:00">2021-01-31</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="极客大挑战2019-babysql"><a href="#极客大挑战2019-babysql" class="headerlink" title="极客大挑战2019-babysql"></a>极客大挑战2019-babysql</h1><p>首先打开题目,又是一道平平无奇的sql注入<br><img src="https://i.loli.net/2021/01/31/3BrPd1lCintpOFL.png"></p>
+<p>首先先试一下万能密码，但是好像不行</p>
+<p>然后测试一下会不会有sql报错<br><img src="https://i.loli.net/2021/01/31/pt1J4QIkyjzCRGY.png"><br><img src="https://i.loli.net/2021/01/31/f4mQXYv1zn2lUAP.png" alt="有报错"></p>
+<p>还是按照常理select一下，但是这个也报错了<br>有点不知道为什么，查了一下才知道这是双写注入<br><img src="https://i.loli.net/2021/01/31/AC2THuKBe8Jri5k.png"></p>
+<p>那稍微改一下payload<br><img src="https://i.loli.net/2021/01/31/z1SOgMapLmYxwrc.png" alt="成功的显回了"></p>
+<p>接下来需要做的就是像往常一样的sql注入了，先爆database<br><img src="https://i.loli.net/2021/01/31/cpimtZ6UlN31yxG.png" alt="再爆table_shcema"></p>
+<p><img src="https://i.loli.net/2021/01/31/k2YDHW6SgVeK7dU.png" alt="接着爆table_name"></p>
+<p><img src="https://i.loli.net/2021/01/31/U2VHxiL7rqCeSYP.png" alt="再爆column_name"><br>后面接着继续感觉没什么结果啊，后来才发现自己的一个坏习惯，不喜欢group_concat<br>于是回过头来再爆column_name<br><img src="https://i.loli.net/2021/01/31/3PCN7vsHzrmI4jw.png" alt="这次把column_name给爆全了"></p>
+<p>最后直接爆出password就好了<br><img src="https://i.loli.net/2021/01/31/3cbaivxCtfHjwFM.png"></p>
+<blockquote>
+<p>得到flag！</p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://silver-glacier.github.io/2021/01/30/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982019-upload/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -802,91 +872,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://silver-glacier.github.io/2021/01/08/%E7%BD%91%E9%BC%8E%E6%9D%AF2018/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Glacier">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/08/%E7%BD%91%E9%BC%8E%E6%9D%AF2018/" class="post-title-link" itemprop="url">网鼎杯2018</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-01-08 14:18:31" itemprop="dateCreated datePublished" datetime="2021-01-08T14:18:31+08:00">2021-01-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-01-10 22:54:09" itemprop="dateModified" datetime="2021-01-10T22:54:09+08:00">2021-01-10</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="网鼎杯-2018-web题-fakebook"><a href="#网鼎杯-2018-web题-fakebook" class="headerlink" title="网鼎杯 2018 web题 fakebook"></a>网鼎杯 2018 web题 fakebook</h1><p><img src="https://i.loli.net/2021/01/03/fsdrYZWDb4NTeuh.png" alt="首先看题目"><br>随便注册一个账号</p>
-<p><img src="https://i.loli.net/2021/01/03/d1c3VwsQrhOKzqD.png" alt="查看源码"><br>感觉是sql注入</p>
-<p><img src="https://i.loli.net/2021/01/03/Jo8WurMy7GUSp1x.png" alt="加个&#39;试一下报错"><br>确实是sql注入</p>
-<p><img src="https://i.loli.net/2021/01/03/b2S7483tiPqoFhC.png" alt="用orderby看一下列数"><br>有4列</p>
-<p><img src="https://i.loli.net/2021/01/03/ru9xsfOEVIn2D6G.png" alt="试一下select"></p>
-<p>发现好像没有成功，是不是把空格过滤了，换成++再试一下<br><img src="https://i.loli.net/2021/01/03/gMFxDB6suSVebom.png" alt="换成++成功了"></p>
-<p>开始sql注入的基本步骤<br><img src="https://i.loli.net/2021/01/03/w5oUpLNPJGWxtXA.png"></p>
-<p>去看一下data<br><img src="https://i.loli.net/2021/01/03/ElnyCGoxRvH29bi.png"></p>
-<p>最后得到的结果好像有点不一样<br><img src="https://i.loli.net/2021/01/03/JbLWSENzjCBl39H.png"></p>
-<p>查看robots.txt<br><img src="https://i.loli.net/2021/01/03/36vmxMgDeU1GKCI.png"></p>
-<p>查看源码</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserInfo</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$name</span> = <span class="string">&quot;&quot;</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$age</span> = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$blog</span> = <span class="string">&quot;&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$name</span>, <span class="variable">$age</span>, <span class="variable">$blog</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;name = <span class="variable">$name</span>;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;age = (<span class="keyword">int</span>)<span class="variable">$age</span>;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;blog = <span class="variable">$blog</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">get</span>(<span class="params"><span class="variable">$url</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="variable">$ch</span> = curl_init();</span><br><span class="line"></span><br><span class="line">        curl_setopt(<span class="variable">$ch</span>, CURLOPT_URL, <span class="variable">$url</span>);</span><br><span class="line">        curl_setopt(<span class="variable">$ch</span>, CURLOPT_RETURNTRANSFER, <span class="number">1</span>);</span><br><span class="line">        <span class="variable">$output</span> = curl_exec(<span class="variable">$ch</span>);</span><br><span class="line">        <span class="variable">$httpCode</span> = curl_getinfo(<span class="variable">$ch</span>, CURLINFO_HTTP_CODE);</span><br><span class="line">        <span class="keyword">if</span>(<span class="variable">$httpCode</span> == <span class="number">404</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">404</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        curl_close(<span class="variable">$ch</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="variable">$output</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getBlogContents</span> (<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;get(<span class="keyword">$this</span>-&gt;blog);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">isValidBlog</span> (<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="variable">$blog</span> = <span class="keyword">$this</span>-&gt;blog;</span><br><span class="line">        <span class="keyword">return</span> preg_match(<span class="string">&quot;/^(((http(s?))\:\/\/)?)([0-9a-zA-Z\-]+\.)+[a-zA-Z]&#123;2,6&#125;(\:[0-9]+)?(\/\S*)?$/i&quot;</span>, <span class="variable">$blog</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>看完有点懵逼，查询资料才知道是考ssrf漏洞</p>
-<p>利用SSRF漏洞</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?no=<span class="number">0</span>++union++select++<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="string">&#x27;O:8:&quot;UserInfo&quot;:3:&#123;s:4:&quot;name&quot;;s:1:&quot;1&quot;;s:3:&quot;age&quot;;i:1;s:4:&quot;blog&quot;;s:29:&quot;file:///var/www/html/flag.php&quot;;&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<p><img src="https://i.loli.net/2021/01/03/e6XaByfSor4wAG1.png"></p>
-<p>去看源码<br><img src="https://i.loli.net/2021/01/03/glVrRB6OeLi4jTf.png"></p>
-<blockquote>
-<p>得到flag！</p>
-</blockquote>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -956,7 +941,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-count">30</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
