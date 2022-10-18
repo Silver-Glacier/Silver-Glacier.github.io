@@ -1,0 +1,685 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Glacier">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="MemoryModule对于dll劫持和转发攻击时，一般会通过LoadLibrary这个API来加载DLL文件，虽然其存在一定的免杀效果，但效果仍不是十分显著，于是便引出了MemoryModule这个用法而网上对于MemoryModule的文章大多是英文，而且晦涩难懂，这篇文章记录一下自己的学习过程和个人对于MemoryModule的理解，可能很多地方翻译的不准确，见谅">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MemoryModule的学习">
+<meta property="og:url" content="https://silver-glacier.github.io/2022/10/18/MemoryModule%E7%9A%84%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="Glacier&#39;s Blog">
+<meta property="og:description" content="MemoryModule对于dll劫持和转发攻击时，一般会通过LoadLibrary这个API来加载DLL文件，虽然其存在一定的免杀效果，但效果仍不是十分显著，于是便引出了MemoryModule这个用法而网上对于MemoryModule的文章大多是英文，而且晦涩难懂，这篇文章记录一下自己的学习过程和个人对于MemoryModule的理解，可能很多地方翻译的不准确，见谅">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-10-18T13:50:12.000Z">
+<meta property="article:modified_time" content="2022-10-18T14:13:20.587Z">
+<meta property="article:author" content="Glacier">
+<meta property="article:tag" content="免杀">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>MemoryModule的学习 - Glacier&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"silver-glacier.github.io","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="MemoryModule的学习"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-10-18 21:50" pubdate>
+          2022年10月18日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          21 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">MemoryModule的学习</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="MemoryModule"><a href="#MemoryModule" class="headerlink" title="MemoryModule"></a>MemoryModule</h1><p>对于dll劫持和转发攻击时，一般会通过LoadLibrary这个API来加载DLL文件，虽然其存在一定的免杀效果，但效果仍不是十分显著，于是便引出了MemoryModule这个用法<br>而网上对于MemoryModule的文章大多是英文，而且晦涩难懂，这篇文章记录一下自己的学习过程和个人对于MemoryModule的理解，可能很多地方翻译的不准确，见谅</p>
+<a id="more"></a>
+
+<h2 id="MemoryModule是什么"><a href="#MemoryModule是什么" class="headerlink" title="MemoryModule是什么"></a>MemoryModule是什么</h2><p><a target="_blank" rel="noopener" href="https://github.com/fancycode/MemoryModule/blob/master/doc/readme.rst">MemoryModule项目文章</a><br><a target="_blank" rel="noopener" href="https://github.com/fancycode/MemoryModule">MemoryModule地址</a></p>
+<blockquote>
+<p>本文的大量示例代码来源于项目文章，在这里直接放上链接，就不一块一块代码照搬了</p>
+</blockquote>
+<p>默认的 Windows API 函数将外部库加载到程序中（加载库、加载库Ex）仅适用于文件系统上的文件。因此，不可能从内存中加载 DLL。但有时，您确实需要此功能（例如，您不想分发大量文件或希望使反汇编更加困难）。此问题的常见解决方法是首先将 DLL 写入临时文件，然后从那里导入。当程序终止时，临时文件将被删除</p>
+<h2 id="MemoryModule为什么能免杀"><a href="#MemoryModule为什么能免杀" class="headerlink" title="MemoryModule为什么能免杀"></a>MemoryModule为什么能免杀</h2><p>Windows操作系统在执行一个Windows PE格式的文件时，Windows自身是有一个Windows PE格式的解析器，通过PE格式把文件的各个节放入不同的内存区域</p>
+<p>爱折腾的程序员自己也想实现这个过程，那就是反射，这个反射机制就是将Windows PE格式通过自己写的代码进行解析，并把不同的节数据加载到内存中，通常这个反射加载技术被很多APT组织、大型渗透框架、病毒作者使用比较广泛</p>
+<p>当一个Windows PE格式的文件变成了一个内存中的字符串，意味着这个文件可以被任意方式去转换、加密、混淆，因此反病毒软件也难以查杀</p>
+<h2 id="理解MemoryModule"><a href="#理解MemoryModule" class="headerlink" title="理解MemoryModule"></a>理解MemoryModule</h2><h3 id="windows-可执行文件PE"><a href="#windows-可执行文件PE" class="headerlink" title="windows 可执行文件PE"></a>windows 可执行文件PE</h3><h4 id="PE-header"><a href="#PE-header" class="headerlink" title="PE header"></a>PE header</h4><p>大多数可以包含可执行代码（.exe  .dll.sys）的 Windows 二进制文件共享一种通用文件格式，而PE文件格式也是如此<br>在windows二进制文件中，PE文件有独特的标识，称之为PE header<br>PE标头包含有关可执行文件中用于存储代码和数据或定义从其他库导入或此库提供的导出的不同部分的信息<br>在该信息中</p>
+<ul>
+<li>描述了文件的物理格式，即内容，有关符号的信息等</li>
+<li>包含有关库的逻辑格式的信息，包括所需的操作系统版本、内存要求和入口点</li>
+<li>包含 16 （） 个条目，用于定义库的逻辑组件<br>对于导入 DLL，我们只需要描述导入和基重定位表的条目。为了提供对导出函数的访问，需要导出条目。</li>
+</ul>
+<p><strong>个人理解：PE header更类似于一种网络协议中的标识符，来告诉windows文件的格式信息</strong></p>
+<h4 id="Section-header"><a href="#Section-header" class="headerlink" title="Section header"></a>Section header</h4><p>Section header存储在 PE header中的OptionalHeader_结构之后。微软提供了宏来获取基于 PE 标头的起始地址。<br><strong>个人理解：Section header的大致用处是存储了有关文件中的每个Seciton的信息</strong></p>
+<h3 id="Loading-the-library"><a href="#Loading-the-library" class="headerlink" title="Loading the library"></a>Loading the library</h3><p>在发出 API 调用时，窗口基本上执行以下任务：<code>LoadLibrary</code></p>
+<ul>
+<li><p>打开给定文件并检查 DOS 和 PE 标头。</p>
+</li>
+<li><p>尝试在位置 分配字节的内存块。<code>PEHeader.OptionalHeader.SizeOfImagePEHeader.OptionalHeader.ImageBase</code></p>
+</li>
+<li><p>解析节标题并将节复制到其地址。相对于分配的内存块的基数，每个部分的目标地址都存储在结构的属性中。<code>VirtualAddressIMAGE_SECTION_HEADER</code></p>
+</li>
+<li><p>如果分配的内存块与 不同，则必须调整代码和/或数据部分中的各种引用。这称为基本重定位。<code>ImageBase</code></p>
+</li>
+<li><p>必须通过加载相应的库来解决库所需的导入。</p>
+</li>
+<li><p>必须根据节的特征保护不同节的内存区域。某些部分被标记为可丢弃，因此此时可以安全地释放。这些部分通常包含仅在导入期间需要的临时数据</p>
+</li>
+<li><p>现在库已完全加载。 须通过使用标志 调用入口点 来通知它。<code>DLL_PROCESS_ATTACH</code></p>
+</li>
+</ul>
+<h4 id="分配内存"><a href="#分配内存" class="headerlink" title="分配内存"></a>分配内存</h4><p>库所需的所有内存必须使用 保留/分配，因为 Windows 提供了保护这些内存块的功能。这是限制对内存的访问所必需的，例如阻止对代码或常量数据的写入访问。<br><strong>个人理解：这里主要是利用<code>VirtualAlloc</code>函数来分配内存，对于该函数是windows的一个API函数，用来申请内存空间</strong></p>
+<h4 id="复制内存"><a href="#复制内存" class="headerlink" title="复制内存"></a>复制内存</h4><p>经过前面的分配内存之后，可以将文件内容复制到系统中。必须计算节头，以确定文件中的位置和内存中的目标区域<br><strong>个人理解：通过复制内容，将shellcode移动到申请的内存空间中来实现免杀</strong></p>
+<h4 id="迁移内存"><a href="#迁移内存" class="headerlink" title="迁移内存"></a>迁移内存</h4><p>库的代码/数据部分中的所有内存地址都相对于OptionalHeader_中定义的地址进行存储<br>如果无法将库导入到此内存地址，则必须调整引用 =&gt;重新定位。文件格式通过在基重定位表中存储有关所有这些引用的信息来帮助实现这一点<br><strong>个人理解：这里需要重新计算内存地址，否则解析PE文件时，导入库可能会导致内存指针指向错误</strong></p>
+<h4 id="解析导入"><a href="#解析导入" class="headerlink" title="解析导入"></a>解析导入</h4><p>当我们解析导入时，我们并行遍历两个列表，导入由第一个列表中的名称定义的函数，并将指向第二个列表中的符号的指针存储<br><strong>个人理解：我对这里的理解并没有十分清晰，但其目的可能是为了使外部库导入的函数名能找到其对应的内存地址</strong></p>
+<h4 id="保护内存与通知库"><a href="#保护内存与通知库" class="headerlink" title="保护内存与通知库"></a>保护内存与通知库</h4><p><code>VirtualProtect</code>该函数可用于限制对内存的访问。如果程序尝试以未经授权的方式访问它，则 Windows 会引发异常。<br>最后要做的是调用 DLL 入口点（由 定义），从而通知库连接到进程。<code>AddressOfEntryPoint</code><br><strong>个人理解：内存保护类似于const，防止其他程序的使用导致该内存出现问题</strong></p>
+<h3 id="Exported-functions"><a href="#Exported-functions" class="headerlink" title="Exported functions"></a>Exported functions</h3><p>如果要访问库导出的函数，则需要找到符号的入口点，即要调用的函数的名称。<br>首先要做的是将函数的名称映射到导出符号的序号。因此，只需遍历由 定义的数组并并行，直到找到所需的名称<br><strong>个人理解：这里与前面的解析导入相对应，为了使函数名能找到其对应的内存地址</strong></p>
+<h3 id="Freeing-the-library-amp-MemoryModule"><a href="#Freeing-the-library-amp-MemoryModule" class="headerlink" title="Freeing the library &amp; MemoryModule"></a>Freeing the library &amp; MemoryModule</h3><p>这里没什么意义，只是释放自定义的库与C中的一个库，可以从内存中加载DLL</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86/" class="category-chain-item">前置知识</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%85%8D%E6%9D%80/">#免杀</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>MemoryModule的学习</div>
+      <div>https://silver-glacier.github.io/2022/10/18/MemoryModule的学习/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Glacier</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年10月18日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/10/18/%E9%9D%99%E6%80%81%E6%81%B6%E6%84%8F%E4%BB%A3%E7%A0%81%E9%80%83%E9%80%B82/" title="静态恶意代码逃逸2">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">静态恶意代码逃逸2</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/17/%E9%9D%99%E6%80%81%E6%81%B6%E6%84%8F%E4%BB%A3%E7%A0%81%E9%80%83%E9%80%B8/" title="静态恶意代码逃逸1">
+                        <span class="hidden-mobile">静态恶意代码逃逸1</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
