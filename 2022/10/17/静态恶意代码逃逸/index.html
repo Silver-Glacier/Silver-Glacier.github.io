@@ -16,19 +16,19 @@
   <meta name="author" content="Glacier">
   <meta name="keywords" content="">
   
-    <meta name="description" content="静态恶意代码逃逸最近在学习从底层去实现免杀，而看到了关于静态恶意代码逃逸的一些很好的文章，在此记录总结一下 恶意代码与shellcodeShellcode是一段机器指令的集合，通常会被压缩至很小的长度，达到为后续恶意代码铺垫的作用。当然你可以通过msfvenom生成各种用于测试的shellcode CS生成的raw文件与C文件在CS中，生成的Shellcode可以为raw文件和C文件在英文中，ra">
+    <meta name="description" content="静态恶意代码逃逸最近在学习从底层去实现免杀，而看到了关于静态恶意代码逃逸的一些很好的文章，在此记录总结一下">
 <meta property="og:type" content="article">
 <meta property="og:title" content="静态恶意代码逃逸">
 <meta property="og:url" content="https://silver-glacier.github.io/2022/10/17/%E9%9D%99%E6%80%81%E6%81%B6%E6%84%8F%E4%BB%A3%E7%A0%81%E9%80%83%E9%80%B8/index.html">
 <meta property="og:site_name" content="Glacier&#39;s Blog">
-<meta property="og:description" content="静态恶意代码逃逸最近在学习从底层去实现免杀，而看到了关于静态恶意代码逃逸的一些很好的文章，在此记录总结一下 恶意代码与shellcodeShellcode是一段机器指令的集合，通常会被压缩至很小的长度，达到为后续恶意代码铺垫的作用。当然你可以通过msfvenom生成各种用于测试的shellcode CS生成的raw文件与C文件在CS中，生成的Shellcode可以为raw文件和C文件在英文中，ra">
+<meta property="og:description" content="静态恶意代码逃逸最近在学习从底层去实现免杀，而看到了关于静态恶意代码逃逸的一些很好的文章，在此记录总结一下">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://s2.loli.net/2022/10/17/7hBy9ialGgvKAfj.png">
 <meta property="og:image" content="https://s2.loli.net/2022/10/17/aLuKOBbCd7TNWwv.png">
 <meta property="og:image" content="https://s2.loli.net/2022/10/17/fhkzOLd82j46Nlp.png">
 <meta property="og:image" content="https://s2.loli.net/2022/10/17/bXyrWgxY1jzoIJG.png">
 <meta property="article:published_time" content="2022-10-17T09:49:24.000Z">
-<meta property="article:modified_time" content="2022-10-18T04:58:15.057Z">
+<meta property="article:modified_time" content="2022-10-18T06:16:23.218Z">
 <meta property="article:author" content="Glacier">
 <meta property="article:tag" content="免杀">
 <meta name="twitter:card" content="summary_large_image">
@@ -279,6 +279,8 @@
               <div class="markdown-body">
                 
                 <h1 id="静态恶意代码逃逸"><a href="#静态恶意代码逃逸" class="headerlink" title="静态恶意代码逃逸"></a>静态恶意代码逃逸</h1><p>最近在学习从底层去实现免杀，而看到了关于静态恶意代码逃逸的一些很好的文章，在此记录总结一下</p>
+<a id="more"></a>
+
 <h2 id="恶意代码与shellcode"><a href="#恶意代码与shellcode" class="headerlink" title="恶意代码与shellcode"></a>恶意代码与shellcode</h2><p>Shellcode是一段机器指令的集合，通常会被压缩至很小的长度，达到为后续恶意代码铺垫的作用。当然你可以通过msfvenom生成各种用于测试的shellcode</p>
 <h2 id="CS生成的raw文件与C文件"><a href="#CS生成的raw文件与C文件" class="headerlink" title="CS生成的raw文件与C文件"></a>CS生成的raw文件与C文件</h2><p>在CS中，生成的Shellcode可以为raw文件和C文件<br><img src="https://s2.loli.net/2022/10/17/7hBy9ialGgvKAfj.png" srcset="/img/loading.gif" lazyload alt="raw"><br><img src="https://s2.loli.net/2022/10/17/aLuKOBbCd7TNWwv.png" srcset="/img/loading.gif" lazyload alt="C"><br>在英文中，raw可以被译为 生的，未加工的，而CS生成出来的就是bin文件，故raw文件是可以直接进行字节操作读取的，因此加载到内存较为方便<br>而C文件给出的是一个C语言中的字符数组，也是可以通过以字节单位操作的</p>
 <h3 id="对于载荷的混淆"><a href="#对于载荷的混淆" class="headerlink" title="对于载荷的混淆"></a>对于载荷的混淆</h3><p>核心思想是将shellcode进行混淆，而这里我们使用的是XOR</p>

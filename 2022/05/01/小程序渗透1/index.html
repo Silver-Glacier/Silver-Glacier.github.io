@@ -16,12 +16,12 @@
   <meta name="author" content="Glacier">
   <meta name="keywords" content="">
   
-    <meta name="description" content="微信小程序渗透测试（抓包）这是基于安卓7.0之前7.0之后看这里 首先准备好一个安卓模拟器，我在这里使用的是夜神模拟器 首先切换到root模式 给burpsuite加上本地IP的端口监听，如果是在虚拟机上实现，则加上对应的IP端口 打开模拟器的网络连接设置，长按WiredSSID，修改网络，进入高级设置 设置为手动代理，加上与burpsuite上相对应的IP以及端口号 从浏览器打开相应的IP以及端">
+    <meta name="description" content="微信小程序渗透测试（抓包）考虑到微信小程序大多是外包开发，且高校的小程序部分为学生开发，相比于站点，安全性较低，尝试去对微信小程序进行渗透">
 <meta property="og:type" content="article">
 <meta property="og:title" content="小程序渗透1">
 <meta property="og:url" content="https://silver-glacier.github.io/2022/05/01/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%B8%97%E9%80%8F1/index.html">
 <meta property="og:site_name" content="Glacier&#39;s Blog">
-<meta property="og:description" content="微信小程序渗透测试（抓包）这是基于安卓7.0之前7.0之后看这里 首先准备好一个安卓模拟器，我在这里使用的是夜神模拟器 首先切换到root模式 给burpsuite加上本地IP的端口监听，如果是在虚拟机上实现，则加上对应的IP端口 打开模拟器的网络连接设置，长按WiredSSID，修改网络，进入高级设置 设置为手动代理，加上与burpsuite上相对应的IP以及端口号 从浏览器打开相应的IP以及端">
+<meta property="og:description" content="微信小程序渗透测试（抓包）考虑到微信小程序大多是外包开发，且高校的小程序部分为学生开发，相比于站点，安全性较低，尝试去对微信小程序进行渗透">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://s2.loli.net/2022/05/01/KMcdE8il9Yu6NPW.png">
 <meta property="og:image" content="https://s2.loli.net/2022/05/01/gdYsDOaTp1z6tJn.png">
@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://s2.loli.net/2022/05/01/lI4A7bcEVMZ2Nso.png">
 <meta property="og:image" content="https://s2.loli.net/2022/05/01/IiamvHD4TNAMSZP.png">
 <meta property="article:published_time" content="2022-05-01T08:04:31.000Z">
-<meta property="article:modified_time" content="2022-10-18T00:51:47.629Z">
+<meta property="article:modified_time" content="2022-10-18T06:14:11.699Z">
 <meta property="article:author" content="Glacier">
 <meta property="article:tag" content="Android">
 <meta name="twitter:card" content="summary_large_image">
@@ -227,7 +227,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          422 字
+          478 字
         
       </span>
     
@@ -281,7 +281,9 @@
             
               <div class="markdown-body">
                 
-                <h1 id="微信小程序渗透测试（抓包）"><a href="#微信小程序渗透测试（抓包）" class="headerlink" title="微信小程序渗透测试（抓包）"></a>微信小程序渗透测试（抓包）</h1><p>这是基于安卓7.0之前<br><a href="https://silver-glacier.github.io/2022/05/01/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%B8%97%E9%80%8F2/">7.0之后看这里</a></p>
+                <h1 id="微信小程序渗透测试（抓包）"><a href="#微信小程序渗透测试（抓包）" class="headerlink" title="微信小程序渗透测试（抓包）"></a>微信小程序渗透测试（抓包）</h1><p>考虑到微信小程序大多是外包开发，且高校的小程序部分为学生开发，相比于站点，安全性较低，尝试去对微信小程序进行渗透</p>
+<a id="more"></a>
+<p>这是基于安卓7.0之前<br><a href="https://silver-glacier.github.io/2022/05/01/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%B8%97%E9%80%8F2/">7.0之后看这里</a></p>
 <p>首先准备好一个安卓模拟器，我在这里使用的是夜神模拟器</p>
 <p><img src="https://s2.loli.net/2022/05/01/KMcdE8il9Yu6NPW.png" srcset="/img/loading.gif" lazyload><br>首先切换到root模式</p>
 <p>给burpsuite加上本地IP的端口监听，如果是在虚拟机上实现，则加上对应的IP端口<br><img src="https://s2.loli.net/2022/05/01/gdYsDOaTp1z6tJn.png" srcset="/img/loading.gif" lazyload></p>
