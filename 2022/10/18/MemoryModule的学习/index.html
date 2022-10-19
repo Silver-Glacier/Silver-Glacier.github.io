@@ -24,7 +24,7 @@
 <meta property="og:description" content="MemoryModule对于dll劫持和转发攻击时，一般会通过LoadLibrary这个API来加载DLL文件，虽然其存在一定的免杀效果，但效果仍不是十分显著，于是便引出了MemoryModule这个用法而网上对于MemoryModule的文章大多是英文，而且晦涩难懂，这篇文章记录一下自己的学习过程和个人对于MemoryModule的理解，可能很多地方翻译的不准确，见谅">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-10-18T13:50:12.000Z">
-<meta property="article:modified_time" content="2022-10-18T14:13:20.587Z">
+<meta property="article:modified_time" content="2022-10-19T00:42:41.582Z">
 <meta property="article:author" content="Glacier">
 <meta property="article:tag" content="免杀">
 <meta name="twitter:card" content="summary_large_image">
@@ -296,17 +296,17 @@
 <ul>
 <li><p>打开给定文件并检查 DOS 和 PE 标头。</p>
 </li>
-<li><p>尝试在位置 分配字节的内存块。<code>PEHeader.OptionalHeader.SizeOfImagePEHeader.OptionalHeader.ImageBase</code></p>
+<li><p>尝试在位置<code>PEHeader.OptionalHeader.ImageBase</code>分配<code>PEHeader.OptionalHeader.SizeOfImage</code>字节的内存块。</p>
 </li>
-<li><p>解析节标题并将节复制到其地址。相对于分配的内存块的基数，每个部分的目标地址都存储在结构的属性中。<code>VirtualAddressIMAGE_SECTION_HEADER</code></p>
+<li><p>解析节标题并将节复制到其地址。相对于分配的内存块的基数，每个部分的目标地址都存储在<code>IMAGE_SECTION_HEADER</code>结构的<code>VirtualAddress</code>属性中。</p>
 </li>
-<li><p>如果分配的内存块与 不同，则必须调整代码和/或数据部分中的各种引用。这称为基本重定位。<code>ImageBase</code></p>
+<li><p>如果分配的内存块与<code>ImageBase</code>不同，则必须调整代码和/或数据部分中的各种引用。这称为基本重定位。</p>
 </li>
 <li><p>必须通过加载相应的库来解决库所需的导入。</p>
 </li>
 <li><p>必须根据节的特征保护不同节的内存区域。某些部分被标记为可丢弃，因此此时可以安全地释放。这些部分通常包含仅在导入期间需要的临时数据</p>
 </li>
-<li><p>现在库已完全加载。 须通过使用标志 调用入口点 来通知它。<code>DLL_PROCESS_ATTACH</code></p>
+<li><p>现在库已完全加载。 须通过使用标志<code>DLL_PROCESS_ATTACH</code>调用入口点 来通知它。</p>
 </li>
 </ul>
 <h4 id="分配内存"><a href="#分配内存" class="headerlink" title="分配内存"></a>分配内存</h4><p>库所需的所有内存必须使用 保留/分配，因为 Windows 提供了保护这些内存块的功能。这是限制对内存的访问所必需的，例如阻止对代码或常量数据的写入访问。<br><strong>个人理解：这里主要是利用<code>VirtualAlloc</code>函数来分配内存，对于该函数是windows的一个API函数，用来申请内存空间</strong></p>
@@ -406,7 +406,7 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/10/18/%E9%9D%99%E6%80%81%E6%81%B6%E6%84%8F%E4%BB%A3%E7%A0%81%E9%80%83%E9%80%B82/" title="静态恶意代码逃逸2">
+                      <a href="/2022/10/19/%E9%9D%99%E6%80%81%E6%81%B6%E6%84%8F%E4%BB%A3%E7%A0%81%E9%80%83%E9%80%B82/" title="静态恶意代码逃逸2">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile">静态恶意代码逃逸2</span>
                         <span class="visible-mobile">上一篇</span>
