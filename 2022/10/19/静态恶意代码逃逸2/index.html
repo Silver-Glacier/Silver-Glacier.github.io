@@ -16,12 +16,12 @@
   <meta name="author" content="Glacier">
   <meta name="keywords" content="">
   
-    <meta name="description" content="静态恶意代码逃逸2最近在学习从底层去实现免杀，而看到了关于静态恶意代码逃逸的一些很好的文章，在此记录总结一下">
+    <meta name="description" content="静态恶意代码逃逸2最近在学习从底层用C&#x2F;C++去实现免杀，而看到了关于静态恶意代码逃逸的一些很好的文章，在此记录总结一下">
 <meta property="og:type" content="article">
 <meta property="og:title" content="静态恶意代码逃逸2">
 <meta property="og:url" content="https://silver-glacier.github.io/2022/10/19/%E9%9D%99%E6%80%81%E6%81%B6%E6%84%8F%E4%BB%A3%E7%A0%81%E9%80%83%E9%80%B82/index.html">
 <meta property="og:site_name" content="Glacier&#39;s Blog">
-<meta property="og:description" content="静态恶意代码逃逸2最近在学习从底层去实现免杀，而看到了关于静态恶意代码逃逸的一些很好的文章，在此记录总结一下">
+<meta property="og:description" content="静态恶意代码逃逸2最近在学习从底层用C&#x2F;C++去实现免杀，而看到了关于静态恶意代码逃逸的一些很好的文章，在此记录总结一下">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://s2.loli.net/2022/10/19/HcQtfh9rgeM2WnE.png">
 <meta property="og:image" content="https://s2.loli.net/2022/10/19/V5DHfw4bZvESp3e.png">
@@ -32,8 +32,9 @@
 <meta property="og:image" content="https://s2.loli.net/2022/10/19/UQd953TlzMeXkKA.png">
 <meta property="og:image" content="https://s2.loli.net/2022/10/19/APHegd1Fp2vu3yB.png">
 <meta property="og:image" content="https://s2.loli.net/2022/10/19/AZXYbaGMgD7Pszh.png">
+<meta property="og:image" content="https://s2.loli.net/2022/10/20/qoaXzHOr7y95j4p.png">
 <meta property="article:published_time" content="2022-10-19T12:49:24.000Z">
-<meta property="article:modified_time" content="2022-10-19T12:47:37.313Z">
+<meta property="article:modified_time" content="2022-10-20T03:25:50.753Z">
 <meta property="article:author" content="Glacier">
 <meta property="article:tag" content="免杀">
 <meta name="twitter:card" content="summary_large_image">
@@ -229,7 +230,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.8k 字
+          4.9k 字
         
       </span>
     
@@ -240,7 +241,7 @@
         
         
         
-          40 分钟
+          42 分钟
         
       </span>
     
@@ -283,7 +284,7 @@
             
               <div class="markdown-body">
                 
-                <h1 id="静态恶意代码逃逸2"><a href="#静态恶意代码逃逸2" class="headerlink" title="静态恶意代码逃逸2"></a>静态恶意代码逃逸2</h1><p>最近在学习从底层去实现免杀，而看到了关于静态恶意代码逃逸的一些很好的文章，在此记录总结一下</p>
+                <h1 id="静态恶意代码逃逸2"><a href="#静态恶意代码逃逸2" class="headerlink" title="静态恶意代码逃逸2"></a>静态恶意代码逃逸2</h1><p>最近在学习从底层用C/C++去实现免杀，而看到了关于静态恶意代码逃逸的一些很好的文章，在此记录总结一下</p>
 <a id="more"></a>
 
 <h3 id="反射DLL加载"><a href="#反射DLL加载" class="headerlink" title="反射DLL加载"></a>反射DLL加载</h3><p>对于加载DLL而言，一般是通过LoadLibrary这个API来实现，但这里我们去使用memoryModule<br><a href="https://silver-glacier.github.io/2022/10/18/MemoryModule%E7%9A%84%E5%AD%A6%E4%B9%A0/">前置知识</a></p>
@@ -320,7 +321,18 @@
 <p><img src="https://s2.loli.net/2022/10/19/AZXYbaGMgD7Pszh.png" srcset="/img/loading.gif" lazyload><br>可以看到dll文件数据由7300+1416=8716bytes构成，意味着有12bytes需要偏移</p>
 <p>于是将代码改为</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">int</span> ret = <span class="hljs-number">0</span>;<br>ret = recv(socks, (PCHAR)bFileBuffer, <span class="hljs-number">4</span>, <span class="hljs-literal">NULL</span>);<br>ret = recv(socks, (PCHAR)bFileBuffer, <span class="hljs-number">2650</span>, <span class="hljs-literal">NULL</span>);<br>ret = recv(socks, (PCHAR)bFileBuffer, <span class="hljs-number">12</span>, <span class="hljs-literal">NULL</span>);<br><br>ZeroMemory(bFileBuffer, PAYLOAD_SIZE);<br><br>ret = recv(socks, (PCHAR)bFileBuffer, <span class="hljs-number">8704</span>, <span class="hljs-literal">NULL</span>);<br></code></pre></td></tr></table></figure>
-<p>这样应该就没问题了，但我本地尝试复现，却一直无法上线，尝试了多种方法，无法解决，那就留个坑在这里</p>
+<p>但仍旧无法上线，可能不是这么简单的移位，这里我用邮件私信了作者，得到了解决办法</p>
+<blockquote>
+<p>用vs调试一下，看看lpbuffer中的内存情况，找到MZ DOS头，以内存的偏移为准</p>
+</blockquote>
+<p>于是决定深入的了解一下PE文件的结构</p>
+<p>以这个文件为例</p>
+<ol>
+<li>从文件头4D 5A（MZ）开始，跳转3C（即偏移3C）</li>
+<li>跳转后可读取到数据为0000 00B0</li>
+<li>再跳转到地址0000 00B0；</li>
+<li>若该地址数据为50 45（即PE）就为PE文件。<br><img src="https://s2.loli.net/2022/10/20/qoaXzHOr7y95j4p.png" srcset="/img/loading.gif" lazyload></li>
+</ol>
 
                 
               </div>
@@ -410,6 +422,12 @@
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2022/10/20/%E9%9D%99%E6%80%81%E6%81%B6%E6%84%8F%E4%BB%A3%E7%A0%81%E9%80%83%E9%80%B83/" title="静态恶意代码逃逸3">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">静态恶意代码逃逸3</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">

