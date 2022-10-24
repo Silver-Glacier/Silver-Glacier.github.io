@@ -19,7 +19,7 @@
     <meta name="description" content="MemoryModule对于dll劫持和转发攻击时，一般会通过LoadLibrary这个API来加载DLL文件，虽然其存在一定的免杀效果，但效果仍不是十分显著，于是便引出了MemoryModule这个用法而网上对于MemoryModule的文章大多是英文，而且晦涩难懂，这篇文章记录一下自己的学习过程和个人对于MemoryModule的理解，可能很多地方翻译的不准确，见谅">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MemoryModule的学习">
-<meta property="og:url" content="https://silver-glacier.github.io/2022/10/18/MemoryModule%E7%9A%84%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:url" content="https://glacierrrr.online/2022/10/18/MemoryModule%E7%9A%84%E5%AD%A6%E4%B9%A0/index.html">
 <meta property="og:site_name" content="Glacier&#39;s Blog">
 <meta property="og:description" content="MemoryModule对于dll劫持和转发攻击时，一般会通过LoadLibrary这个API来加载DLL文件，虽然其存在一定的免杀效果，但效果仍不是十分显著，于是便引出了MemoryModule这个用法而网上对于MemoryModule的文章大多是英文，而且晦涩难懂，这篇文章记录一下自己的学习过程和个人对于MemoryModule的理解，可能很多地方翻译的不准确，见谅">
 <meta property="og:locale" content="zh_CN">
@@ -69,7 +69,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"silver-glacier.github.io","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"glacierrrr.online","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -362,7 +362,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>MemoryModule的学习</div>
-      <div>https://silver-glacier.github.io/2022/10/18/MemoryModule的学习/</div>
+      <div>https://glacierrrr.online/2022/10/18/MemoryModule的学习/</div>
     </div>
     <div class="license-meta">
       

@@ -19,7 +19,7 @@
     <meta name="description" content="静态恶意代码逃逸2最近在学习从底层用C&#x2F;C++去实现免杀，而看到了关于静态恶意代码逃逸的一些很好的文章，在此记录总结一下">
 <meta property="og:type" content="article">
 <meta property="og:title" content="静态恶意代码逃逸2">
-<meta property="og:url" content="https://silver-glacier.github.io/2022/10/19/%E9%9D%99%E6%80%81%E6%81%B6%E6%84%8F%E4%BB%A3%E7%A0%81%E9%80%83%E9%80%B82/index.html">
+<meta property="og:url" content="https://glacierrrr.online/2022/10/19/%E9%9D%99%E6%80%81%E6%81%B6%E6%84%8F%E4%BB%A3%E7%A0%81%E9%80%83%E9%80%B82/index.html">
 <meta property="og:site_name" content="Glacier&#39;s Blog">
 <meta property="og:description" content="静态恶意代码逃逸2最近在学习从底层用C&#x2F;C++去实现免杀，而看到了关于静态恶意代码逃逸的一些很好的文章，在此记录总结一下">
 <meta property="og:locale" content="zh_CN">
@@ -80,7 +80,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"silver-glacier.github.io","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"glacierrrr.online","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -287,7 +287,7 @@
                 <h1 id="静态恶意代码逃逸2"><a href="#静态恶意代码逃逸2" class="headerlink" title="静态恶意代码逃逸2"></a>静态恶意代码逃逸2</h1><p>最近在学习从底层用C/C++去实现免杀，而看到了关于静态恶意代码逃逸的一些很好的文章，在此记录总结一下</p>
 <a id="more"></a>
 
-<h3 id="反射DLL加载"><a href="#反射DLL加载" class="headerlink" title="反射DLL加载"></a>反射DLL加载</h3><p>对于加载DLL而言，一般是通过LoadLibrary这个API来实现，但这里我们去使用memoryModule<br><a href="https://silver-glacier.github.io/2022/10/18/MemoryModule%E7%9A%84%E5%AD%A6%E4%B9%A0/">前置知识</a></p>
+<h3 id="反射DLL加载"><a href="#反射DLL加载" class="headerlink" title="反射DLL加载"></a>反射DLL加载</h3><p>对于加载DLL而言，一般是通过LoadLibrary这个API来实现，但这里我们去使用memoryModule<br><a target="_blank" rel="noopener" href="https://silver-glacier.github.io/2022/10/18/MemoryModule%E7%9A%84%E5%AD%A6%E4%B9%A0/">前置知识</a></p>
 <p>将该项目下载之后，主要使用的是<code>MemoryModule.h、MemoryModule.cpp</code>文件</p>
 <p>记录一下报错信息与处理<br><code>wcsncpy: This function or variable may be unsafe. Consider using wcsncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.</code></p>
 <blockquote>
@@ -379,7 +379,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>静态恶意代码逃逸2</div>
-      <div>https://silver-glacier.github.io/2022/10/19/静态恶意代码逃逸2/</div>
+      <div>https://glacierrrr.online/2022/10/19/静态恶意代码逃逸2/</div>
     </div>
     <div class="license-meta">
       

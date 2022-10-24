@@ -19,7 +19,7 @@
     <meta name="description" content="微信小程序渗透测试（抓包）考虑到微信小程序大多是外包开发，且高校的小程序部分为学生开发，相比于站点，安全性较低，尝试去对微信小程序进行渗透">
 <meta property="og:type" content="article">
 <meta property="og:title" content="小程序渗透1">
-<meta property="og:url" content="https://silver-glacier.github.io/2022/05/01/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%B8%97%E9%80%8F1/index.html">
+<meta property="og:url" content="https://glacierrrr.online/2022/05/01/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%B8%97%E9%80%8F1/index.html">
 <meta property="og:site_name" content="Glacier&#39;s Blog">
 <meta property="og:description" content="微信小程序渗透测试（抓包）考虑到微信小程序大多是外包开发，且高校的小程序部分为学生开发，相比于站点，安全性较低，尝试去对微信小程序进行渗透">
 <meta property="og:locale" content="zh_CN">
@@ -77,7 +77,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"silver-glacier.github.io","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"glacierrrr.online","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -283,7 +283,7 @@
                 
                 <h1 id="微信小程序渗透测试（抓包）"><a href="#微信小程序渗透测试（抓包）" class="headerlink" title="微信小程序渗透测试（抓包）"></a>微信小程序渗透测试（抓包）</h1><p>考虑到微信小程序大多是外包开发，且高校的小程序部分为学生开发，相比于站点，安全性较低，尝试去对微信小程序进行渗透</p>
 <a id="more"></a>
-<p>这是基于安卓7.0之前<br><a href="https://silver-glacier.github.io/2022/05/01/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%B8%97%E9%80%8F2/">7.0之后看这里</a></p>
+<p>这是基于安卓7.0之前<br><a target="_blank" rel="noopener" href="https://silver-glacier.github.io/2022/05/01/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%B8%97%E9%80%8F2/">7.0之后看这里</a></p>
 <p>首先准备好一个安卓模拟器，我在这里使用的是夜神模拟器</p>
 <p><img src="https://s2.loli.net/2022/05/01/KMcdE8il9Yu6NPW.png" srcset="/img/loading.gif" lazyload><br>首先切换到root模式</p>
 <p>给burpsuite加上本地IP的端口监听，如果是在虚拟机上实现，则加上对应的IP端口<br><img src="https://s2.loli.net/2022/05/01/gdYsDOaTp1z6tJn.png" srcset="/img/loading.gif" lazyload></p>
@@ -292,7 +292,7 @@
 <p>从浏览器打开相应的IP以及端口，下载相应的burpsuite的证书<br>（这里只是为了下载相应的证书，也可以从本地下载下来，再放入到模拟器中）<br><img src="https://s2.loli.net/2022/05/01/usxnIrJd4vCVqNA.png" srcset="/img/loading.gif" lazyload></p>
 <p>下载完成后，打开模拟器自带的文件管理系统，下载的证书将在download中<br><strong>这里注意！下载下来的证书很可能是灰色的，需要将后缀改为crt，der后缀文件可能存在识别错误的问题</strong><br><strong>其他问题：可能存在证书在download目录下也无法正常导入，需要将其移入其他目录（本人再这里未遇到该问题）</strong><br><img src="https://s2.loli.net/2022/05/01/lI4A7bcEVMZ2Nso.png" srcset="/img/loading.gif" lazyload></p>
 <p>成功导入证书后就完成了<br>我们打开百度测试一下<br><img src="https://s2.loli.net/2022/05/01/IiamvHD4TNAMSZP.png" srcset="/img/loading.gif" lazyload alt="成功抓包"></p>
-<p><a href="https://silver-glacier.github.io/2022/05/01/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%B8%97%E9%80%8F2/">如果提示证书安全问题看这里</a></p>
+<p><a target="_blank" rel="noopener" href="https://silver-glacier.github.io/2022/05/01/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%B8%97%E9%80%8F2/">如果提示证书安全问题看这里</a></p>
 
                 
               </div>
@@ -339,7 +339,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>小程序渗透1</div>
-      <div>https://silver-glacier.github.io/2022/05/01/小程序渗透1/</div>
+      <div>https://glacierrrr.online/2022/05/01/小程序渗透1/</div>
     </div>
     <div class="license-meta">
       
