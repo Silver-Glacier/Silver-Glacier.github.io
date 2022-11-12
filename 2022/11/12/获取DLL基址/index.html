@@ -16,12 +16,12 @@
   <meta name="author" content="Glacier">
   <meta name="keywords" content="">
   
-    <meta name="description" content="windbg查看dll基址syscall首先写一个简单的syscall的例子 12345678910111213141516171819202122232425262728293031323334353637383940414243444546#include &lt;Windows.h&gt;#include &quot;winternl.h&quot;#pragma comment(lib,">
+    <meta name="description" content="windbg查看dll基址fs寄存器 -&gt; TEB -&gt; PEB -&gt; PEB_LDR_DATA -&gt; LIST_ENTRY -&gt; LDR_DATA_TABLE_ENTRY -&gt; dll_base">
 <meta property="og:type" content="article">
 <meta property="og:title" content="获取DLL基址">
 <meta property="og:url" content="https://glacierrrr.online/2022/11/12/%E8%8E%B7%E5%8F%96DLL%E5%9F%BA%E5%9D%80/index.html">
 <meta property="og:site_name" content="Glacier&#39;s Blog">
-<meta property="og:description" content="windbg查看dll基址syscall首先写一个简单的syscall的例子 12345678910111213141516171819202122232425262728293031323334353637383940414243444546#include &lt;Windows.h&gt;#include &quot;winternl.h&quot;#pragma comment(lib,">
+<meta property="og:description" content="windbg查看dll基址fs寄存器 -&gt; TEB -&gt; PEB -&gt; PEB_LDR_DATA -&gt; LIST_ENTRY -&gt; LDR_DATA_TABLE_ENTRY -&gt; dll_base">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://s2.loli.net/2022/11/12/o9g5R3rYb7ctkBs.png">
 <meta property="og:image" content="https://s2.loli.net/2022/11/12/gf8hqV5Oi7beAE9.png">
@@ -29,7 +29,7 @@
 <meta property="og:image" content="https://s2.loli.net/2022/11/12/zL6bA2oT34i1VEp.png">
 <meta property="og:image" content="https://s2.loli.net/2022/11/12/zL6bA2oT34i1VEp.png">
 <meta property="article:published_time" content="2022-11-12T12:21:24.000Z">
-<meta property="article:modified_time" content="2022-11-12T07:52:44.848Z">
+<meta property="article:modified_time" content="2022-11-12T08:30:30.574Z">
 <meta property="article:author" content="Glacier">
 <meta property="article:tag" content="免杀">
 <meta name="twitter:card" content="summary_large_image">
@@ -225,7 +225,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.6k 字
+          2.7k 字
         
       </span>
     
@@ -236,7 +236,7 @@
         
         
         
-          22 分钟
+          23 分钟
         
       </span>
     
@@ -279,7 +279,9 @@
             
               <div class="markdown-body">
                 
-                <h1 id="windbg查看dll基址"><a href="#windbg查看dll基址" class="headerlink" title="windbg查看dll基址"></a>windbg查看dll基址</h1><h2 id="syscall"><a href="#syscall" class="headerlink" title="syscall"></a>syscall</h2><p>首先写一个简单的syscall的例子</p>
+                <h1 id="windbg查看dll基址"><a href="#windbg查看dll基址" class="headerlink" title="windbg查看dll基址"></a>windbg查看dll基址</h1><p>fs寄存器 -&gt; TEB -&gt; PEB -&gt; PEB_LDR_DATA -&gt; LIST_ENTRY -&gt; LDR_DATA_TABLE_ENTRY -&gt; dll_base</p>
+<a id="more"></a>
+<h2 id="syscall"><a href="#syscall" class="headerlink" title="syscall"></a>syscall</h2><p>首先写一个简单的syscall的例子</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;Windows.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&quot;winternl.h&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">pragma</span> comment(lib, <span class="hljs-meta-string">&quot;ntdll&quot;</span>)</span><br><br><span class="hljs-function">EXTERN_C NTSTATUS <span class="hljs-title">SysNtCreateFile</span><span class="hljs-params">(</span></span><br><span class="hljs-function"><span class="hljs-params">	PHANDLE FileHandle,</span></span><br><span class="hljs-function"><span class="hljs-params">	ACCESS_MASK DesiredAccess,</span></span><br><span class="hljs-function"><span class="hljs-params">	POBJECT_ATTRIBUTES ObjectAttributes,</span></span><br><span class="hljs-function"><span class="hljs-params">	PIO_STATUS_BLOCK IoStatusBlock,</span></span><br><span class="hljs-function"><span class="hljs-params">	PLARGE_INTEGER AllocationSize,</span></span><br><span class="hljs-function"><span class="hljs-params">	ULONG FileAttributes,</span></span><br><span class="hljs-function"><span class="hljs-params">	ULONG ShareAccess,</span></span><br><span class="hljs-function"><span class="hljs-params">	ULONG CreateDisposition,</span></span><br><span class="hljs-function"><span class="hljs-params">	ULONG CreateOptions,</span></span><br><span class="hljs-function"><span class="hljs-params">	PVOID EaBuffer,</span></span><br><span class="hljs-function"><span class="hljs-params">	ULONG EaLength)</span></span>;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	FARPROC addr = GetProcAddress(LoadLibraryA(<span class="hljs-string">&quot;ntdll&quot;</span>), <span class="hljs-string">&quot;NtCreateFile&quot;</span>);<br><br>	OBJECT_ATTRIBUTES oa;<br>	HANDLE fileHandle = <span class="hljs-literal">NULL</span>;<br>	NTSTATUS status = <span class="hljs-literal">NULL</span>;<br>	UNICODE_STRING fileName;<br>	IO_STATUS_BLOCK osb;<br><br>	RtlInitUnicodeString(&amp;fileName, (PCWSTR)<span class="hljs-string">L&quot;\\??\\c:\\temp\\test.txt&quot;</span>);<br>	ZeroMemory(&amp;osb, <span class="hljs-keyword">sizeof</span>(IO_STATUS_BLOCK));<br>	InitializeObjectAttributes(&amp;oa, &amp;fileName, OBJ_CASE_INSENSITIVE, <span class="hljs-literal">NULL</span>, <span class="hljs-literal">NULL</span>);<br><br>	SysNtCreateFile(<br>		&amp;fileHandle,<br>		FILE_GENERIC_WRITE,<br>		&amp;oa,<br>		&amp;osb,<br>		<span class="hljs-number">0</span>,<br>		FILE_ATTRIBUTE_NORMAL,<br>		FILE_SHARE_WRITE,<br>		FILE_OVERWRITE_IF,<br>		FILE_SYNCHRONOUS_IO_NONALERT,<br>		<span class="hljs-literal">NULL</span>,<br>		<span class="hljs-number">0</span>);<br><br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>编译生成exe文件，然后丢进windbg里面进行调试<br>windbg常用的几个指令</p>
 <ol>
