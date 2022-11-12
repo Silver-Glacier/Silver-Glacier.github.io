@@ -16,12 +16,12 @@
   <meta name="author" content="Glacier">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Hell’s Gate地狱之门项目地址地狱之门的主要实现是直接系统调用来绕过用户级API的hook，这种技术可用于使用 Cobalt Strike 创建 LSASS 内存转储，同时不接触磁盘并规避 AV&#x2F;EDR 监控的用户模式的API调用。 直接系统调用对于windows而言，你可能经历过，一个简单的应用程序崩溃，导致整个系统崩溃，什么出现无法理解的蓝屏情况，而使用windbg也无法找出其存在问题">
+    <meta name="description" content="Hell’s Gate地狱之门地狱之门的主要实现是直接系统调用来绕过用户级API的hook，这种技术可用于使用 Cobalt Strike 创建 LSASS 内存转储，同时不接触磁盘并规避 AV&#x2F;EDR 监控的用户模式的API调用。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Halo&#39;s Gate">
+<meta property="og:title" content="Hell&#39;s Gate">
 <meta property="og:url" content="https://glacierrrr.online/2022/11/09/Halo's%20Gate/index.html">
 <meta property="og:site_name" content="Glacier&#39;s Blog">
-<meta property="og:description" content="Hell’s Gate地狱之门项目地址地狱之门的主要实现是直接系统调用来绕过用户级API的hook，这种技术可用于使用 Cobalt Strike 创建 LSASS 内存转储，同时不接触磁盘并规避 AV&#x2F;EDR 监控的用户模式的API调用。 直接系统调用对于windows而言，你可能经历过，一个简单的应用程序崩溃，导致整个系统崩溃，什么出现无法理解的蓝屏情况，而使用windbg也无法找出其存在问题">
+<meta property="og:description" content="Hell’s Gate地狱之门地狱之门的主要实现是直接系统调用来绕过用户级API的hook，这种技术可用于使用 Cobalt Strike 创建 LSASS 内存转储，同时不接触磁盘并规避 AV&#x2F;EDR 监控的用户模式的API调用。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://s2.loli.net/2022/11/09/Pe8JtUjiFf6uQXb.png">
 <meta property="og:image" content="https://s2.loli.net/2022/11/09/YwdaC6h42eKxGkB.png">
@@ -30,7 +30,7 @@
 <meta property="og:image" content="https://s2.loli.net/2022/11/09/LpQ2uSaWA4mIzvs.png">
 <meta property="og:image" content="https://s2.loli.net/2022/11/09/oMpuabB7XqtCFDI.png">
 <meta property="article:published_time" content="2022-11-09T12:21:24.000Z">
-<meta property="article:modified_time" content="2022-11-09T12:26:08.849Z">
+<meta property="article:modified_time" content="2022-11-12T08:35:22.980Z">
 <meta property="article:author" content="Glacier">
 <meta property="article:tag" content="免杀">
 <meta name="twitter:card" content="summary_large_image">
@@ -38,7 +38,7 @@
   
   
   
-  <title>Halo&#39;s Gate - Glacier&#39;s Blog</title>
+  <title>Hell&#39;s Gate - Glacier&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -203,7 +203,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Halo&#39;s Gate"></span>
+            <span id="subtitle" data-typed-text="Hell&#39;s Gate"></span>
           
         </div>
 
@@ -275,12 +275,14 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Halo&#39;s Gate</h1>
+            <h1 style="display: none">Hell&#39;s Gate</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="Hell’s-Gate"><a href="#Hell’s-Gate" class="headerlink" title="Hell’s Gate"></a>Hell’s Gate</h1><h2 id="地狱之门"><a href="#地狱之门" class="headerlink" title="地狱之门"></a>地狱之门</h2><p><a target="_blank" rel="noopener" href="https://github.com/am0nsec/HellsGate">项目地址</a><br>地狱之门的主要实现是直接系统调用来绕过用户级API的hook，这种技术可用于使用 Cobalt Strike 创建 LSASS 内存转储，同时不接触磁盘并规避 AV/EDR 监控的用户模式的API调用。</p>
+                <h1 id="Hell’s-Gate"><a href="#Hell’s-Gate" class="headerlink" title="Hell’s Gate"></a>Hell’s Gate</h1><h2 id="地狱之门"><a href="#地狱之门" class="headerlink" title="地狱之门"></a>地狱之门</h2><p><a target="_blank" rel="noopener" href="https://github.com/am0nsec/HellsGate">地狱之门</a>的主要实现是直接系统调用来绕过用户级API的hook，这种技术可用于使用 Cobalt Strike 创建 LSASS 内存转储，同时不接触磁盘并规避 AV/EDR 监控的用户模式的API调用。</p>
+<a id="more"></a>
+
 <h3 id="直接系统调用"><a href="#直接系统调用" class="headerlink" title="直接系统调用"></a>直接系统调用</h3><p>对于windows而言，你可能经历过，一个简单的应用程序崩溃，导致整个系统崩溃，什么出现无法理解的蓝屏情况，而使用windbg也无法找出其存在问题，这是因为操作系统在一个real模式下运行，这意味着处理器在没有应用层次你隔离和保护的模式下运行。由于严重的系统内存损坏，错误的程序或者错误可能导致操作系统完全崩溃，因为对于可以访问或不访问的内存区域没有限制。<br>而保护模式的更新处理器和操作系统引入了许多保护措施，并且可以并且可以通过使用虚拟内存和特权级别或环将正在运行的程序相互隔离来保护系统免受崩溃。在 Windows 系统中，实际使用了其中两个环。应用程序在 用户模式下运行，相当于 ring 3，关键系统组件如内核和设备驱动程序在 内核模式下运行，对应于 ring 0。<br><img src="https://s2.loli.net/2022/11/09/Pe8JtUjiFf6uQXb.png" srcset="/img/loading.gif" lazyload></p>
 <p>使用这些保护环可以确保应用程序是隔离的，并且不能直接访问在 内核模式下运行的关键内存部分和系统资源。当应用程序需要执行特权系统操作时，处理器首先需要切换到 ring 0 以将执行流程切换到 kernel-mode。这是 系统调用到位的地方。</p>
 <p>例如我们将文件保存在磁盘上的这个操作，操作系统需要访问文件系统和设备驱动程序。这些是特权操作，不应允许应用程序本身执行。直接从应用程序访问设备驱动程序可能会导致非常糟糕的事情。因此，进入内核模式之前的最后一个 API 调用负责将 dip 开关拉入内核区域。</p>
@@ -356,7 +358,7 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Halo&#39;s Gate</div>
+      <div>Hell&#39;s Gate</div>
       <div>https://glacierrrr.online/2022/11/09/Halo&#39;s Gate/</div>
     </div>
     <div class="license-meta">
