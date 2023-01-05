@@ -1,0 +1,677 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Glacier">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="在上一篇文章中，我们分析了shiro 550的反序列化漏洞的原理以及应用，这次分析另一个shiro的高危漏洞shiro 721">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Shiro-721漏洞分析与复现">
+<meta property="og:url" content="https://glacierrrr.online/2023/01/05/Shiro-721%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E4%B8%8E%E5%A4%8D%E7%8E%B0/index.html">
+<meta property="og:site_name" content="Glacier&#39;s Blog">
+<meta property="og:description" content="在上一篇文章中，我们分析了shiro 550的反序列化漏洞的原理以及应用，这次分析另一个shiro的高危漏洞shiro 721">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2023/01/05/CfTSswDpdx8z7OF.png">
+<meta property="og:image" content="https://s2.loli.net/2023/01/05/uwtMmj2U9BJhczi.png">
+<meta property="og:image" content="https://s2.loli.net/2023/01/05/jR6mXN7VaepQ5HS.png">
+<meta property="og:image" content="https://s2.loli.net/2023/01/05/ZS4HIyfvM21Vhdk.png">
+<meta property="og:image" content="https://s2.loli.net/2023/01/05/cmxurhqOsZ1g8FH.png">
+<meta property="og:image" content="https://s2.loli.net/2023/01/05/6at1PIJKshNmwEq.png">
+<meta property="og:image" content="https://s2.loli.net/2023/01/05/FMy56qkQ8Iws4la.png">
+<meta property="og:image" content="https://s2.loli.net/2023/01/05/aOqyfvmG4YFTESw.png">
+<meta property="article:published_time" content="2023-01-05T08:49:24.000Z">
+<meta property="article:modified_time" content="2023-01-05T10:14:04.463Z">
+<meta property="article:author" content="Glacier">
+<meta property="article:tag" content="框架漏洞">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://s2.loli.net/2023/01/05/CfTSswDpdx8z7OF.png">
+  
+  
+  
+  <title>Shiro-721漏洞分析与复现 - Glacier&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"glacierrrr.online","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Shiro-721漏洞分析与复现"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-01-05 16:49" pubdate>
+          2023年1月5日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          29 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Shiro-721漏洞分析与复现</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>在上一篇文章中，我们分析了<a href="https://glacierrrr.online/2023/01/04/Shiro-550%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E4%B8%8E%E5%A4%8D%E7%8E%B0/">shiro 550</a>的反序列化漏洞的原理以及应用，这次分析另一个shiro的高危漏洞shiro 721</p>
+<a id="more"></a>
+
+<p>shiro 721与550区别较大的是，550因为密钥为固定常量，导致可以伪造各种信息，而721修复了这一点，却又出现了新的问题</p>
+<p>在shiro 721中，RememberMe Cookie 默认通过AES-128-CBC加密，而这种加密模式容易受到长度扩展攻击(在这里具体为Padding Oracle Attack( Oracle 填充攻击 ))，攻击者可以使用有效的 RememberMe Cookie 作为Paddding Oracle Attack 的前缀，然后精心构造RememberMe Cookie 来实施反序列化攻击</p>
+<ol>
+<li>使用任意账户登陆目标网站，以获取一个合法的RememberMe Cookie</li>
+<li>将获取的值作为POA的前缀</li>
+<li>加密反序列化的payload来构造恶意RememberMe Cookie</li>
+<li>将构造好的恶意数据填充到 RememberMe Cookie字段中并发送</li>
+</ol>
+<blockquote>
+<p>影响版本 1.2.5 &lt;= Shiro &lt;= 1.4.1</p>
+</blockquote>
+<h1 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h1><p>首先，我们先得明确一点，这个漏洞能够被利用的核心，就是利用Padding Oracle Attack，那就先来分析下填充攻击</p>
+<h2 id="Padding-Oracle-Attack"><a href="#Padding-Oracle-Attack" class="headerlink" title="Padding Oracle Attack"></a>Padding Oracle Attack</h2><p>AES-128-CBC加密，很好理解，使用的是AES加密算法，128bit为一个分组，而CBC指的是利用CBC加密模式</p>
+<h3 id="AES-128-CBC"><a href="#AES-128-CBC" class="headerlink" title="AES-128-CBC"></a>AES-128-CBC</h3><blockquote>
+<p>CBC 加密模式：将明文切分成若干小段，然后每一段分别与上一段的密文进行异或运算，再与密钥进行加密，生成本段明文的密文，这段密文用于下一段明文的加密。第一段明文没有对应的密文，为了确保分组的唯一性，CBC加密模式使用了初始化向量（IV，Initialization Vector）。初始化向量是一个固定长度的随机数，该向量会作为密文第一个块，随密文一同传输，在CBC模式中，因为链接模式中的异或操作是等长操作，所以初始化向量（IV）的长度与分组大小相同，为16 Bytes（128 bits）<br>纯粹的文字还是比较抽象，这里放上一张CBC加密的流程图，就很好理解了<br><img src="https://s2.loli.net/2023/01/05/CfTSswDpdx8z7OF.png" srcset="/img/loading.gif" lazyload alt="CBC加密"><br>首先把明文按照128bit为一组分组，再由初始化的向量IV与明文的第一组进行异或，加密，得到密文的第一组。再用刚得到的异地组密文与第二组明文异或，加密，得到密文的第二组依次往后</p>
+</blockquote>
+<p>这样就很好理解了，但我们也会发现一个问题，在给明文分组的时候，如果不是128bit的倍数，也就是最后一组不够128bit(16byte)的时候怎么办，例如：<br>0123456789ABCDEF FEDCBA9876543210<br>这一共是32byte，也就是256bit刚好可以分为两组<br>0123456789ABCDEF FEDCBA987654<br>这一共是28byte, 也就是224bit，第二组不满128bit<br>如果就这样进入CBC中加密，那么在异或这一步的时候，就会因为位数不同而无法进行下去，故当初的算法设计这就想到了，使用PKCS5进行长度填充，比如在第二个例子中，最后缺少4个byte，则填充4个0x04，若缺少15个byte，则填充15个0x0f</p>
+<h3 id="填充Oracle攻击"><a href="#填充Oracle攻击" class="headerlink" title="填充Oracle攻击"></a>填充Oracle攻击</h3><blockquote>
+<p>Padding Oracle填充攻击（Padding Oracle Attack）是比较早的一种漏洞利用方式了，早在2011年的Pwnie Rewards中被评为“最具有价值的服务器漏洞”。这个漏洞主要是由于设计使用的场景不当，导致可以利用密码算法通过“旁路攻击”被破解。值得强调的是，这个漏洞启示并不是对算法本身的破解，而是利用算法本身的某些padding特性以及系统中不必要的一些错误提示，进而分析出系统当前的漏洞利用路径。同时也需要强调下，这里的Oracle，其实与甲骨文公司关系并不大，这里的Oracle可以理解为“提示、暗示”的含义。<br>既然是服务器漏洞，那么肯定会涉及到与服务器进行的交互，而这里就是用到服务器给出的回显或者相应的不同，来判断填充的是否正确，例如：<br>服务器返回200 -&gt; 密文与填充均正确<br>服务器返回301 -&gt; 密文正确，填充错误<br>服务器返回500 -&gt; 密文与填充均错误<br>这里根据服务器的相应变化，穷举填充的值，其实很类似于<strong>SQL中的盲注</strong><br>我们再来具体看CBC的解密流程<br><img src="https://s2.loli.net/2023/01/05/uwtMmj2U9BJhczi.png" srcset="/img/loading.gif" lazyload alt="CBC解密"><br>解密时，与加密一样，先将密文按128bit分组，然后将第一组密文与密钥进行解密，再与初始向量IV异或，得到第一组明文，第二组密文与密钥进行解密，再与第一组密文异或，得到第二组密文，以此进行解密<br>因为Oracle的任务是提交数据让服务器解密，并验证解密后明文分组是否正确，所以我们不需要去解密明文，那我们只需要去遍历输入的值，根据服务器的返回信息，来判断正确，知道我们找到正确的值，也就这个padding符合规范</p>
+</blockquote>
+<p><img src="https://s2.loli.net/2023/01/05/jR6mXN7VaepQ5HS.png" srcset="/img/loading.gif" lazyload alt="CBC解密"></p>
+<ol>
+<li>对于r的破解<br>根据CBC解密的流程，从最后一个分组入手，穷举猜测r使其满足CBC最后一个或者多个分组的输出填充规则，例如最后一个字节满足<img src="https://s2.loli.net/2023/01/05/ZS4HIyfvM21Vhdk.png" srcset="/img/loading.gif" lazyload alt="注意，y的真实填充可能并非为0x01"><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">list</span>:<br>    <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">list</span>:<br><br>        c2=c2[:<span class="hljs-number">30</span>]+i+_<br>        <span class="hljs-comment"># c1=c1[:30]+i+_</span><br>        <span class="hljs-comment"># iv=iv[:30]+i+_</span><br><br>        iv_c=iv+c1+c2+c3<br>        <span class="hljs-comment"># iv_c=iv+c1+c2</span><br>        <span class="hljs-comment"># iv_c=iv+c1</span><br><br>        output = subp.call([<span class="hljs-string">&#x27;./dec_oracle.exe&#x27;</span>,iv_c])<br>        <span class="hljs-keyword">if</span> output==<span class="hljs-number">200</span>:<br>            print(i+_,<span class="hljs-string">&#x27;`````````````````````````&#x27;</span>)<br></code></pre></td></tr></table></figure></li>
+<li>进一步判断填充的长度<br>接下来就是进一步判断填充的长度，从r1入手，逐个字修改与确认<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>,<span class="hljs-number">32</span>,<span class="hljs-number">2</span>):<br>     r=r1[:i]+<span class="hljs-string">&#x27;00&#x27;</span>+r1[i+<span class="hljs-number">2</span>:]<br><br>     iv_c_new=iv+c1+r+c3<br>     <span class="hljs-comment"># iv_c_new=iv+r+c2</span><br>     <span class="hljs-comment">#iv_c_new=r+c1</span><br>     output = subp.call([<span class="hljs-string">&#x27;./dec_oracle.exe&#x27;</span>,iv_c_new])<br>     <span class="hljs-keyword">if</span> output==<span class="hljs-number">500</span>:<br>         <span class="hljs-built_in">len</span>=<span class="hljs-number">16</span>-i/<span class="hljs-number">2</span>  <br>         print(<span class="hljs-built_in">len</span>) <span class="hljs-comment">#填充长度len=1,第二组填充长度len=1,第三组填充长度len=1</span><br><br>print(<span class="hljs-built_in">hex</span>(<span class="hljs-number">0x01</span>^<span class="hljs-number">0x3d</span>))<br></code></pre></td></tr></table></figure></li>
+<li>进一步得到aj-1<br>通过调整r，将CBC解密后的填充修改为长度为b-j+2的形式，即让aj-1对应的字节也成为填充<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>,<span class="hljs-number">16</span>):<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">list</span>:<br>        <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">list</span>:<br>            r1=r1[:<span class="hljs-number">30</span>-n*<span class="hljs-number">2</span>]+i+_+r1[<span class="hljs-number">32</span>-n*<span class="hljs-number">2</span>:]<br>            <br>             iv_c_new=iv+c1+r1+c3<br>            <span class="hljs-comment"># iv_c_new=iv+r1+c2</span><br>            <span class="hljs-comment"># iv_c_new=r1+c1</span><br>            <br>            output = subp.call([<span class="hljs-string">&#x27;./dec_oracle.exe&#x27;</span>,iv_c_new])<br>            <span class="hljs-keyword">if</span> output==<span class="hljs-number">200</span>:<br>                print(i+_,<span class="hljs-string">&#x27;``````````````````````````````````succeed!````````````````````````````````````&#x27;</span>)<br>                num=(<span class="hljs-built_in">int</span>(i+_,<span class="hljs-number">16</span>)^(n+<span class="hljs-number">1</span>))<br>                num=<span class="hljs-built_in">hex</span>(num)<br>                <span class="hljs-keyword">if</span>(<span class="hljs-built_in">len</span>(num)&lt;<span class="hljs-number">4</span>):<br>                    num=<span class="hljs-string">&#x27;0x0&#x27;</span>+num[<span class="hljs-number">2</span>:]<br>                a.insert(<span class="hljs-number">0</span>,num[<span class="hljs-number">2</span>:])<br>                <span class="hljs-keyword">break</span><br>    r1=r1[:<span class="hljs-number">32</span>-(n+<span class="hljs-number">1</span>)*<span class="hljs-number">2</span>]<br>    <span class="hljs-keyword">for</span> q <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n+<span class="hljs-number">1</span>):<br>        <span class="hljs-keyword">if</span>(<span class="hljs-built_in">len</span>(<span class="hljs-built_in">hex</span>(<span class="hljs-built_in">int</span>(a[q],<span class="hljs-number">16</span>)^(n+<span class="hljs-number">2</span>)))&lt;<span class="hljs-number">4</span>):<br>            r1+=<span class="hljs-string">&#x27;0&#x27;</span><br>        r1+=(<span class="hljs-built_in">hex</span>(<span class="hljs-built_in">int</span>(a[q],<span class="hljs-number">16</span>)^(n+<span class="hljs-number">2</span>))[<span class="hljs-number">2</span>:])<br></code></pre></td></tr></table></figure></li>
+<li>得到其他分组<br>利用上述方法可以恢复任意一个分组，的解密中间状态<br><img src="https://s2.loli.net/2023/01/05/cmxurhqOsZ1g8FH.png" srcset="/img/loading.gif" lazyload><br>此时再根据截获的上一个分组密文y’，来获得真实的明文<br><img src="https://s2.loli.net/2023/01/05/6at1PIJKshNmwEq.png" srcset="/img/loading.gif" lazyload></li>
+</ol>
+<p>在不知道密钥的情况下，完成数据的加密，绕过服务端的校验（解密成功+明文有效），达到攻击的目的，这就是填充Oracle攻击</p>
+<h1 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h1><p>可以下载<a target="_blank" rel="noopener" href="https://github.com/phith0n/JavaThings/tree/master/shirodemo">p神的环境</a><br>换一下pom.xml中shiro的版本即可<br>然后有exp也可以直接使用<a target="_blank" rel="noopener" href="https://github.com/feihong-cs/ShiroExploit-Deprecated">exp</a><br>我这里还是为了省事，直接用vulhub搭建的<br><img src="https://s2.loli.net/2023/01/05/FMy56qkQ8Iws4la.png" srcset="/img/loading.gif" lazyload><br>然后还是工具一把梭<br><img src="https://s2.loli.net/2023/01/05/aOqyfvmG4YFTESw.png" srcset="/img/loading.gif" lazyload></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" class="category-chain-item">漏洞复现</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%A1%86%E6%9E%B6%E6%BC%8F%E6%B4%9E/">#框架漏洞</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Shiro-721漏洞分析与复现</div>
+      <div>https://glacierrrr.online/2023/01/05/Shiro-721漏洞分析与复现/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Glacier</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年1月5日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/01/04/Shiro-550%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E4%B8%8E%E5%A4%8D%E7%8E%B0/" title="Shiro-550漏洞分析与复现">
+                        <span class="hidden-mobile">Shiro-550漏洞分析与复现</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
